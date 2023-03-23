@@ -1,0 +1,27 @@
+name: CD workflows
+on:
+        push:
+                branches:
+                        - main
+
+jobs:
+        deploy:
+                runs-on: ubuntu-latest
+
+                steps:
+                        - name: Checkout
+                          uses: actions/checkout@v2
+
+                        - uses: okteto/context@latest
+                          with:
+                                  token: ${{secrets.OKTETO_TOKEN}}
+
+                        - name: 'Activate Namespace'
+                          uses: okteto/namespace@latest
+                          with:
+                                  namespace: nomorechokedboy
+
+                        - name: 'Trigger deploy stack'
+                          uses: okteto/deploy-stack@latest
+                          with:
+                                  build: 'true'
