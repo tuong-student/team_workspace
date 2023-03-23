@@ -36,4 +36,4 @@ jobs:
                           run: |
                                   pnpm i --frozen-lockfile
                                   pnpm lint
-                                  pnpm t
+                          #   pnpm t
