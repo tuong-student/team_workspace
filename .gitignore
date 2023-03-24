@@ -38,6 +38,7 @@ logs
 # codegen
 apps/api/src/routes.ts
 apps/api/src/swagger.json
+tmp
 
 # local data
 data
