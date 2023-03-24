@@ -11,7 +11,8 @@
 		"dev": "turbo run dev",
 		"lint": "turbo run lint",
 		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"api:dev": "(cd apps/api; air; cd ..; cd ..)"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^17.5.0",
@@ -32,6 +33,9 @@
 		],
 		"*.{json,yaml,yml}": [
 			"prettier --write"
+		],
+		"*.go": [
+			"gofmt"
 		]
 	}
 }
