@@ -19,7 +19,7 @@ jobs:
                         - name: 'Activate Namespace'
                           uses: okteto/namespace@latest
                           with:
-                                  namespace: nomorechokedboy
+                                  namespace: jira-nomorechokedboy
 
                         - name: 'Trigger deploy stack'
                           uses: okteto/deploy-stack@latest
