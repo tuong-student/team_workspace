@@ -89,9 +89,21 @@ pnpm run build
 
 ### Develop
 
+Ensure to run migration up script before first time running `air` command. Migration up script:
+
+```sh
+migrate -path migrations/ -database "postgresql://postgres:postgres@localhost:5432/jira?sslmode=disable" -verbose up
+```
+
+Migration down script:
+
+```sh
+migrate -path migrations/ -database "postgresql://postgres:postgres@localhost:5432/jira?sslmode=disable" -verbose up
+```
+
 To develop all apps and packages, run the following command:
 
-```
+```sh
 cd my-turborepo
 pnpm run dev
 ```
