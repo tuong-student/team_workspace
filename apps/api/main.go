@@ -8,6 +8,8 @@ import (
 	"os/signal"
 	"syscall"
 
+	_ "github.com/lib/pq"
+
 	"api/src/config"
 	"api/src/utils"
 
@@ -20,15 +22,16 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/monitor"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/swagger"
+	"github.com/jmoiron/sqlx"
 )
 
 func HealthCheck(c *fiber.Ctx) error {
 	return c.SendString("Hello, World!")
 }
 
-// @title Fiber Pizza API
+// @title Fiber Jira API
 // @version 1.0.0
-// @description This is pizza api swagger for Fiber
+// @description This is jira api swagger for Fiber
 // @termsOfService http://swagger.io/terms/
 // @contact.name API Support
 // @contact.email fiber@swagger.io
@@ -41,7 +44,17 @@ func main() {
 		log.Fatal(e)
 	}
 	DB_DNS := utils.GetDbURI(config)
-	fmt.Println(DB_DNS)
+	db, err := sqlx.Connect("postgres", DB_DNS)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	tx := db.MustBegin()
+	tx.MustExec("SELECT 1;")
+	if err := tx.Commit(); err != nil {
+		panic("oh no")
+	}
+
 	serverAddr := utils.GetServerAddress(config)
 
 	app := fiber.New()
