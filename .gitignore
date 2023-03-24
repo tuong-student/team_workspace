@@ -31,3 +31,16 @@ yarn-error.log*
 
 # turbo
 .turbo
+
+# logs
+logs
+
+# codegen
+apps/api/src/routes.ts
+apps/api/src/swagger.json
+
+# local data
+data
+
+# outdir
+dist
