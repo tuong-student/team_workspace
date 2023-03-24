@@ -1,6 +1,49 @@
 # Turborepo starter
 
-This is an official pnpm starter turborepo.
+[![codecov](https://codecov.io/github/nomorechokedboy/pizza/branch/main/graph/badge.svg?token=8USH85MRVT)](https://codecov.io/github/nomorechokedboy/pizza)
+[![CI workflows](https://github.com/nomorechokedboy/pizza/actions/workflows/ci.yml/badge.svg)](https://github.com/nomorechokedboy/pizza/actions/workflows/ci.yml)
+[![golangci-lint](https://github.com/nomorechokedboy/pizza/actions/workflows/golangci-lint.yml/badge.svg)](https://github.com/nomorechokedboy/pizza/actions/workflows/golangci-lint.yml)
+
+This is an official pnpm starter turborepo. The monorepo contains frontend, cms written in [VueJS](https://vuejs.org) and api written in [Go](https://go.dev/)
+
+## Prerequisite
+
+Because of the mix with typescript and golang, you will need to install go dependencies if you wish to run the api code.
+
+And of course, please install [NodeJs](https://nodejs.dev/) and [Golang](https://go.dev/) locally for development.
+
+### Set GOPATH to use go binary
+
+Running this command will set your environtment path with $GOPATH/bin so you can use golang binary commands
+
+```sh
+echo 'export PATH=$(go env GOPATH)/bin:$PATH' >> ~/.zshrc # (or .bashrc)
+```
+
+### Swaggo
+
+Install swaggo with the below installation command [from fiber swagger repo](https://github.com/gofiber/swagger)
+
+```sh
+go get -u github.com/swaggo/swag/cmd/swag
+# 1.16 or newer
+go install github.com/swaggo/swag/cmd/swag@latest
+
+swag -v
+```
+
+### Golanglint-ci
+
+To install Golanglint-ci, run the command from golanglint-ci installation guide. If you wish to install with other methods, you can checkout [the documentation](https://golangci-lint.run/usage/install/)
+
+```sh
+# binary will be $(go env GOPATH)/bin/golangci-lint
+curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.50.1
+
+golangci-lint --version
+```
+
+After this, you are good to contribute to the golang repository
 
 ## What's inside?
 
