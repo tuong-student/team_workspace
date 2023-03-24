@@ -1,8 +1,8 @@
 # Turborepo starter
 
-[![codecov](https://codecov.io/github/nomorechokedboy/pizza/branch/main/graph/badge.svg?token=8USH85MRVT)](https://codecov.io/github/nomorechokedboy/pizza)
-[![CI workflows](https://github.com/nomorechokedboy/pizza/actions/workflows/ci.yml/badge.svg)](https://github.com/nomorechokedboy/pizza/actions/workflows/ci.yml)
-[![golangci-lint](https://github.com/nomorechokedboy/pizza/actions/workflows/golangci-lint.yml/badge.svg)](https://github.com/nomorechokedboy/pizza/actions/workflows/golangci-lint.yml)
+[![CI workflows](https://github.com/tuong-student/team_workspace/actions/workflows/ci.yml/badge.svg)](https://github.com/tuong-student/team_workspace/actions/workflows/ci.yml)
+[![CD workflows](https://github.com/tuong-student/team_workspace/actions/workflows/cd.yml/badge.svg)](https://github.com/tuong-student/team_workspace/actions/workflows/cd.yml)
+[![golangci-lint](https://github.com/tuong-student/team_workspace/actions/workflows/golangci-lint.yml/badge.svg)](https://github.com/tuong-student/team_workspace/actions/workflows/golangci-lint.yml)
 
 This is an official pnpm starter turborepo. The monorepo contains frontend, cms written in [VueJS](https://vuejs.org) and api written in [Go](https://go.dev/)
 
@@ -31,6 +31,18 @@ go install github.com/swaggo/swag/cmd/swag@latest
 
 swag -v
 ```
+
+### Golang-migrate
+
+This cli is use for generate migration files, which will create and delete database's tables. You can checkout how to install [here](https://github.com/golang-migrate/migrate/tree/master/cmd/migrate)
+
+This is brief command to install the package with go toolchain:
+
+```sh
+go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@lates
+```
+
+[Usage reference](https://www.freecodecamp.org/news/database-migration-golang-migrate/)
 
 ### Golanglint-ci
 
