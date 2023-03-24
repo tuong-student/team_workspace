@@ -52,10 +52,18 @@ func main() {
 		log.Fatalln(err)
 	}
 	driver, err := postgres.WithInstance(db.DB, &postgres.Config{})
+	if err != nil {
+		panic("Lmao error create driver")
+	}
 	m, err := migrate.NewWithDatabaseInstance(
-		"file:///migrations",
+		"file://migrations",
 		"postgres", driver)
-	m.Up()
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err := m.Up(); err != nil {
+		log.Fatal(err)
+	}
 
 	tx := db.MustBegin()
 	tx.MustExec("SELECT 1;")
