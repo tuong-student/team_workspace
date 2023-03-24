@@ -8,6 +8,9 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/lib/pq"
 
 	"api/src/config"
@@ -48,6 +51,11 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+	driver, err := postgres.WithInstance(db.DB, &postgres.Config{})
+	m, err := migrate.NewWithDatabaseInstance(
+		"file:///migrations",
+		"postgres", driver)
+	m.Up()
 
 	tx := db.MustBegin()
 	tx.MustExec("SELECT 1;")
