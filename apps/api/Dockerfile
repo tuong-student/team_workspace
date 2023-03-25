@@ -14,7 +14,9 @@ RUN $GOPATH/bin/swag init && \
     go build -ldflags="-s -w" -o api .
 
 FROM scratch
+WORKDIR /usr/src/app
 
+COPY apps/api/migrations .
 COPY --from=builder ["/build/api", "/"]
 
 ENTRYPOINT ["/api"]
