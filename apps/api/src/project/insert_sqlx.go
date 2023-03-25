@@ -18,18 +18,12 @@ var insertQuery = `
 `
 
 func (r *ProjectSqlxRepo) Insert(req WriteProjectBody) (*Project, error) {
-	tx := r.db.MustBegin()
 	var createdProject Project
-	if err := tx.QueryRowx(insertQuery, req.Name, req.Description, req.Category).StructScan(&createdProject); err != nil {
-		tx.Rollback()
+	if err := r.db.QueryRowx(insertQuery, req.Name, req.Description, req.Category).StructScan(&createdProject); err != nil {
 		if err.(*pq.Error).Code == "23505" {
 			return nil, &common.ErrDuplicate
 		}
 
-		return nil, &common.InternalError
-	}
-
-	if err := tx.Commit(); err != nil {
 		return nil, &common.InternalError
 	}
 

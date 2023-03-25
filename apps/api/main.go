@@ -50,11 +50,11 @@ func main() {
 	DB_DNS := utils.GetDbURI(config)
 	db, err := sqlx.Connect("postgres", DB_DNS)
 	if err != nil {
-		fmt.Println("Lmao error", err)
+		fmt.Println("Can't connect to database", err)
 	}
 	driver, err := postgres.WithInstance(db.DB, &postgres.Config{})
 	if err != nil {
-		panic("Lmao error create driver")
+		panic("Error create driver")
 	}
 	m, err := migrate.NewWithDatabaseInstance(
 		"file://migrations",
@@ -64,12 +64,6 @@ func main() {
 	}
 	if err := m.Up(); err != nil {
 		fmt.Println(err)
-	}
-
-	tx := db.MustBegin()
-	tx.MustExec("SELECT 1;")
-	if err := tx.Commit(); err != nil {
-		panic("oh no")
 	}
 
 	serverAddr := utils.GetServerAddress(config)
