@@ -14,6 +14,7 @@ import (
 	_ "github.com/lib/pq"
 
 	"api/src/config"
+	"api/src/project"
 	"api/src/utils"
 
 	"github.com/gofiber/fiber/v2"
@@ -75,10 +76,11 @@ func main() {
 
 	app := fiber.New()
 	api := app.Group("/api")
-	_ = api.Group("/v1")
+	v1 := api.Group("/v1")
 
 	app.Use(cors.New())
 	app.Use(func(c *fiber.Ctx) error {
+		project.RegisterProjectRepository(c, db)
 		return c.Next()
 	})
 	app.Use(recover.New())
@@ -89,6 +91,8 @@ func main() {
 	app.Use(compress.New())
 	app.Use(etag.New())
 	app.Use(favicon.New())
+
+	project.New(v1)
 
 	app.Get("/healthz", HealthCheck)
 	app.Get("/docs/*", swagger.HandlerDefault)
