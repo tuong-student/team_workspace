@@ -16,7 +16,7 @@ RUN $GOPATH/bin/swag init && \
 FROM scratch
 WORKDIR /usr/src/app
 
-COPY apps/api/migrations .
+COPY apps/api/migrations ./migrations
 COPY --from=builder ["/build/api", "/"]
 
 ENTRYPOINT ["/api"]
