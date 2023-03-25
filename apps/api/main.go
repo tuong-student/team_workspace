@@ -49,7 +49,7 @@ func main() {
 	DB_DNS := utils.GetDbURI(config)
 	db, err := sqlx.Connect("postgres", DB_DNS)
 	if err != nil {
-		log.Fatalln(err)
+		fmt.Println("Lmao error", err)
 	}
 	driver, err := postgres.WithInstance(db.DB, &postgres.Config{})
 	if err != nil {
@@ -62,7 +62,7 @@ func main() {
 		log.Fatal(err)
 	}
 	if err := m.Up(); err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
 	}
 
 	tx := db.MustBegin()

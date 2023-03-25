@@ -3,25 +3,22 @@ on:
         push:
                 branches:
                         - main
-
 jobs:
         deploy:
                 runs-on: ubuntu-latest
-
                 steps:
                         - name: Checkout
                           uses: actions/checkout@v2
-
                         - uses: okteto/context@latest
                           with:
                                   token: ${{secrets.OKTETO_TOKEN}}
-
                         - name: 'Activate Namespace'
                           uses: okteto/namespace@latest
                           with:
                                   namespace: jira-nomorechokedboy
-
-                        - name: 'Trigger deploy stack'
-                          uses: okteto/deploy-stack@latest
+                        - name: 'Trigger the pipeline'
+                          uses: okteto/pipeline@latest
                           with:
-                                  build: 'true'
+                                  name: jira
+                                  timeout: 8m
+                                  filename: docker-compose.yml

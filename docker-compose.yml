@@ -10,7 +10,7 @@ services:
                 environment:
                         - DB_PORT=5432
                         - DB_HOST=postgres
-                        - DB_NAME=pizza
+                        - DB_NAME=jira
                         - DB_USER=postgres
                         - DB_PASSWORD=postgres
                 ports:
@@ -25,7 +25,6 @@ services:
                         - cache-network
                         - db-network
                         - storage-network
-
         postgres:
                 image: postgres:14.1-alpine
                 restart: always
@@ -45,7 +44,6 @@ services:
                         timeout: 60s
                         retries: 5
                         start_period: 30s
-
         minio:
                 environment:
                         - MINIO_ROOT_USER=admin
@@ -85,7 +83,6 @@ volumes:
                         type: none
                         o: bind
                         device: ${PWD}/data/minio
-
         postgres-data:
                 driver: local
                 driver_opts:
