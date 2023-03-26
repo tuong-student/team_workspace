@@ -1,6 +1,13 @@
 package common
 
-import "net/http"
+import (
+	"errors"
+	"net/http"
+)
+
+type BadRequestError struct {
+	string `example:"not found"`
+}
 
 type HttpError struct {
 	Message string
@@ -29,4 +36,13 @@ var InternalError = HttpError{
 
 func (e HttpError) Error() string {
 	return e.Message
+}
+
+func IsHttpError(e error) *HttpError {
+	var httpErr HttpError
+	if errors.As(e, &httpErr) {
+		return &httpErr
+	}
+
+	return nil
 }
