@@ -3,7 +3,6 @@ package project
 import (
 	"api/src/common"
 	"api/src/utils"
-	"fmt"
 	"strings"
 
 	"github.com/doug-martin/goqu/v9"
@@ -15,7 +14,6 @@ func (r *ProjectSqlxRepo) Find(query ProjectQuery) (*common.BasePaginationRespon
 	queryBuilder := common.Pagination("projects", &query.BaseQuery, res)
 	countQueryBuilder := goqu.From("projects").Select(goqu.COUNT("*"))
 
-	fmt.Println(query.Q != nil)
 	if query.Q != nil {
 		search := utils.EscapeLike("%", "%", strings.ToLower(*query.Q))
 		whereExpression := goqu.Or(
