@@ -1,6 +1,11 @@
 package common
 
-import "api/src/utils"
+import (
+	"api/src/utils"
+
+	"github.com/doug-martin/goqu/v9"
+	"github.com/doug-martin/goqu/v9/exp"
+)
 
 type BaseQuery struct {
 	Page     *uint   `query:"page"`
@@ -55,4 +60,25 @@ func (q *BaseQuery) GetSortBy() *string {
 	}
 
 	return q.SortBy
+}
+
+func Pagination[T any](table string, query *BaseQuery, res *BasePaginationResponse[T]) *goqu.SelectDataset {
+	res.Page = query.GetPage()
+	res.PageSize = query.GetPageSize()
+
+	order := goqu.I(*query.GetSortBy())
+	var orderExpression exp.OrderedExpression
+	if *query.GetSort() == "desc" {
+		orderExpression = order.Desc()
+	} else {
+		orderExpression = order.Asc()
+	}
+
+	return goqu.
+		From(table).
+		Offset(query.
+			GetOffset()).
+		Limit(query.
+			GetPageSize()).
+		Order(orderExpression)
 }
