@@ -12,6 +12,7 @@ func New(v1 fiber.Router) {
 	route.Delete("/delete/:id<int;min(1)>", DeleteProject)
 	route.Put("/update/:id<int;min(1)>", UpdateProject)
 	route.Get("/find", FindProject)
+	route.Get("/details/:id<int;min(1)>", FindOneProject)
 }
 
 func RegisterProjectRepository(c *fiber.Ctx, db *sqlx.DB) {

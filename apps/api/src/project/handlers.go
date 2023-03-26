@@ -14,6 +14,7 @@ type ProjectRepository interface {
 	Update(id uint, req WriteProjectBody) (*Project, error)
 	Delete(id uint) (*Project, error)
 	Find(queries ProjectQuery) (*common.BasePaginationResponse[Project], error)
+	FindOne(id uint) (*Project, error)
 }
 
 type ProjectSqlxRepo struct {
@@ -164,4 +165,33 @@ func FindProject(ctx *fiber.Ctx) error {
 	}
 
 	return ctx.JSON(projects)
+}
+
+// FindOneProject godoc
+// @Summary Find project details api
+// @Description Get a project details with coresponding id
+// @Accept json
+// @Produce json
+// @Param id path string true "Project id"
+// @Success 200 {object} Project
+// @Failure 400
+// @Router /project/details/{id} [get]
+// @tags Project
+func FindOneProject(ctx *fiber.Ctx) error {
+	id, err := ctx.ParamsInt("id")
+	if err != nil {
+		return err
+	}
+
+	repo := ctx.Locals("ProjectRepo").(ProjectRepository)
+	project, err := repo.FindOne(uint(id))
+	if err != nil {
+		if httpErr := common.IsHttpError(err); httpErr != nil {
+			return ctx.Status(httpErr.Code).JSON(httpErr.Message)
+		}
+
+		return ctx.JSON(err.Error())
+	}
+
+	return ctx.JSON(project)
 }
