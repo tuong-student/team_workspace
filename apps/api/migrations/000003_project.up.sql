@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS projects (
         updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+DROP TRIGGER IF EXISTS projects_update
+  ON projects;
 CREATE TRIGGER projects_update
 BEFORE UPDATE ON projects
 FOR EACH ROW EXECUTE PROCEDURE updatedAt();
