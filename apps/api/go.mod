@@ -14,6 +14,7 @@ require (
 	github.com/BurntSushi/toml v1.1.0 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/doug-martin/goqu/v9 v9.18.0 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
