@@ -24,7 +24,7 @@ func (r *ProjectSqlxRepo) Insert(req WriteProjectBody) (*Project, error) {
 			return nil, &common.ErrDuplicate
 		}
 
-		return nil, &common.InternalError
+		return nil, common.InternalError
 	}
 
 	return &createdProject, nil
