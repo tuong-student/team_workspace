@@ -15,7 +15,7 @@ jobs:
                         - name: 'Activate Namespace'
                           uses: okteto/namespace@latest
                           with:
-                                  namespace: dev-nomorechokedboy
+                                  namespace: fahasa-nomorechokedboy
                         - name: 'Trigger the pipeline'
                           uses: okteto/pipeline@latest
                           with:
