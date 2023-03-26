@@ -9,20 +9,22 @@ module.exports = {
 		'./src/**/*.{js,ts,jsx,tsx}'
 	],
 	theme: {
+		colors: {
+			primary: {
+				b400: '#0052CC',
+				n800: '#172B4D',
+				n0: '#FFFFFF'
+			},
+			secondary: {
+				r300: '#FF5630',
+				y300: '#FFAB00',
+				g300: '#36B37E',
+				t300: '#00B8D9',
+				p300: '#6554C0'
+			}
+		},
 		extend: {
-			colors: {
-				primary: {
-					b400: '#0052CC',
-					n800: '#172B4D',
-					n0: '#FFFFFF'
-				},
-				secondary: {
-					r300: '#FF5630',
-					y300: '#FFAB00',
-					g300: '#36B37E',
-					t300: '#00B8D9',
-					p300: '#6554C0'
-				},
+			color: {
 				neutral: {
 					dark: {
 						900: '#091E42',
