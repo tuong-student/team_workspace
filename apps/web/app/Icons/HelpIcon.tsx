@@ -6,7 +6,7 @@ export default function HelpIcon() {
 			viewBox='0 0 24 24'
 			role='presentation'
 		>
-			<g fill-rule='evenodd'>
+			<g fillRule='evenodd'>
 				<circle
 					fill='currentColor'
 					cx='12'

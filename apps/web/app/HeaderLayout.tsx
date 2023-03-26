@@ -6,13 +6,13 @@ import {
 	ButtonProps,
 	TextInput
 } from '@mantine/core'
-import SearchIcon from './SearchIcon'
-import JiraLogo from './JiraLogo'
-import GridIcon from './GridIcon'
-import CaretDownIcon from './CaretDownIcon'
-import BellIcon from './BellIcon'
-import HelpIcon from './HelpIcon'
-import SettingsIcon from './SettingsIcon'
+import SearchIcon from './Icons/SearchIcon'
+import JiraLogo from './Icons/JiraLogo'
+import GridIcon from './Icons/GridIcon'
+import CaretDownIcon from './Icons/CaretDownIcon'
+import BellIcon from './Icons/BellIcon'
+import HelpIcon from './Icons/HelpIcon'
+import SettingsIcon from './Icons/SettingsIcon'
 import { ReactNode } from 'react'
 
 const ButtonTexts: { children: ReactNode; props?: ButtonProps }[] = [
@@ -28,8 +28,8 @@ const icons = [BellIcon, HelpIcon, SettingsIcon]
 
 export default function HeaderLayout({ children }: { children: ReactNode }) {
 	return (
-		<div className='flex h-screen w-screen flex-col'>
-			<header className='flex h-[5.6rem] flex-row items-center px-[1.2rem]'>
+		<>
+			<header className='flex h-[5.6rem] flex-row items-center px-[1.2rem] shadow-lg'>
 				<nav className='flex h-full flex-row items-center'>
 					<ActionIcon
 						variant='subtle'
@@ -49,10 +49,13 @@ export default function HeaderLayout({ children }: { children: ReactNode }) {
 					</NextLink>
 					<div className='flex flex-row items-center'>
 						{ButtonTexts.map(
-							({
-								children,
-								props
-							}) => (
+							(
+								{
+									children,
+									props
+								},
+								i
+							) => (
 								<Button
 									className='group mx-[4px] h-[3.4rem] pl-[4px] pr-0'
 									color={
@@ -63,7 +66,7 @@ export default function HeaderLayout({ children }: { children: ReactNode }) {
 									}
 									size='xl'
 									{...props}
-									key={crypto.randomUUID()}
+									key={i}
 								>
 									<span className='text-slate-500 group-hover:text-blue-500'>
 										{
@@ -93,13 +96,13 @@ export default function HeaderLayout({ children }: { children: ReactNode }) {
 						size='lg'
 						radius={'md'}
 					/>
-					{icons.map((Icon) => (
+					{icons.map((Icon, i) => (
 						<ActionIcon
 							variant='subtle'
 							className='group rounded-full'
 							color={'indigo'}
 							size={54}
-							key={crypto.randomUUID()}
+							key={i}
 						>
 							<span className='text-zinc-500 group-hover:text-blue-500'>
 								{<Icon />}
@@ -123,6 +126,6 @@ export default function HeaderLayout({ children }: { children: ReactNode }) {
 				</div>
 			</header>
 			{children}
-		</div>
+		</>
 	)
 }

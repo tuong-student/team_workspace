@@ -1,3 +1,7 @@
 export default function ProjectsPage() {
-	return <h1>Hello, Next.js!</h1>
+	return (
+		<main className='h-full w-full'>
+			<h1>Hello, Next.js!</h1>
+		</main>
+	)
 }
