@@ -5,10 +5,6 @@ import (
 	"net/http"
 )
 
-type BadRequestError struct {
-	string `example:"not found"`
-}
-
 type HttpError struct {
 	Message string
 	Code    int
