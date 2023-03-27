@@ -14,6 +14,7 @@ import (
 	_ "github.com/lib/pq"
 
 	"api/src/config"
+	"api/src/project"
 	"api/src/utils"
 
 	"github.com/gofiber/fiber/v2"
@@ -49,11 +50,11 @@ func main() {
 	DB_DNS := utils.GetDbURI(config)
 	db, err := sqlx.Connect("postgres", DB_DNS)
 	if err != nil {
-		fmt.Println("Lmao error", err)
+		fmt.Println("Can't connect to database", err)
 	}
 	driver, err := postgres.WithInstance(db.DB, &postgres.Config{})
 	if err != nil {
-		panic("Lmao error create driver")
+		panic("Error create driver")
 	}
 	m, err := migrate.NewWithDatabaseInstance(
 		"file://migrations",
@@ -65,30 +66,25 @@ func main() {
 		fmt.Println(err)
 	}
 
-	tx := db.MustBegin()
-	tx.MustExec("SELECT 1;")
-	if err := tx.Commit(); err != nil {
-		panic("oh no")
-	}
-
 	serverAddr := utils.GetServerAddress(config)
 
 	app := fiber.New()
 	api := app.Group("/api")
-	_ = api.Group("/v1")
+	v1 := api.Group("/v1")
 
 	app.Use(cors.New())
 	app.Use(func(c *fiber.Ctx) error {
+		project.RegisterProjectRepository(c, db)
 		return c.Next()
 	})
 	app.Use(recover.New())
-	app.Use(logger.New(logger.Config{
-		Format: "[${time}] ${ip}  ${status} - ${latency} ${method} ${path}\n",
-	}))
+	app.Use(logger.New())
 	app.Get("/metrics", monitor.New(monitor.Config{Title: "MyService Metrics Page"}))
 	app.Use(compress.New())
 	app.Use(etag.New())
 	app.Use(favicon.New())
+
+	project.New(v1)
 
 	app.Get("/healthz", HealthCheck)
 	app.Get("/docs/*", swagger.HandlerDefault)
