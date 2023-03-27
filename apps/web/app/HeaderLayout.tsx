@@ -1,4 +1,3 @@
-import NextLink from 'next/link'
 import {
 	ActionIcon,
 	Avatar,
@@ -6,14 +5,15 @@ import {
 	ButtonProps,
 	TextInput
 } from '@mantine/core'
-import SearchIcon from './Icons/SearchIcon'
-import JiraLogo from './Icons/JiraLogo'
-import GridIcon from './Icons/GridIcon'
-import CaretDownIcon from './Icons/CaretDownIcon'
-import BellIcon from './Icons/BellIcon'
-import HelpIcon from './Icons/HelpIcon'
-import SettingsIcon from './Icons/SettingsIcon'
+import NextLink from 'next/link'
 import { ReactNode } from 'react'
+import BellIcon from './Icons/BellIcon.svg'
+import CaretDownIcon from './Icons/CaretDownIcon.svg'
+import GridIcon from './Icons/GridIcon.svg'
+import HelpIcon from './Icons/HelpIcon.svg'
+import JiraLogo from './Icons/JiraLogo.svg'
+import SearchIcon from './Icons/SearchIcon.svg'
+import SettingsIcon from './Icons/SettingsIcon.svg'
 
 const ButtonTexts: { children: ReactNode; props?: ButtonProps }[] = [
 	{ children: 'Your work', props: {} },
@@ -44,7 +44,7 @@ export default function HeaderLayout({ children }: { children: ReactNode }) {
 							className='h-[3.4rem]'
 							variant='subtle'
 						>
-							<JiraLogo />
+							<JiraLogo height='24' />
 						</Button>
 					</NextLink>
 					<div className='flex flex-row items-center'>

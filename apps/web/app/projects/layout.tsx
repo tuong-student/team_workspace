@@ -1,6 +1,7 @@
 'use client'
 import HeaderLayout from '../HeaderLayout'
 import SidebarLayout from '../SidebarLayout'
+import MainSidebar from './MainSidebar'
 
 export default function RootLayout({
 	children
@@ -15,7 +16,7 @@ export default function RootLayout({
 			<body className='flex h-screen w-screen flex-col'>
 				<HeaderLayout>
 					<SidebarLayout
-						component={<h1>Lmao</h1>}
+						component={<MainSidebar />}
 					>
 						{children}
 					</SidebarLayout>
