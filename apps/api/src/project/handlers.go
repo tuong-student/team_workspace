@@ -33,6 +33,7 @@ type ProjectSqlxRepo struct {
 // @Failure 422 {object} []common.ErrorResponse
 // @Failure 500 {string} string
 // @Router /project/create [post]
+// @Security ApiKeyAuth
 // @tags Project
 func CreateProject(ctx *fiber.Ctx) error {
 	req := WriteProjectBody{}
@@ -69,6 +70,7 @@ func CreateProject(ctx *fiber.Ctx) error {
 // @Failure 404 {string} string
 // @Failure 500 {string} string
 // @Router /project/delete/{id} [delete]
+// @Security ApiKeyAuth
 // @tags Project
 func DeleteProject(ctx *fiber.Ctx) error {
 	id, err := ctx.ParamsInt("id")
@@ -104,6 +106,7 @@ func DeleteProject(ctx *fiber.Ctx) error {
 // @Failure 422 {object} []common.ErrorResponse
 // @Failure 500 {string} string
 // @Router /project/update/{id} [put]
+// @Security ApiKeyAuth
 // @tags Project
 func UpdateProject(ctx *fiber.Ctx) error {
 	id, err := ctx.ParamsInt("id")
@@ -146,6 +149,7 @@ func UpdateProject(ctx *fiber.Ctx) error {
 // @Success 200 {object} common.BasePaginationResponse[Project]
 // @Failure 500 {string} string
 // @Router /project/find [get]
+// @Security ApiKeyAuth
 // @tags Project
 func FindProject(ctx *fiber.Ctx) error {
 	queries := new(ProjectQuery)
@@ -174,13 +178,15 @@ func FindProject(ctx *fiber.Ctx) error {
 // @Produce json
 // @Param id path string true "Project id"
 // @Success 200 {object} Project
-// @Failure 400
+// @Failure 400 {string} string
+// @Failure 404 {string} string
 // @Router /project/details/{id} [get]
+// @Security ApiKeyAuth
 // @tags Project
 func FindOneProject(ctx *fiber.Ctx) error {
 	id, err := ctx.ParamsInt("id")
 	if err != nil {
-		return err
+		return ctx.Status(http.StatusBadRequest).JSON("Id must be number")
 	}
 
 	repo := ctx.Locals("ProjectRepo").(ProjectRepository)
