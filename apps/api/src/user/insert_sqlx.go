@@ -2,6 +2,7 @@ package user
 
 import (
 	"api/src/common"
+	"fmt"
 
 	"github.com/lib/pq"
 )
@@ -9,19 +10,20 @@ import (
 var insertQuery = `
 	INSERT INTO users
 	(
-		name,email, password
+		full_name, email, password
 	)
 	VALUES
 	(
 		$1, $2, $3
-	) RETURNING id, name, email, password, created_at, updated_at
+	) RETURNING id, full_name, email, password, created_at, updated_at
 `
 
 func (r *UserSqlxRepo) Insert(req WriteUserBody) (*User, error) {
 	var createdUser User
-	if err := r.db.QueryRowx(insertQuery, req.Name, req.Email, req.Password).StructScan(&createdUser); err != nil {
+	if err := r.db.QueryRowx(insertQuery, req.FullName, req.Email, req.Password).StructScan(&createdUser); err != nil {
+		fmt.Println("DEBUG:", err, len(req.Password))
 		if ok := err.(*pq.Error).Code == "23505"; ok {
-			return nil, &common.ErrDuplicate
+			return nil, common.ErrDuplicate
 		}
 
 		return nil, common.InternalError
