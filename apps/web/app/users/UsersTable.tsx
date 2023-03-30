@@ -1,0 +1,66 @@
+'use client'
+import { Table } from '@mantine/core'
+import { ReactNode } from 'react'
+import Actions from './ActionGroup'
+import User, { UserDetailProps } from './User'
+
+export type UserDataType = {
+	id: string
+	detail: UserDetailProps
+	activeDate?: string
+	status?: 'active' | 'offline'
+}
+
+const TableLabel = ({ children }: { children: ReactNode }) => {
+	return (
+		<span className='text-[1rem] text-neutral-mid-90'>
+			{children}
+		</span>
+	)
+}
+
+export default function UsersTable({ data }: { data: UserDataType[] }) {
+	const userDataRows = data.map((user, i) => (
+		<tr key={i}>
+			<td>
+				<User user={user.detail} />
+			</td>
+			<td>
+				<span className='text-[1.3rem]'>
+					{user.activeDate}
+				</span>
+			</td>
+			<td>
+				<span className='capitalize text-[1.3rem]'>
+					{user.status}
+				</span>
+			</td>
+			<td>
+				<Actions userId={user.id} />
+			</td>
+		</tr>
+	))
+	return (
+		<Table>
+			<thead>
+				<tr>
+					<th>
+						<TableLabel>User</TableLabel>
+					</th>
+					<th>
+						<TableLabel>
+							Last Active
+						</TableLabel>
+					</th>
+					<th>
+						<TableLabel>Status</TableLabel>
+					</th>
+					<th>
+						<TableLabel>Actions</TableLabel>
+					</th>
+				</tr>
+			</thead>
+			<tbody>{userDataRows}</tbody>
+		</Table>
+	)
+}
