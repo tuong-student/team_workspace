@@ -5,7 +5,6 @@ import (
 	"api/src/user"
 	"api/src/utils"
 	"errors"
-	"fmt"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
@@ -122,7 +121,6 @@ func RefreshToken(ctx *fiber.Ctx) error {
 func Me(ctx *fiber.Ctx) error {
 	userId, ok := ctx.Locals("userId").(uint)
 	if !ok {
-		fmt.Println("Debug")
 		return ctx.Status(http.StatusInternalServerError).JSON("Internal error")
 	}
 
