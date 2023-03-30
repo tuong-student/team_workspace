@@ -1,0 +1,3 @@
+issues:
+        new: true
+        new-from-rev: HEAD

@@ -11,7 +11,8 @@
 		"dev": "turbo run dev",
 		"lint": "turbo run lint",
 		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"api:dev": "(cd apps/api; air; cd ..; cd ..)"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^17.5.0",
@@ -19,10 +20,12 @@
 		"husky": "^8.0.0",
 		"lint-staged": "^13.2.0",
 		"prettier": "^2.8.4",
+		"prettier-plugin-organize-imports": "^3.2.2",
+		"prettier-plugin-tailwindcss": "^0.2.5",
 		"turbo": "^1.8.5"
 	},
 	"engines": {
-		"node": ">=14.0.0"
+		"node": ">=16.8.0"
 	},
 	"packageManager": "pnpm@7.8.0",
 	"lint-staged": {
@@ -32,6 +35,9 @@
 		],
 		"*.{json,yaml,yml}": [
 			"prettier --write"
+		],
+		"*.go": [
+			"gofmt"
 		]
 	}
 }

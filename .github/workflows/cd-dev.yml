@@ -1,0 +1,26 @@
+name: CD workflows
+on:
+        push:
+                branches:
+                        - dev
+                paths:
+                        - 'apps/api/**'
+jobs:
+        deploy:
+                runs-on: ubuntu-latest
+                steps:
+                        - name: Checkout
+                          uses: actions/checkout@v2
+                        - uses: okteto/context@latest
+                          with:
+                                  token: ${{secrets.OKTETO_TOKEN}}
+                        - name: 'Activate Namespace'
+                          uses: okteto/namespace@latest
+                          with:
+                                  namespace: fahasa-nomorechokedboy
+                        - name: 'Trigger the pipeline'
+                          uses: okteto/pipeline@latest
+                          with:
+                                  name: jira
+                                  timeout: 8m
+                                  filename: docker-compose.yml
