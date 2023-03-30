@@ -13,8 +13,10 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/lib/pq"
 
+	"api/src/auth"
 	"api/src/config"
 	"api/src/project"
+	"api/src/user"
 	"api/src/utils"
 
 	"github.com/gofiber/fiber/v2"
@@ -74,7 +76,9 @@ func main() {
 
 	app.Use(cors.New())
 	app.Use(func(c *fiber.Ctx) error {
+		auth.RegisterUserRepository(c, db)
 		project.RegisterProjectRepository(c, db)
+		user.RegisterUserRepo(c, db)
 		return c.Next()
 	})
 	app.Use(recover.New())
@@ -84,7 +88,9 @@ func main() {
 	app.Use(etag.New())
 	app.Use(favicon.New())
 
+	user.New(v1)
 	project.New(v1)
+	auth.New(v1)
 
 	app.Get("/healthz", HealthCheck)
 	app.Get("/docs/*", swagger.HandlerDefault)
