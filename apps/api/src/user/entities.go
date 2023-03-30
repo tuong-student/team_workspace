@@ -1,10 +1,13 @@
 package user
 
-import "time"
+import (
+	"api/src/common"
+	"time"
+)
 
 type User struct {
 	Id       uint
-	Name     string
+	FullName string `db:"full_name"`
 	Email    string
 	Password string
 	CreateAt time.Time `db:"created_at"`
@@ -12,12 +15,11 @@ type User struct {
 }
 
 type WriteUserBody struct {
-	Name     string `validate:"required,min=2,max=30" db:"name"`
+	FullName string `validate:"required,min=8,max=30" db:"full_name"`
 	Email    string `validate:"required,min=10,max=30" db:"email"`
-	Password string `validate:"required,min=10,max=30" db:"password"`
+	Password string `validate:"min=8,max=32"`
 }
 
-type UserLogin struct {
-	Email    string `validate:"required" db:"email"`
-	Password string `validate:"required" db:"password"`
+type UserQuery struct {
+	common.BaseQuery
 }

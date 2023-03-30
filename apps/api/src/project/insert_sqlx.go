@@ -21,7 +21,7 @@ func (r *ProjectSqlxRepo) Insert(req WriteProjectBody) (*Project, error) {
 	var createdProject Project
 	if err := r.db.QueryRowx(insertQuery, req.Name, req.Description, req.Category).StructScan(&createdProject); err != nil {
 		if ok := err.(*pq.Error).Code == "23505"; ok {
-			return nil, &common.ErrDuplicate
+			return nil, common.ErrDuplicate
 		}
 
 		return nil, common.InternalError
