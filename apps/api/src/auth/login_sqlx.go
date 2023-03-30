@@ -6,11 +6,12 @@ import (
 	"database/sql"
 )
 
-var loginQuery = `
+/* var loginQuery = `
     SELECT id, full_name, email, password, created_at, updated_at
     FROM users
     WHERE email = $1
-`
+    LIMIT 1
+` */
 
 func (r *AuthSqlxRepo) Login(email string) (*user.User, error) {
 	var user user.User
