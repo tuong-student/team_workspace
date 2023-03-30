@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { Link } from "react-router-dom"
+import Link from "next/link"
 import "./login.scss"
 
 const Login = () => {
