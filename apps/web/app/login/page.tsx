@@ -1,11 +1,12 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { auth } from '../../libs'
 import './login.scss'
 
-const Login = () => {
+export default function LoginPage() {
 	const [email, setEmail] = useState('')
 	const [error, setError] = useState<string | null>(null)
 
@@ -30,6 +31,7 @@ const Login = () => {
 	}
 
 	const [password, setPassword] = useState('')
+	const router = useRouter()
 	const handleChangePassword: ChangeEventHandler<HTMLInputElement> = (
 		e
 	) => {
@@ -48,16 +50,20 @@ const Login = () => {
 				password
 			})
 
-			if (data.accessToken && data.refreshToken) {
+			console.log({ data })
+
+			if (data.AccessToken && data.RefreshToken) {
 				localStorage.setItem(
 					'accessToken',
-					data.accessToken
+					data.AccessToken
 				)
 				localStorage.setItem(
 					'refreshToken',
-					data.refreshToken
+					data.RefreshToken
 				)
 			}
+
+			router.push('/users')
 		} catch (e) {
 			console.error('Login error', e)
 		}
@@ -161,5 +167,3 @@ const Login = () => {
 		</div>
 	)
 }
-
-export default Login

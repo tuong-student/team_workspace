@@ -1,7 +1,8 @@
 import axiosGlobal, { CreateAxiosDefaults } from 'axios'
 import { AuthApi, ProjectApi, UserApi } from '../codegen/api'
 
-const baseURL = 'https://api-fahasa-nomorechokedboy.cloud.okteto.net'
+// const baseURL = 'https://api-fahasa-nomorechokedboy.cloud.okteto.net'
+const baseURL = 'http://localhost:3001'
 
 const configs: CreateAxiosDefaults = {
 	baseURL,

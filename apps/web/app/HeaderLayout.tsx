@@ -6,6 +6,7 @@ import {
 	TextInput
 } from '@mantine/core'
 import NextLink from 'next/link'
+import { useRouter } from 'next/navigation'
 import { ReactNode } from 'react'
 import BellIcon from './Icons/BellIcon.svg'
 import CaretDownIcon from './Icons/CaretDownIcon.svg'
@@ -27,6 +28,15 @@ const ButtonTexts: { children: ReactNode; props?: ButtonProps }[] = [
 const icons = [BellIcon, HelpIcon, SettingsIcon]
 
 export default function HeaderLayout({ children }: { children: ReactNode }) {
+	const router = useRouter()
+
+	const handleLogout = () => {
+		localStorage.removeItem('accessToken')
+		localStorage.removeItem('refreshToken')
+
+		router.push('/login')
+	}
+
 	return (
 		<>
 			<header className='flex h-[5.6rem] flex-row items-center px-[1.2rem] shadow-lg'>
@@ -123,6 +133,12 @@ export default function HeaderLayout({ children }: { children: ReactNode }) {
 							MK
 						</Avatar>
 					</ActionIcon>
+					<Button
+						variant='light'
+						onClick={handleLogout}
+					>
+						Logout
+					</Button>
 				</div>
 			</header>
 			{children}
