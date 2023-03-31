@@ -85,6 +85,7 @@ func main() {
 		auth.RegisterUserRepository(c, db)
 		project.RegisterProjectRepository(c, db)
 		user.RegisterUserRepo(c, db)
+		c.Locals("TokenSecret", config.TokenSecret)
 		return c.Next()
 	})
 	app.Use(recover.New())

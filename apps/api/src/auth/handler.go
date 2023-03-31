@@ -2,6 +2,7 @@ package auth
 
 import (
 	"api/src/common"
+	"api/src/config"
 	"api/src/user"
 	"api/src/utils"
 	"errors"
@@ -40,6 +41,7 @@ func Login(ctx *fiber.Ctx) error {
 		return ctx.Status(http.StatusUnprocessableEntity).JSON(err)
 	}
 
+	tokenSec := ctx.Locals("TokenSecret").(config.TokenSecret)
 	repo := ctx.Locals("AuthRepo").(AuthRepository)
 	user, err := repo.Login(req.Email)
 	if err != nil {
@@ -60,7 +62,7 @@ func Login(ctx *fiber.Ctx) error {
 		return ctx.Status(http.StatusConflict).JSON("Wrong password")
 	}
 
-	AccessToken, RefreshToken := utils.GenerateToken(user.Id, []byte("jwtsec"), []byte("refreshSec"))
+	AccessToken, RefreshToken := utils.GenerateToken(user.Id, []byte(tokenSec.TokenSecret), []byte(tokenSec.RefreshTokenSecret))
 
 	token := LoginResp{
 		AccessToken:  AccessToken,
@@ -92,12 +94,13 @@ func RefreshToken(ctx *fiber.Ctx) error {
 		return ctx.Status(http.StatusUnprocessableEntity).JSON(err)
 	}
 
-	userId, err := utils.ParseToken(req.RefreshToken, []byte("refreshSec"))
+	tokenSec := ctx.Locals("TokenSecret").(config.TokenSecret)
+	userId, err := utils.ParseToken(req.RefreshToken, []byte(tokenSec.RefreshTokenSecret))
 	if err != nil {
 		return ctx.Status(http.StatusUnprocessableEntity).JSON("Refresh token expired")
 	}
 
-	accessToken, refreshToken := utils.GenerateToken(userId, []byte("jwtsec"), []byte("refreshSec"))
+	accessToken, refreshToken := utils.GenerateToken(userId, []byte(tokenSec.TokenSecret), []byte(tokenSec.RefreshTokenSecret))
 	token := LoginResp{
 		AccessToken:  accessToken,
 		RefreshToken: refreshToken,
