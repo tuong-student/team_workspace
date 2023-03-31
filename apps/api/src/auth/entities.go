@@ -6,6 +6,10 @@ type LoginBody struct {
 }
 
 type LoginResp struct {
-	AccessToken  string `js:"accessToken"`
-	RefreshToken string `js:"refreshToken"`
+	AccessToken  string `json:"accessToken"`
+	RefreshToken string `json:"refreshToken"`
+}
+
+type RefreshTokenBody struct {
+	RefreshToken string `json:"refreshToken" validate:"required,jwt"`
 }

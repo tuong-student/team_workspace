@@ -1,6 +1,8 @@
 package project
 
 import (
+	"api/src/common"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/jmoiron/sqlx"
 )
@@ -8,6 +10,7 @@ import (
 func New(v1 fiber.Router) {
 	route := v1.Group("/project")
 
+	route.Use(common.AuthMiddleware)
 	route.Post("/create", CreateProject)
 	route.Delete("/delete/:id<int;min(1)>", DeleteProject)
 	route.Put("/update/:id<int;min(1)>", UpdateProject)

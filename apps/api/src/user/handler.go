@@ -11,7 +11,11 @@ import (
 )
 
 type UserRepository interface {
-	Insert(req WriteUserBody) (*User, error)
+	Insert(req WriteUserBody) (*UserResp, error)
+	Update(id uint, req UpdateUserBody) (*UserResp, error)
+	Delete(id uint) (*UserResp, error)
+	Find(queries UserQuery) (*common.BasePaginationResponse[UserResp], error)
+	FindOne(id uint) (*UserResp, error)
 }
 
 type UserSqlxRepo struct {
@@ -19,17 +23,18 @@ type UserSqlxRepo struct {
 }
 
 // CreateUser godoc
-// @Summary Create project api
-// @Description Create a new project with coresponding information
+// @Summary Create user api
+// @Description Create a new user with coresponding information
 // @Accept json
 // @Produce json
-// @Param project body WriteUserBody true "New Project body"
-// @Success 201 {object} User
+// @Param user body WriteUserBody true "New User body"
+// @Success 201 {object} UserResp
 // @Failure 400 {string} common.BadRequestError
 // @Failure 409 {string} string
 // @Failure 422 {object} []common.ErrorResponse
 // @Failure 500 {string} string
 // @Router /user/create [post]
+// @Security ApiKeyAuth
 // @tags User
 func CreateUser(ctx *fiber.Ctx) error {
 	req := WriteUserBody{}
@@ -59,4 +64,147 @@ func CreateUser(ctx *fiber.Ctx) error {
 	}
 
 	return ctx.Status(201).JSON(createdUser)
+}
+
+// DeleteUser godoc
+// @Summary Delete user api
+// @Description Delete a user with coresponding id
+// @Accept json
+// @Produce json
+// @Param id path string true "User id"
+// @Success 200 {object} User
+// @Failure 400 {string} string
+// @Failure 404 {string} string
+// @Failure 500 {string} string
+// @Router /user/delete/{id} [delete]
+// @Security ApiKeyAuth
+// @tags User
+func DeleteUser(ctx *fiber.Ctx) error {
+	id, err := ctx.ParamsInt("id")
+	if err != nil {
+		return ctx.Status(http.StatusBadRequest).JSON(err)
+	}
+
+	repo := ctx.Locals("UserRepo").(UserRepository)
+	user, err := repo.Delete(uint(id))
+	if err != nil {
+		var httpErr common.HttpError
+		if errors.As(err, &httpErr) {
+			return ctx.Status(httpErr.Code).JSON(httpErr.Message)
+		}
+
+		return ctx.JSON(err.Error())
+	}
+
+	return ctx.Status(201).JSON(user)
+}
+
+// UpdateUser godoc
+// @Summary Update user api
+// @Description Update a user with coresponding id
+// @Accept json
+// @Produce json
+// @Param id path string true "User Id"
+// @Param user body UpdateUserBody true "Update project"
+// @Success 200 {object} User
+// @Failure 400 {string} string
+// @Failure 404 {string} string
+// @Failure 409 {object} string
+// @Failure 422 {object} []common.ErrorResponse
+// @Failure 500 {string} string
+// @Router /user/update/{id} [put]
+// @Security ApiKeyAuth
+// @tags User
+func UpdateUser(ctx *fiber.Ctx) error {
+	id, err := ctx.ParamsInt("id")
+	if err != nil {
+		return ctx.Status(http.StatusBadRequest).JSON(err)
+	}
+
+	req := UpdateUserBody{}
+	if err := ctx.BodyParser(&req); err != nil {
+		return ctx.Status(http.StatusBadRequest).JSON(err)
+	}
+
+	if err := common.ValidatorAdapter.Exec(req); err != nil {
+		return ctx.Status(http.StatusUnprocessableEntity).JSON(err)
+	}
+
+	repo := ctx.Locals("UserRepo").(UserRepository)
+	user, err := repo.Update(uint(id), req)
+	if err != nil {
+		if httpErr := common.IsHttpError(err); httpErr != nil {
+			return ctx.Status(httpErr.Code).JSON(httpErr.Message)
+		}
+
+		return ctx.JSON(err.Error())
+	}
+
+	return ctx.JSON(user)
+}
+
+// FindUser godoc
+// @Summary Find users api
+// @Description Get a list of categories with coresponding query parameters
+// @Accept json
+// @Produce json
+// @Param page query int false "User page number"
+// @Param pageSize query int false "User page size return"
+// @Param q query string false "User query"
+// @Param sort query string false "Sort direction" Enums(asc, desc) default(desc)
+// @Param sortBy query string false "Sort by" Enums(id, name, description) default(id)
+// @Success 200 {object} common.BasePaginationResponse[User]
+// @Failure 500 {string} string
+// @Router /user/find [get]
+// @Security ApiKeyAuth
+// @tags User
+func FindUser(ctx *fiber.Ctx) error {
+	queries := new(UserQuery)
+	if err := ctx.QueryParser(queries); err != nil {
+		return ctx.Status(http.StatusBadRequest).JSON(err)
+	}
+
+	repo := ctx.Locals("UserRepo").(UserRepository)
+	users, err := repo.Find(*queries)
+
+	if err != nil {
+		if httpErr := common.IsHttpError(err); httpErr != nil {
+			return ctx.Status(httpErr.Code).JSON(httpErr.Message)
+		}
+
+		return ctx.JSON(err.Error())
+	}
+
+	return ctx.JSON(users)
+}
+
+// FindOneUser godoc
+// @Summary Find user details api
+// @Description Get a user details with coresponding id
+// @Accept json
+// @Produce json
+// @Param id path string true "User id"
+// @Success 200 {object} User
+// @Failure 400 {string} string
+// @Failure 404 {string} string
+// @Router /user/details/{id} [get]
+// @Security ApiKeyAuth
+// @tags User
+func FindOneUser(ctx *fiber.Ctx) error {
+	id, err := ctx.ParamsInt("id")
+	if err != nil {
+		return ctx.Status(http.StatusBadRequest).JSON("Id must be number")
+	}
+
+	repo := ctx.Locals("UserRepo").(UserRepository)
+	user, err := repo.FindOne(uint(id))
+	if err != nil {
+		if httpErr := common.IsHttpError(err); httpErr != nil {
+			return ctx.Status(httpErr.Code).JSON(httpErr.Message)
+		}
+
+		return ctx.JSON(err.Error())
+	}
+
+	return ctx.JSON(user)
 }
