@@ -9,7 +9,7 @@ import (
 )
 
 func (r *ProjectSqlxRepo) Find(query ProjectQuery) (*common.BasePaginationResponse[Project], error) {
-	projects := []*Project{}
+	var projects []*Project
 	res := &common.BasePaginationResponse[Project]{}
 	queryBuilder := common.Pagination("projects", &query.BaseQuery, res)
 	countQueryBuilder := goqu.From("projects").Select(goqu.COUNT("*"))
