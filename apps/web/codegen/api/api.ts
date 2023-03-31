@@ -25,6 +25,7 @@ import {
 	createRequestFunction,
 	DUMMY_BASE_URL,
 	serializeDataIfNeeded,
+	setApiKeyToObject,
 	setSearchParams,
 	toPathString
 } from './common'
@@ -72,6 +73,19 @@ export interface AuthLoginResp {
 /**
  *
  * @export
+ * @interface AuthRefreshTokenBody
+ */
+export interface AuthRefreshTokenBody {
+	/**
+	 *
+	 * @type {string}
+	 * @memberof AuthRefreshTokenBody
+	 */
+	refreshToken: string
+}
+/**
+ *
+ * @export
  * @interface CommonBasePaginationResponseProjectProject
  */
 export interface CommonBasePaginationResponseProjectProject {
@@ -97,6 +111,37 @@ export interface CommonBasePaginationResponseProjectProject {
 	 *
 	 * @type {number}
 	 * @memberof CommonBasePaginationResponseProjectProject
+	 */
+	total?: number
+}
+/**
+ *
+ * @export
+ * @interface CommonBasePaginationResponseUserUser
+ */
+export interface CommonBasePaginationResponseUserUser {
+	/**
+	 *
+	 * @type {Array<UserUser>}
+	 * @memberof CommonBasePaginationResponseUserUser
+	 */
+	items?: Array<UserUser>
+	/**
+	 *
+	 * @type {number}
+	 * @memberof CommonBasePaginationResponseUserUser
+	 */
+	page?: number
+	/**
+	 *
+	 * @type {number}
+	 * @memberof CommonBasePaginationResponseUserUser
+	 */
+	pageSize?: number
+	/**
+	 *
+	 * @type {number}
+	 * @memberof CommonBasePaginationResponseUserUser
 	 */
 	total?: number
 }
@@ -196,9 +241,34 @@ export interface ProjectWriteProjectBody {
 /**
  *
  * @export
+ * @interface UserUpdateUserBody
+ */
+export interface UserUpdateUserBody {
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserUpdateUserBody
+	 */
+	avatarUrl?: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserUpdateUserBody
+	 */
+	fullName?: string
+}
+/**
+ *
+ * @export
  * @interface UserUser
  */
 export interface UserUser {
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserUser
+	 */
+	avatarUrl?: string
 	/**
 	 *
 	 * @type {string}
@@ -234,6 +304,61 @@ export interface UserUser {
 	 * @type {string}
 	 * @memberof UserUser
 	 */
+	role?: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserUser
+	 */
+	updateAt?: string
+}
+/**
+ *
+ * @export
+ * @interface UserUserResp
+ */
+export interface UserUserResp {
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserUserResp
+	 */
+	avatarUrl?: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserUserResp
+	 */
+	createAt?: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserUserResp
+	 */
+	email?: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserUserResp
+	 */
+	fullName?: string
+	/**
+	 *
+	 * @type {number}
+	 * @memberof UserUserResp
+	 */
+	id?: number
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserUserResp
+	 */
+	role?: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserUserResp
+	 */
 	updateAt?: string
 }
 /**
@@ -260,6 +385,12 @@ export interface UserWriteUserBody {
 	 * @memberof UserWriteUserBody
 	 */
 	password?: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserWriteUserBody
+	 */
+	role: string
 }
 
 /**
@@ -325,6 +456,117 @@ export const AuthApiAxiosParamCreator = function (
 				url: toPathString(localVarUrlObj),
 				options: localVarRequestOptions
 			}
+		},
+		/**
+		 * Ger current user profile api
+		 * @summary User profile api
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		authMeGet: async (
+			options: AxiosRequestConfig = {}
+		): Promise<RequestArgs> => {
+			const localVarPath = `/auth/me`
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(
+				localVarPath,
+				DUMMY_BASE_URL
+			)
+			let baseOptions
+			if (configuration) {
+				baseOptions = configuration.baseOptions
+			}
+
+			const localVarRequestOptions = {
+				method: 'GET',
+				...baseOptions,
+				...options
+			}
+			const localVarHeaderParameter = {} as any
+			const localVarQueryParameter = {} as any
+
+			// authentication ApiKeyAuth required
+			await setApiKeyToObject(
+				localVarHeaderParameter,
+				'Authorization',
+				configuration
+			)
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter)
+			let headersFromBaseOptions =
+				baseOptions && baseOptions.headers
+					? baseOptions.headers
+					: {}
+			localVarRequestOptions.headers = {
+				...localVarHeaderParameter,
+				...headersFromBaseOptions,
+				...options.headers
+			}
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions
+			}
+		},
+		/**
+		 * Refresh token api
+		 * @summary Refresh token api
+		 * @param {AuthRefreshTokenBody} refreshToken Refresh token payload
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		authRefreshPost: async (
+			refreshToken: AuthRefreshTokenBody,
+			options: AxiosRequestConfig = {}
+		): Promise<RequestArgs> => {
+			// verify required parameter 'refreshToken' is not null or undefined
+			assertParamExists(
+				'authRefreshPost',
+				'refreshToken',
+				refreshToken
+			)
+			const localVarPath = `/auth/refresh`
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(
+				localVarPath,
+				DUMMY_BASE_URL
+			)
+			let baseOptions
+			if (configuration) {
+				baseOptions = configuration.baseOptions
+			}
+
+			const localVarRequestOptions = {
+				method: 'POST',
+				...baseOptions,
+				...options
+			}
+			const localVarHeaderParameter = {} as any
+			const localVarQueryParameter = {} as any
+
+			localVarHeaderParameter['Content-Type'] =
+				'application/json'
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter)
+			let headersFromBaseOptions =
+				baseOptions && baseOptions.headers
+					? baseOptions.headers
+					: {}
+			localVarRequestOptions.headers = {
+				...localVarHeaderParameter,
+				...headersFromBaseOptions,
+				...options.headers
+			}
+			localVarRequestOptions.data = serializeDataIfNeeded(
+				refreshToken,
+				localVarRequestOptions,
+				configuration
+			)
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions
+			}
 		}
 	}
 }
@@ -364,6 +606,59 @@ export const AuthApiFp = function (configuration?: Configuration) {
 				BASE_PATH,
 				configuration
 			)
+		},
+		/**
+		 * Ger current user profile api
+		 * @summary User profile api
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async authMeGet(
+			options?: AxiosRequestConfig
+		): Promise<
+			(
+				axios?: AxiosInstance,
+				basePath?: string
+			) => AxiosPromise<UserUserResp>
+		> {
+			const localVarAxiosArgs =
+				await localVarAxiosParamCreator.authMeGet(
+					options
+				)
+			return createRequestFunction(
+				localVarAxiosArgs,
+				globalAxios,
+				BASE_PATH,
+				configuration
+			)
+		},
+		/**
+		 * Refresh token api
+		 * @summary Refresh token api
+		 * @param {AuthRefreshTokenBody} refreshToken Refresh token payload
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async authRefreshPost(
+			refreshToken: AuthRefreshTokenBody,
+			options?: AxiosRequestConfig
+		): Promise<
+			(
+				axios?: AxiosInstance,
+				basePath?: string
+			) => AxiosPromise<AuthLoginResp>
+		> {
+			const localVarAxiosArgs =
+				await localVarAxiosParamCreator.authRefreshPost(
+					refreshToken,
+					options
+				)
+			return createRequestFunction(
+				localVarAxiosArgs,
+				globalAxios,
+				BASE_PATH,
+				configuration
+			)
 		}
 	}
 }
@@ -393,6 +688,32 @@ export const AuthApiFactory = function (
 			return localVarFp
 				.authLoginPost(project, options)
 				.then((request) => request(axios, basePath))
+		},
+		/**
+		 * Ger current user profile api
+		 * @summary User profile api
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		authMeGet(options?: any): AxiosPromise<UserUserResp> {
+			return localVarFp
+				.authMeGet(options)
+				.then((request) => request(axios, basePath))
+		},
+		/**
+		 * Refresh token api
+		 * @summary Refresh token api
+		 * @param {AuthRefreshTokenBody} refreshToken Refresh token payload
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		authRefreshPost(
+			refreshToken: AuthRefreshTokenBody,
+			options?: any
+		): AxiosPromise<AuthLoginResp> {
+			return localVarFp
+				.authRefreshPost(refreshToken, options)
+				.then((request) => request(axios, basePath))
 		}
 	}
 }
@@ -418,6 +739,36 @@ export class AuthApi extends BaseAPI {
 	) {
 		return AuthApiFp(this.configuration)
 			.authLoginPost(project, options)
+			.then((request) => request(this.axios, this.basePath))
+	}
+
+	/**
+	 * Ger current user profile api
+	 * @summary User profile api
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof AuthApi
+	 */
+	public authMeGet(options?: AxiosRequestConfig) {
+		return AuthApiFp(this.configuration)
+			.authMeGet(options)
+			.then((request) => request(this.axios, this.basePath))
+	}
+
+	/**
+	 * Refresh token api
+	 * @summary Refresh token api
+	 * @param {AuthRefreshTokenBody} refreshToken Refresh token payload
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof AuthApi
+	 */
+	public authRefreshPost(
+		refreshToken: AuthRefreshTokenBody,
+		options?: AxiosRequestConfig
+	) {
+		return AuthApiFp(this.configuration)
+			.authRefreshPost(refreshToken, options)
 			.then((request) => request(this.axios, this.basePath))
 	}
 }
@@ -465,6 +816,13 @@ export const ProjectApiAxiosParamCreator = function (
 			}
 			const localVarHeaderParameter = {} as any
 			const localVarQueryParameter = {} as any
+
+			// authentication ApiKeyAuth required
+			await setApiKeyToObject(
+				localVarHeaderParameter,
+				'Authorization',
+				configuration
+			)
 
 			localVarHeaderParameter['Content-Type'] =
 				'application/json'
@@ -525,6 +883,13 @@ export const ProjectApiAxiosParamCreator = function (
 			const localVarHeaderParameter = {} as any
 			const localVarQueryParameter = {} as any
 
+			// authentication ApiKeyAuth required
+			await setApiKeyToObject(
+				localVarHeaderParameter,
+				'Authorization',
+				configuration
+			)
+
 			setSearchParams(localVarUrlObj, localVarQueryParameter)
 			let headersFromBaseOptions =
 				baseOptions && baseOptions.headers
@@ -575,6 +940,13 @@ export const ProjectApiAxiosParamCreator = function (
 			}
 			const localVarHeaderParameter = {} as any
 			const localVarQueryParameter = {} as any
+
+			// authentication ApiKeyAuth required
+			await setApiKeyToObject(
+				localVarHeaderParameter,
+				'Authorization',
+				configuration
+			)
 
 			setSearchParams(localVarUrlObj, localVarQueryParameter)
 			let headersFromBaseOptions =
@@ -629,6 +1001,13 @@ export const ProjectApiAxiosParamCreator = function (
 			}
 			const localVarHeaderParameter = {} as any
 			const localVarQueryParameter = {} as any
+
+			// authentication ApiKeyAuth required
+			await setApiKeyToObject(
+				localVarHeaderParameter,
+				'Authorization',
+				configuration
+			)
 
 			if (page !== undefined) {
 				localVarQueryParameter['page'] = page
@@ -708,6 +1087,13 @@ export const ProjectApiAxiosParamCreator = function (
 			}
 			const localVarHeaderParameter = {} as any
 			const localVarQueryParameter = {} as any
+
+			// authentication ApiKeyAuth required
+			await setApiKeyToObject(
+				localVarHeaderParameter,
+				'Authorization',
+				configuration
+			)
 
 			localVarHeaderParameter['Content-Type'] =
 				'application/json'
@@ -1121,18 +1507,18 @@ export const UserApiAxiosParamCreator = function (
 ) {
 	return {
 		/**
-		 * Create a new project with coresponding information
-		 * @summary Create project api
-		 * @param {UserWriteUserBody} project New Project body
+		 * Create a new user with coresponding information
+		 * @summary Create user api
+		 * @param {UserWriteUserBody} user New User body
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
 		userCreatePost: async (
-			project: UserWriteUserBody,
+			user: UserWriteUserBody,
 			options: AxiosRequestConfig = {}
 		): Promise<RequestArgs> => {
-			// verify required parameter 'project' is not null or undefined
-			assertParamExists('userCreatePost', 'project', project)
+			// verify required parameter 'user' is not null or undefined
+			assertParamExists('userCreatePost', 'user', user)
 			const localVarPath = `/user/create`
 			// use dummy base URL string because the URL constructor only accepts absolute URLs.
 			const localVarUrlObj = new URL(
@@ -1152,6 +1538,13 @@ export const UserApiAxiosParamCreator = function (
 			const localVarHeaderParameter = {} as any
 			const localVarQueryParameter = {} as any
 
+			// authentication ApiKeyAuth required
+			await setApiKeyToObject(
+				localVarHeaderParameter,
+				'Authorization',
+				configuration
+			)
+
 			localVarHeaderParameter['Content-Type'] =
 				'application/json'
 
@@ -1166,7 +1559,274 @@ export const UserApiAxiosParamCreator = function (
 				...options.headers
 			}
 			localVarRequestOptions.data = serializeDataIfNeeded(
-				project,
+				user,
+				localVarRequestOptions,
+				configuration
+			)
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions
+			}
+		},
+		/**
+		 * Delete a user with coresponding id
+		 * @summary Delete user api
+		 * @param {string} id User id
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		userDeleteIdDelete: async (
+			id: string,
+			options: AxiosRequestConfig = {}
+		): Promise<RequestArgs> => {
+			// verify required parameter 'id' is not null or undefined
+			assertParamExists('userDeleteIdDelete', 'id', id)
+			const localVarPath = `/user/delete/{id}`.replace(
+				`{${'id'}}`,
+				encodeURIComponent(String(id))
+			)
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(
+				localVarPath,
+				DUMMY_BASE_URL
+			)
+			let baseOptions
+			if (configuration) {
+				baseOptions = configuration.baseOptions
+			}
+
+			const localVarRequestOptions = {
+				method: 'DELETE',
+				...baseOptions,
+				...options
+			}
+			const localVarHeaderParameter = {} as any
+			const localVarQueryParameter = {} as any
+
+			// authentication ApiKeyAuth required
+			await setApiKeyToObject(
+				localVarHeaderParameter,
+				'Authorization',
+				configuration
+			)
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter)
+			let headersFromBaseOptions =
+				baseOptions && baseOptions.headers
+					? baseOptions.headers
+					: {}
+			localVarRequestOptions.headers = {
+				...localVarHeaderParameter,
+				...headersFromBaseOptions,
+				...options.headers
+			}
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions
+			}
+		},
+		/**
+		 * Get a user details with coresponding id
+		 * @summary Find user details api
+		 * @param {string} id User id
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		userDetailsIdGet: async (
+			id: string,
+			options: AxiosRequestConfig = {}
+		): Promise<RequestArgs> => {
+			// verify required parameter 'id' is not null or undefined
+			assertParamExists('userDetailsIdGet', 'id', id)
+			const localVarPath = `/user/details/{id}`.replace(
+				`{${'id'}}`,
+				encodeURIComponent(String(id))
+			)
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(
+				localVarPath,
+				DUMMY_BASE_URL
+			)
+			let baseOptions
+			if (configuration) {
+				baseOptions = configuration.baseOptions
+			}
+
+			const localVarRequestOptions = {
+				method: 'GET',
+				...baseOptions,
+				...options
+			}
+			const localVarHeaderParameter = {} as any
+			const localVarQueryParameter = {} as any
+
+			// authentication ApiKeyAuth required
+			await setApiKeyToObject(
+				localVarHeaderParameter,
+				'Authorization',
+				configuration
+			)
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter)
+			let headersFromBaseOptions =
+				baseOptions && baseOptions.headers
+					? baseOptions.headers
+					: {}
+			localVarRequestOptions.headers = {
+				...localVarHeaderParameter,
+				...headersFromBaseOptions,
+				...options.headers
+			}
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions
+			}
+		},
+		/**
+		 * Get a list of categories with coresponding query parameters
+		 * @summary Find users api
+		 * @param {number} [page] User page number
+		 * @param {number} [pageSize] User page size return
+		 * @param {string} [q] User query
+		 * @param {'asc' | 'desc'} [sort] Sort direction
+		 * @param {'id' | 'name' | 'description'} [sortBy] Sort by
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		userFindGet: async (
+			page?: number,
+			pageSize?: number,
+			q?: string,
+			sort?: 'asc' | 'desc',
+			sortBy?: 'id' | 'name' | 'description',
+			options: AxiosRequestConfig = {}
+		): Promise<RequestArgs> => {
+			const localVarPath = `/user/find`
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(
+				localVarPath,
+				DUMMY_BASE_URL
+			)
+			let baseOptions
+			if (configuration) {
+				baseOptions = configuration.baseOptions
+			}
+
+			const localVarRequestOptions = {
+				method: 'GET',
+				...baseOptions,
+				...options
+			}
+			const localVarHeaderParameter = {} as any
+			const localVarQueryParameter = {} as any
+
+			// authentication ApiKeyAuth required
+			await setApiKeyToObject(
+				localVarHeaderParameter,
+				'Authorization',
+				configuration
+			)
+
+			if (page !== undefined) {
+				localVarQueryParameter['page'] = page
+			}
+
+			if (pageSize !== undefined) {
+				localVarQueryParameter['pageSize'] = pageSize
+			}
+
+			if (q !== undefined) {
+				localVarQueryParameter['q'] = q
+			}
+
+			if (sort !== undefined) {
+				localVarQueryParameter['sort'] = sort
+			}
+
+			if (sortBy !== undefined) {
+				localVarQueryParameter['sortBy'] = sortBy
+			}
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter)
+			let headersFromBaseOptions =
+				baseOptions && baseOptions.headers
+					? baseOptions.headers
+					: {}
+			localVarRequestOptions.headers = {
+				...localVarHeaderParameter,
+				...headersFromBaseOptions,
+				...options.headers
+			}
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions
+			}
+		},
+		/**
+		 * Update a user with coresponding id
+		 * @summary Update user api
+		 * @param {string} id User Id
+		 * @param {UserUpdateUserBody} user Update project
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		userUpdateIdPut: async (
+			id: string,
+			user: UserUpdateUserBody,
+			options: AxiosRequestConfig = {}
+		): Promise<RequestArgs> => {
+			// verify required parameter 'id' is not null or undefined
+			assertParamExists('userUpdateIdPut', 'id', id)
+			// verify required parameter 'user' is not null or undefined
+			assertParamExists('userUpdateIdPut', 'user', user)
+			const localVarPath = `/user/update/{id}`.replace(
+				`{${'id'}}`,
+				encodeURIComponent(String(id))
+			)
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(
+				localVarPath,
+				DUMMY_BASE_URL
+			)
+			let baseOptions
+			if (configuration) {
+				baseOptions = configuration.baseOptions
+			}
+
+			const localVarRequestOptions = {
+				method: 'PUT',
+				...baseOptions,
+				...options
+			}
+			const localVarHeaderParameter = {} as any
+			const localVarQueryParameter = {} as any
+
+			// authentication ApiKeyAuth required
+			await setApiKeyToObject(
+				localVarHeaderParameter,
+				'Authorization',
+				configuration
+			)
+
+			localVarHeaderParameter['Content-Type'] =
+				'application/json'
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter)
+			let headersFromBaseOptions =
+				baseOptions && baseOptions.headers
+					? baseOptions.headers
+					: {}
+			localVarRequestOptions.headers = {
+				...localVarHeaderParameter,
+				...headersFromBaseOptions,
+				...options.headers
+			}
+			localVarRequestOptions.data = serializeDataIfNeeded(
+				user,
 				localVarRequestOptions,
 				configuration
 			)
@@ -1188,14 +1848,42 @@ export const UserApiFp = function (configuration?: Configuration) {
 		UserApiAxiosParamCreator(configuration)
 	return {
 		/**
-		 * Create a new project with coresponding information
-		 * @summary Create project api
-		 * @param {UserWriteUserBody} project New Project body
+		 * Create a new user with coresponding information
+		 * @summary Create user api
+		 * @param {UserWriteUserBody} user New User body
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
 		async userCreatePost(
-			project: UserWriteUserBody,
+			user: UserWriteUserBody,
+			options?: AxiosRequestConfig
+		): Promise<
+			(
+				axios?: AxiosInstance,
+				basePath?: string
+			) => AxiosPromise<UserUserResp>
+		> {
+			const localVarAxiosArgs =
+				await localVarAxiosParamCreator.userCreatePost(
+					user,
+					options
+				)
+			return createRequestFunction(
+				localVarAxiosArgs,
+				globalAxios,
+				BASE_PATH,
+				configuration
+			)
+		},
+		/**
+		 * Delete a user with coresponding id
+		 * @summary Delete user api
+		 * @param {string} id User id
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async userDeleteIdDelete(
+			id: string,
 			options?: AxiosRequestConfig
 		): Promise<
 			(
@@ -1204,8 +1892,107 @@ export const UserApiFp = function (configuration?: Configuration) {
 			) => AxiosPromise<UserUser>
 		> {
 			const localVarAxiosArgs =
-				await localVarAxiosParamCreator.userCreatePost(
-					project,
+				await localVarAxiosParamCreator.userDeleteIdDelete(
+					id,
+					options
+				)
+			return createRequestFunction(
+				localVarAxiosArgs,
+				globalAxios,
+				BASE_PATH,
+				configuration
+			)
+		},
+		/**
+		 * Get a user details with coresponding id
+		 * @summary Find user details api
+		 * @param {string} id User id
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async userDetailsIdGet(
+			id: string,
+			options?: AxiosRequestConfig
+		): Promise<
+			(
+				axios?: AxiosInstance,
+				basePath?: string
+			) => AxiosPromise<UserUser>
+		> {
+			const localVarAxiosArgs =
+				await localVarAxiosParamCreator.userDetailsIdGet(
+					id,
+					options
+				)
+			return createRequestFunction(
+				localVarAxiosArgs,
+				globalAxios,
+				BASE_PATH,
+				configuration
+			)
+		},
+		/**
+		 * Get a list of categories with coresponding query parameters
+		 * @summary Find users api
+		 * @param {number} [page] User page number
+		 * @param {number} [pageSize] User page size return
+		 * @param {string} [q] User query
+		 * @param {'asc' | 'desc'} [sort] Sort direction
+		 * @param {'id' | 'name' | 'description'} [sortBy] Sort by
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async userFindGet(
+			page?: number,
+			pageSize?: number,
+			q?: string,
+			sort?: 'asc' | 'desc',
+			sortBy?: 'id' | 'name' | 'description',
+			options?: AxiosRequestConfig
+		): Promise<
+			(
+				axios?: AxiosInstance,
+				basePath?: string
+			) => AxiosPromise<CommonBasePaginationResponseUserUser>
+		> {
+			const localVarAxiosArgs =
+				await localVarAxiosParamCreator.userFindGet(
+					page,
+					pageSize,
+					q,
+					sort,
+					sortBy,
+					options
+				)
+			return createRequestFunction(
+				localVarAxiosArgs,
+				globalAxios,
+				BASE_PATH,
+				configuration
+			)
+		},
+		/**
+		 * Update a user with coresponding id
+		 * @summary Update user api
+		 * @param {string} id User Id
+		 * @param {UserUpdateUserBody} user Update project
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async userUpdateIdPut(
+			id: string,
+			user: UserUpdateUserBody,
+			options?: AxiosRequestConfig
+		): Promise<
+			(
+				axios?: AxiosInstance,
+				basePath?: string
+			) => AxiosPromise<UserUser>
+		> {
+			const localVarAxiosArgs =
+				await localVarAxiosParamCreator.userUpdateIdPut(
+					id,
+					user,
 					options
 				)
 			return createRequestFunction(
@@ -1230,18 +2017,95 @@ export const UserApiFactory = function (
 	const localVarFp = UserApiFp(configuration)
 	return {
 		/**
-		 * Create a new project with coresponding information
-		 * @summary Create project api
-		 * @param {UserWriteUserBody} project New Project body
+		 * Create a new user with coresponding information
+		 * @summary Create user api
+		 * @param {UserWriteUserBody} user New User body
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
 		userCreatePost(
-			project: UserWriteUserBody,
+			user: UserWriteUserBody,
+			options?: any
+		): AxiosPromise<UserUserResp> {
+			return localVarFp
+				.userCreatePost(user, options)
+				.then((request) => request(axios, basePath))
+		},
+		/**
+		 * Delete a user with coresponding id
+		 * @summary Delete user api
+		 * @param {string} id User id
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		userDeleteIdDelete(
+			id: string,
 			options?: any
 		): AxiosPromise<UserUser> {
 			return localVarFp
-				.userCreatePost(project, options)
+				.userDeleteIdDelete(id, options)
+				.then((request) => request(axios, basePath))
+		},
+		/**
+		 * Get a user details with coresponding id
+		 * @summary Find user details api
+		 * @param {string} id User id
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		userDetailsIdGet(
+			id: string,
+			options?: any
+		): AxiosPromise<UserUser> {
+			return localVarFp
+				.userDetailsIdGet(id, options)
+				.then((request) => request(axios, basePath))
+		},
+		/**
+		 * Get a list of categories with coresponding query parameters
+		 * @summary Find users api
+		 * @param {number} [page] User page number
+		 * @param {number} [pageSize] User page size return
+		 * @param {string} [q] User query
+		 * @param {'asc' | 'desc'} [sort] Sort direction
+		 * @param {'id' | 'name' | 'description'} [sortBy] Sort by
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		userFindGet(
+			page?: number,
+			pageSize?: number,
+			q?: string,
+			sort?: 'asc' | 'desc',
+			sortBy?: 'id' | 'name' | 'description',
+			options?: any
+		): AxiosPromise<CommonBasePaginationResponseUserUser> {
+			return localVarFp
+				.userFindGet(
+					page,
+					pageSize,
+					q,
+					sort,
+					sortBy,
+					options
+				)
+				.then((request) => request(axios, basePath))
+		},
+		/**
+		 * Update a user with coresponding id
+		 * @summary Update user api
+		 * @param {string} id User Id
+		 * @param {UserUpdateUserBody} user Update project
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		userUpdateIdPut(
+			id: string,
+			user: UserUpdateUserBody,
+			options?: any
+		): AxiosPromise<UserUser> {
+			return localVarFp
+				.userUpdateIdPut(id, user, options)
 				.then((request) => request(axios, basePath))
 		}
 	}
@@ -1255,19 +2119,91 @@ export const UserApiFactory = function (
  */
 export class UserApi extends BaseAPI {
 	/**
-	 * Create a new project with coresponding information
-	 * @summary Create project api
-	 * @param {UserWriteUserBody} project New Project body
+	 * Create a new user with coresponding information
+	 * @summary Create user api
+	 * @param {UserWriteUserBody} user New User body
 	 * @param {*} [options] Override http request option.
 	 * @throws {RequiredError}
 	 * @memberof UserApi
 	 */
 	public userCreatePost(
-		project: UserWriteUserBody,
+		user: UserWriteUserBody,
 		options?: AxiosRequestConfig
 	) {
 		return UserApiFp(this.configuration)
-			.userCreatePost(project, options)
+			.userCreatePost(user, options)
+			.then((request) => request(this.axios, this.basePath))
+	}
+
+	/**
+	 * Delete a user with coresponding id
+	 * @summary Delete user api
+	 * @param {string} id User id
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof UserApi
+	 */
+	public userDeleteIdDelete(id: string, options?: AxiosRequestConfig) {
+		return UserApiFp(this.configuration)
+			.userDeleteIdDelete(id, options)
+			.then((request) => request(this.axios, this.basePath))
+	}
+
+	/**
+	 * Get a user details with coresponding id
+	 * @summary Find user details api
+	 * @param {string} id User id
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof UserApi
+	 */
+	public userDetailsIdGet(id: string, options?: AxiosRequestConfig) {
+		return UserApiFp(this.configuration)
+			.userDetailsIdGet(id, options)
+			.then((request) => request(this.axios, this.basePath))
+	}
+
+	/**
+	 * Get a list of categories with coresponding query parameters
+	 * @summary Find users api
+	 * @param {number} [page] User page number
+	 * @param {number} [pageSize] User page size return
+	 * @param {string} [q] User query
+	 * @param {'asc' | 'desc'} [sort] Sort direction
+	 * @param {'id' | 'name' | 'description'} [sortBy] Sort by
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof UserApi
+	 */
+	public userFindGet(
+		page?: number,
+		pageSize?: number,
+		q?: string,
+		sort?: 'asc' | 'desc',
+		sortBy?: 'id' | 'name' | 'description',
+		options?: AxiosRequestConfig
+	) {
+		return UserApiFp(this.configuration)
+			.userFindGet(page, pageSize, q, sort, sortBy, options)
+			.then((request) => request(this.axios, this.basePath))
+	}
+
+	/**
+	 * Update a user with coresponding id
+	 * @summary Update user api
+	 * @param {string} id User Id
+	 * @param {UserUpdateUserBody} user Update project
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof UserApi
+	 */
+	public userUpdateIdPut(
+		id: string,
+		user: UserUpdateUserBody,
+		options?: AxiosRequestConfig
+	) {
+		return UserApiFp(this.configuration)
+			.userUpdateIdPut(id, user, options)
 			.then((request) => request(this.axios, this.basePath))
 	}
 }
