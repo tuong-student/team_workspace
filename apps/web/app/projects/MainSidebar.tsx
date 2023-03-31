@@ -70,13 +70,7 @@ export default function MainSidebar() {
 
 	return (
 		<>
-			<div className='px-5 pt-12'>
-				<SidebarHeader
-					src='https://api.dicebear.com/6.x/icons/svg?seed=CheeseRaa'
-					title='CheeseRaa'
-					description='Software project'
-				/>
-			</div>
+			<SidebarHeader />
 			{navLinkSections.map(({ label, children }, i) => (
 				<NavLinkSection label={label} key={i}>
 					{children.map(

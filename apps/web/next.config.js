@@ -30,22 +30,5 @@ module.exports = {
 		fileLoaderRule.exclude = /\.svg$/i
 
 		return config
-	},
-	images: {
-		remotePatterns: [
-			{
-				protocol: 'https',
-				hostname: 'aid-frontend.prod.atl-paas.net'
-			}
-		]
-	},
-	async rewrites() {
-		return [
-			{
-				source: '/api/:path',
-				destination:
-					'https://api-fahasa-nomorechokedboy.cloud.okteto.net/api/v1'
-			}
-		]
 	}
 }

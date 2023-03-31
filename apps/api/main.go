@@ -44,10 +44,6 @@ func HealthCheck(c *fiber.Ctx) error {
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 // @BasePath /api/v1
-// @securityDefinitions.apikey ApiKeyAuth
-// @in header
-// @name Authorization
-// @description Prefix the token with Bearer
 func main() {
 	config, e := config.LoadEnv()
 	if e != nil {
@@ -58,7 +54,6 @@ func main() {
 	if err != nil {
 		fmt.Println("Can't connect to database", err)
 	}
-
 	driver, err := postgres.WithInstance(db.DB, &postgres.Config{})
 	if err != nil {
 		panic("Error create driver")

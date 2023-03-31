@@ -1,6 +1,5 @@
 'use client'
 import './global.css'
-import Providers from './Providers'
 
 export default function RootLayout({
 	children
@@ -13,7 +12,7 @@ export default function RootLayout({
 				<title>Jira</title>
 			</head>
 			<body className='flex h-screen w-screen flex-col'>
-				<Providers>{children}</Providers>
+				{children}
 			</body>
 		</html>
 	)
