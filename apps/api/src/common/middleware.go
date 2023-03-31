@@ -19,7 +19,7 @@ func AuthMiddleware(c *fiber.Ctx) error {
 
 	userId, err := utils.ParseToken(token, []byte("jwtsec"))
 	if err != nil {
-		return c.Status(http.StatusInternalServerError).JSON("Internal error")
+		return c.Status(http.StatusUnauthorized).JSON("Unauthorized")
 	}
 
 	c.Locals("userId", userId)
