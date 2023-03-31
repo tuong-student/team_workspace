@@ -23,10 +23,8 @@ importers:
 
         apps/web:
                 specifiers:
-                        '@atlaskit/button': ^16.5.7
                         '@atlaskit/dynamic-table': ^14.8.13
                         '@atlaskit/select': ^16.1.7
-                        '@atlaskit/table-tree': ^9.2.11
                         '@babel/core': ^7.0.0
                         '@emotion/react': ^11.10.6
                         '@emotion/server': ^11.10.0
@@ -60,7 +58,6 @@ importers:
                 dependencies:
                         '@atlaskit/dynamic-table': 14.8.13_zula6vjvt3wdocc4mwcxqa6nzi
                         '@atlaskit/select': 16.1.7_zula6vjvt3wdocc4mwcxqa6nzi
-                        '@atlaskit/table-tree': 9.2.11_pmekkgnqduwlme35zpnqhenc34
                         '@tanstack/react-query': 4.28.0_biqbaboplfbrettd7655fr4n2y
                         axios: 1.3.4
                         cookies-next: 2.1.1
@@ -72,7 +69,6 @@ importers:
                         uuid: 9.0.0
                         zustand: 4.3.7_react@18.2.0
                 devDependencies:
-                        '@atlaskit/button': 16.5.7_pmekkgnqduwlme35zpnqhenc34
                         '@babel/core': 7.21.3
                         '@emotion/react': 11.10.6_pmekkgnqduwlme35zpnqhenc34
                         '@emotion/server': 11.10.0
@@ -152,6 +148,7 @@ packages:
                 dependencies:
                         react: 18.2.0
                         tslib: 2.5.0
+                dev: false
 
         /@atlaskit/analytics-next/9.0.0_react@18.2.0:
                 resolution:
@@ -166,6 +163,7 @@ packages:
                         prop-types: 15.8.1
                         react: 18.2.0
                         use-memo-one: 1.1.3_react@18.2.0
+                dev: false
 
         /@atlaskit/button/16.5.7_pmekkgnqduwlme35zpnqhenc34:
                 resolution:
@@ -187,6 +185,7 @@ packages:
                 transitivePeerDependencies:
                         - '@types/react'
                         - supports-color
+                dev: false
 
         /@atlaskit/codemod-utils/4.1.3:
                 resolution:
@@ -195,6 +194,7 @@ packages:
                         }
                 dependencies:
                         '@babel/runtime': 7.21.0
+                dev: false
 
         /@atlaskit/ds-explorations/2.0.10_pmekkgnqduwlme35zpnqhenc34:
                 resolution:
@@ -225,6 +225,7 @@ packages:
                         '@babel/runtime': 7.21.0
                         bind-event-listener: 2.1.1
                         react: 18.2.0
+                dev: false
 
         /@atlaskit/dynamic-table/14.8.13_zula6vjvt3wdocc4mwcxqa6nzi:
                 resolution:
@@ -280,6 +281,7 @@ packages:
                 dependencies:
                         '@babel/runtime': 7.21.0
                         react: 18.2.0
+                dev: false
 
         /@atlaskit/pagination/14.2.10_pmekkgnqduwlme35zpnqhenc34:
                 resolution:
@@ -374,29 +376,6 @@ packages:
                 transitivePeerDependencies:
                         - '@types/react'
                         - supports-color
-
-        /@atlaskit/table-tree/9.2.11_pmekkgnqduwlme35zpnqhenc34:
-                resolution:
-                        {
-                                integrity: sha512-d8bfpM3OjfxkWeo/KP5pSybU4UtngSAFbudpcX58ekutlnMZlADFkROU5D0IUWr/b6gpNq+uR92Pl++qu3zLDw==
-                        }
-                peerDependencies:
-                        react: ^16.8.0
-                dependencies:
-                        '@atlaskit/analytics-next': 9.0.0_react@18.2.0
-                        '@atlaskit/button': 16.5.7_pmekkgnqduwlme35zpnqhenc34
-                        '@atlaskit/icon': 21.11.5_pmekkgnqduwlme35zpnqhenc34
-                        '@atlaskit/spinner': 15.4.0_pmekkgnqduwlme35zpnqhenc34
-                        '@atlaskit/theme': 12.3.0_react@18.2.0
-                        '@atlaskit/tokens': 1.2.6_react@18.2.0
-                        '@babel/runtime': 7.21.0
-                        '@emotion/react': 11.10.6_pmekkgnqduwlme35zpnqhenc34
-                        lodash: 4.17.21
-                        prop-types: 15.8.1
-                        react: 18.2.0
-                transitivePeerDependencies:
-                        - '@types/react'
-                        - supports-color
                 dev: false
 
         /@atlaskit/theme/12.2.9_react@18.2.0:
@@ -414,6 +393,7 @@ packages:
                         react: 18.2.0
                 transitivePeerDependencies:
                         - supports-color
+                dev: false
 
         /@atlaskit/theme/12.3.0_react@18.2.0:
                 resolution:
@@ -430,6 +410,7 @@ packages:
                         react: 18.2.0
                 transitivePeerDependencies:
                         - supports-color
+                dev: false
 
         /@atlaskit/tokens/1.2.6_react@18.2.0:
                 resolution:
@@ -447,6 +428,7 @@ packages:
                         react: 18.2.0
                 transitivePeerDependencies:
                         - supports-color
+                dev: false
 
         /@atlaskit/visually-hidden/1.1.2_pmekkgnqduwlme35zpnqhenc34:
                 resolution:
@@ -3905,6 +3887,7 @@ packages:
                         {
                                 integrity: sha512-O+a5c0D2se/u2VlBJmPRn45IB6R4mYMh1ok3dWxrIZ2pmLqzggBhb875mbq73508ylzofc0+hT9W41x4Y2s8lg==
                         }
+                dev: false
 
         /boolbase/1.0.0:
                 resolution:
@@ -6608,6 +6591,7 @@ packages:
                         {
                                 integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
                         }
+                dev: true
 
         /log-update/4.0.0:
                 resolution:
@@ -7493,6 +7477,7 @@ packages:
                         loose-envify: 1.4.0
                         object-assign: 4.1.1
                         react-is: 16.13.1
+                dev: false
 
         /proxy-from-env/1.1.0:
                 resolution:
@@ -9103,6 +9088,7 @@ packages:
                         react: ^16.8.0 || ^17.0.0 || ^18.0.0
                 dependencies:
                         react: 18.2.0
+                dev: false
 
         /use-sidecar/1.1.2_pmekkgnqduwlme35zpnqhenc34:
                 resolution:
