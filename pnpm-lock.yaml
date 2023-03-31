@@ -43,6 +43,7 @@ importers:
                         postcss: ^8.4.21
                         react: 18.2.0
                         react-dom: 18.2.0
+                        sass: ^1.60.0
                         tailwindcss: ^3.2.7
                         tsconfig: workspace:*
                         typescript: ^4.5.3
@@ -50,7 +51,7 @@ importers:
                 dependencies:
                         '@tanstack/react-query': 4.28.0_biqbaboplfbrettd7655fr4n2y
                         axios: 1.3.4
-                        next: 13.2.4_hrdbe576m4w26u2yfpqpvbxyky
+                        next: 13.2.4_lpxbxhvdj65gzxdpbrqknapd3i
                         react: 18.2.0
                         react-dom: 18.2.0_react@18.2.0
                         ui: link:../../packages/ui
@@ -70,6 +71,7 @@ importers:
                         eslint: 7.32.0
                         eslint-config-custom: link:../../packages/eslint-config-custom
                         postcss: 8.4.21
+                        sass: 1.60.0
                         tailwindcss: 3.2.7
                         tsconfig: link:../../packages/tsconfig
                         typescript: 4.9.5
@@ -2396,7 +2398,7 @@ packages:
                 dependencies:
                         '@mantine/ssr': 6.0.4_5hf7yutiboqvmzmnlvms67nwwa
                         '@mantine/styles': 6.0.4_keyspdss4kub3atek752gc6fle
-                        next: 13.2.4_hrdbe576m4w26u2yfpqpvbxyky
+                        next: 13.2.4_lpxbxhvdj65gzxdpbrqknapd3i
                         react: 18.2.0
                         react-dom: 18.2.0_react@18.2.0
                 transitivePeerDependencies:
@@ -3362,7 +3364,6 @@ packages:
                 dependencies:
                         normalize-path: 3.0.0
                         picomatch: 2.3.1
-                dev: true
 
         /arg/4.1.3:
                 resolution:
@@ -3632,7 +3633,6 @@ packages:
                                 integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
                         }
                 engines: { node: '>=8' }
-                dev: true
 
         /bind-event-listener/2.1.1:
                 resolution:
@@ -3793,7 +3793,6 @@ packages:
                         readdirp: 3.6.0
                 optionalDependencies:
                         fsevents: 2.3.2
-                dev: true
 
         /clean-stack/2.2.0:
                 resolution:
@@ -5190,7 +5189,6 @@ packages:
                 engines: { node: ^8.16.0 || ^10.6.0 || >=11.0.0 }
                 os: [darwin]
                 requiresBuild: true
-                dev: true
                 optional: true
 
         /function-bind/1.1.1:
@@ -5596,6 +5594,12 @@ packages:
                 engines: { node: '>= 4' }
                 dev: false
 
+        /immutable/4.3.0:
+                resolution:
+                        {
+                                integrity: sha512-0AOCmOip+xgJwEVTQj1EfiDDOkPmuyllDuTuEX+DDXUgapLAsBIfkg3sxCYyCEA8mQqZrrxPUGjcOQ2JS3WLkg==
+                        }
+
         /import-fresh/3.3.0:
                 resolution:
                         {
@@ -5717,7 +5721,6 @@ packages:
                 engines: { node: '>=8' }
                 dependencies:
                         binary-extensions: 2.2.0
-                dev: true
 
         /is-boolean-object/1.1.2:
                 resolution:
@@ -6521,7 +6524,7 @@ packages:
                                 integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
                         }
 
-        /next/13.2.4_hrdbe576m4w26u2yfpqpvbxyky:
+        /next/13.2.4_lpxbxhvdj65gzxdpbrqknapd3i:
                 resolution:
                         {
                                 integrity: sha512-g1I30317cThkEpvzfXujf0O4wtaQHtDCLhlivwlTJ885Ld+eOgcz7r3TGQzeU+cSRoNHtD8tsJgzxVdYojFssw==
@@ -6551,6 +6554,7 @@ packages:
                         postcss: 8.4.14
                         react: 18.2.0
                         react-dom: 18.2.0_react@18.2.0
+                        sass: 1.60.0
                         styled-jsx: 5.1.1_ogvc6ewgr3qq5z6tmbtquhqyui
                 optionalDependencies:
                         '@next/swc-android-arm-eabi': 13.2.4
@@ -6607,7 +6611,6 @@ packages:
                                 integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==
                         }
                 engines: { node: '>=0.10.0' }
-                dev: true
 
         /normalize-range/0.1.2:
                 resolution:
@@ -7405,7 +7408,6 @@ packages:
                 engines: { node: '>=8.10.0' }
                 dependencies:
                         picomatch: 2.3.1
-                dev: true
 
         /redent/3.0.0:
                 resolution:
@@ -7632,6 +7634,18 @@ packages:
                         get-intrinsic: 1.2.0
                         is-regex: 1.1.4
                 dev: false
+
+        /sass/1.60.0:
+                resolution:
+                        {
+                                integrity: sha512-updbwW6fNb5gGm8qMXzVO7V4sWf7LMXnMly/JEyfbfERbVH46Fn6q02BX7/eHTdKpE7d+oTkMMQpFWNUMfFbgQ==
+                        }
+                engines: { node: '>=12.0.0' }
+                hasBin: true
+                dependencies:
+                        chokidar: 3.5.3
+                        immutable: 4.3.0
+                        source-map-js: 1.0.2
 
         /scheduler/0.23.0:
                 resolution:
