@@ -135,7 +135,10 @@ export default function HeaderLayout({ children }: { children: ReactNode }) {
 							</span>
 						</ActionIcon>
 					))}
-					<Popover width={'20%'}>
+					<Popover
+						width={'13%'}
+						position='bottom-end'
+					>
 						<Popover.Target>
 							<ActionIcon
 								variant='subtle'
