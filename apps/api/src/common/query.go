@@ -16,10 +16,10 @@ type BaseQuery struct {
 }
 
 type BasePaginationResponse[T any] struct {
-	Items    []*T `js:"items"`
-	Page     uint `js:"page"`
-	PageSize uint `js:"pageSize"`
-	Total    uint `js:"total"`
+	Items    []*T `json:"items"`
+	Page     uint `json:"page"`
+	PageSize uint `json:"pageSize"`
+	Total    uint `json:"total"`
 }
 
 func (baseQ *BaseQuery) GetPage() uint {
