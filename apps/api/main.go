@@ -13,6 +13,7 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/lib/pq"
 
+	"api/src/admin"
 	"api/src/auth"
 	"api/src/config"
 	"api/src/project"
@@ -93,9 +94,10 @@ func main() {
 	app.Use(etag.New())
 	app.Use(favicon.New())
 
+	auth.New(v1)
+	admin.New(v1)
 	user.New(v1)
 	project.New(v1)
-	auth.New(v1)
 
 	app.Get("/healthz", HealthCheck)
 	app.Get("/docs/*", swagger.HandlerDefault)
