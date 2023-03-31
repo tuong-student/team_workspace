@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
-import { auth } from '../../libs'
+import { $Api } from '../../libs'
 import './login.scss'
 
 export default function LoginPage() {
@@ -45,21 +45,21 @@ export default function LoginPage() {
 		}
 
 		try {
-			const { data } = await auth.authLoginPost({
+			const { data } = await $Api.auth.authLoginPost({
 				email,
 				password
 			})
 
 			console.log({ data })
 
-			if (data.AccessToken && data.RefreshToken) {
+			if (data.accessToken && data.refreshToken) {
 				localStorage.setItem(
 					'accessToken',
-					data.AccessToken
+					data.accessToken
 				)
 				localStorage.setItem(
 					'refreshToken',
-					data.RefreshToken
+					data.refreshToken
 				)
 			}
 
