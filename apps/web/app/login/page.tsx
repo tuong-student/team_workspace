@@ -1,14 +1,18 @@
 'use client'
+import { setCookie } from 'cookies-next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { $Api } from '../../libs'
+import { useNotification } from '../../stores'
+import { notifyError } from '../../utils'
 import './login.scss'
 
 export default function LoginPage() {
 	const [email, setEmail] = useState('')
 	const [error, setError] = useState<string | null>(null)
+	const notify = useNotification((s) => s.notify)
 
 	function ValidEmail(email: string) {
 		return /\S+@\S+\.\S+/.test(email)
@@ -50,8 +54,6 @@ export default function LoginPage() {
 				password
 			})
 
-			console.log({ data })
-
 			if (data.accessToken && data.refreshToken) {
 				localStorage.setItem(
 					'accessToken',
@@ -61,11 +63,14 @@ export default function LoginPage() {
 					'refreshToken',
 					data.refreshToken
 				)
+				setCookie('refreshToken', data.refreshToken, {
+					maxAge: 30 * 60
+				})
 			}
 
 			router.push('/users')
 		} catch (e) {
-			console.error('Login error', e)
+			notifyError(e, notify)
 		}
 	}
 
