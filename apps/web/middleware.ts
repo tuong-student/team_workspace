@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
 	const refreshToken = request.cookies.get('refreshToken')
-	if (!refreshToken) {
+	if (!refreshToken && request.nextUrl.pathname !== '/login') {
 		return NextResponse.redirect(new URL('/login', request.url))
 	}
 
