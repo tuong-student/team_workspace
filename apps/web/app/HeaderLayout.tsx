@@ -93,12 +93,18 @@ export default function HeaderLayout({ children }: { children: ReactNode }) {
 									{...props}
 									key={uuid()}
 								>
-									<span className='text-slate-500 group-hover:text-blue-500'>
+									<span
+										className='text-slate-500 group-hover:text-blue-500'
+										key={uuid()}
+									>
 										{
 											children
 										}
 									</span>
-									<span className='text-slate-500/60 group-hover:text-blue-500/60'>
+									<span
+										className='text-slate-500/60 group-hover:text-blue-500/60'
+										key={uuid()}
+									>
 										<CaretDownIcon />
 									</span>
 								</Button>
