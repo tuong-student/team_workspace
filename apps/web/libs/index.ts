@@ -47,8 +47,6 @@ const createAxiosResponseInterceptor = () => {
 				return Promise.reject(error)
 			}
 
-			console.log('In refresh token')
-
 			axios.interceptors.response.eject(interceptor)
 
 			const refreshToken =
@@ -62,8 +60,6 @@ const createAxiosResponseInterceptor = () => {
 			return auth
 				.authRefreshPost({ refreshToken })
 				.then(({ data }) => {
-					console.log('Lmao I am dead', data)
-
 					if (
 						!data.refreshToken ||
 						!data.accessToken
