@@ -31,30 +31,41 @@ importers:
                         '@mantine/hooks': ^6.0.4
                         '@mantine/next': ^6.0.4
                         '@svgr/webpack': ^7.0.0
+                        '@tabler/icons-react': ^2.13.0
                         '@tanstack/react-query': ^4.28.0
                         '@types/node': ^17.0.12
                         '@types/react': ^18.0.22
                         '@types/react-dom': ^18.0.7
+                        '@types/uuid': ^9.0.1
                         autoprefixer: ^10.4.14
                         axios: ^1.3.4
+                        cookies-next: ^2.1.1
                         eslint: 7.32.0
                         eslint-config-custom: workspace:*
                         next: ^13.1.1
                         postcss: ^8.4.21
                         react: 18.2.0
                         react-dom: 18.2.0
+                        react-icons: ^4.8.0
                         sass: ^1.60.0
                         tailwindcss: ^3.2.7
                         tsconfig: workspace:*
                         typescript: ^4.5.3
                         ui: workspace:*
+                        uuid: ^9.0.0
+                        zustand: ^4.3.7
                 dependencies:
+                        '@tabler/icons-react': 2.13.0_react@18.2.0
                         '@tanstack/react-query': 4.28.0_biqbaboplfbrettd7655fr4n2y
                         axios: 1.3.4
+                        cookies-next: 2.1.1
                         next: 13.2.4_lpxbxhvdj65gzxdpbrqknapd3i
                         react: 18.2.0
                         react-dom: 18.2.0_react@18.2.0
+                        react-icons: 4.8.0_react@18.2.0
                         ui: link:../../packages/ui
+                        uuid: 9.0.0
+                        zustand: 4.3.7_react@18.2.0
                 devDependencies:
                         '@atlaskit/button': 16.5.7_pmekkgnqduwlme35zpnqhenc34
                         '@babel/core': 7.21.3
@@ -67,6 +78,7 @@ importers:
                         '@types/node': 17.0.45
                         '@types/react': 18.0.28
                         '@types/react-dom': 18.0.11
+                        '@types/uuid': 9.0.1
                         autoprefixer: 10.4.14_postcss@8.4.21
                         eslint: 7.32.0
                         eslint-config-custom: link:../../packages/eslint-config-custom
@@ -2989,6 +3001,26 @@ packages:
                 dependencies:
                         tslib: 2.5.0
 
+        /@tabler/icons-react/2.13.0_react@18.2.0:
+                resolution:
+                        {
+                                integrity: sha512-d1eAnD4+JhFxLnRFwE1h0ukt7el0/KnbqTZ4acSvtZ8yuHuqff266yZU587aCU3ovaX/6zxkgaxJsDnBXiLTEw==
+                        }
+                peerDependencies:
+                        react: ^16.5.1 || ^17.0.0 || ^18.0.0
+                dependencies:
+                        '@tabler/icons': 2.13.0
+                        prop-types: 15.8.1
+                        react: 18.2.0
+                dev: false
+
+        /@tabler/icons/2.13.0:
+                resolution:
+                        {
+                                integrity: sha512-YF1cl17cdhaAHQayv3zDRzYLT6AX49gm6RGTNkIfFiEcefMsJtyCt1qXbI/mxzFCugrb3LdlPmZPLceYl9kn8A==
+                        }
+                dev: false
+
         /@tanstack/query-core/4.27.0:
                 resolution:
                         {
@@ -3053,6 +3085,13 @@ packages:
                         }
                 dev: true
 
+        /@types/cookie/0.4.1:
+                resolution:
+                        {
+                                integrity: sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q==
+                        }
+                dev: false
+
         /@types/json5/0.0.29:
                 resolution:
                         {
@@ -3066,6 +3105,13 @@ packages:
                                 integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
                         }
                 dev: true
+
+        /@types/node/16.18.23:
+                resolution:
+                        {
+                                integrity: sha512-XAMpaw1s1+6zM+jn2tmw8MyaRDIJfXxqmIQIS0HfoGYPuf7dUWeiUKopwq13KFX9lEp1+THGtlaaYx39Nxr58g==
+                        }
+                dev: false
 
         /@types/node/17.0.45:
                 resolution:
@@ -3119,6 +3165,13 @@ packages:
                 resolution:
                         {
                                 integrity: sha512-5cJ8CB4yAx7BH1oMvdU0Jh9lrEXyPkar6F9G/ERswkCuvP4KQZfZkSjcMbAICCpQTN4OuZn8tz0HiKv9TGZgrQ==
+                        }
+                dev: true
+
+        /@types/uuid/9.0.1:
+                resolution:
+                        {
+                                integrity: sha512-rFT3ak0/2trgvp4yYZo5iKFEPsET7vKydKF+VRCxlQ9bpheehyAJH89dAkaLEq/j/RZXJIqcgsmPJKUP1Z28HA==
                         }
                 dev: true
 
@@ -3970,6 +4023,25 @@ packages:
                         {
                                 integrity: sha512-ASFBup0Mz1uyiIjANan1jzLQami9z1PoYSZCiiYW2FczPbenXc45FZdBZLzOT+r6+iciuEModtmCti+hjaAk0A==
                         }
+
+        /cookie/0.4.2:
+                resolution:
+                        {
+                                integrity: sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==
+                        }
+                engines: { node: '>= 0.6' }
+                dev: false
+
+        /cookies-next/2.1.1:
+                resolution:
+                        {
+                                integrity: sha512-AZGZPdL1hU3jCjN2UMJTGhLOYzNUN9Gm+v8BdptYIHUdwz397Et1p+sZRfvAl8pKnnmMdX2Pk9xDRKCGBum6GA==
+                        }
+                dependencies:
+                        '@types/cookie': 0.4.1
+                        '@types/node': 16.18.23
+                        cookie: 0.4.2
+                dev: false
 
         /core-js-compat/3.29.1:
                 resolution:
@@ -7227,6 +7299,17 @@ packages:
                         react: 18.2.0
                         scheduler: 0.23.0
 
+        /react-icons/4.8.0_react@18.2.0:
+                resolution:
+                        {
+                                integrity: sha512-N6+kOLcihDiAnj5Czu637waJqSnwlMNROzVZMhfX68V/9bu9qHaMIJC4UdozWoOk57gahFCNHwVvWzm0MTzRjg==
+                        }
+                peerDependencies:
+                        react: '*'
+                dependencies:
+                        react: 18.2.0
+                dev: false
+
         /react-is/16.13.1:
                 resolution:
                         {
@@ -8615,6 +8698,14 @@ packages:
                         }
                 dev: true
 
+        /uuid/9.0.0:
+                resolution:
+                        {
+                                integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
+                        }
+                hasBin: true
+                dev: false
+
         /v8-compile-cache-lib/3.0.1:
                 resolution:
                         {
@@ -8826,3 +8917,22 @@ packages:
                         }
                 engines: { node: '>=10' }
                 dev: true
+
+        /zustand/4.3.7_react@18.2.0:
+                resolution:
+                        {
+                                integrity: sha512-dY8ERwB9Nd21ellgkBZFhudER8KVlelZm8388B5nDAXhO/+FZDhYMuRnqDgu5SYyRgz/iaf8RKnbUs/cHfOGlQ==
+                        }
+                engines: { node: '>=12.7.0' }
+                peerDependencies:
+                        immer: '>=9.0'
+                        react: '>=16.8'
+                peerDependenciesMeta:
+                        immer:
+                                optional: true
+                        react:
+                                optional: true
+                dependencies:
+                        react: 18.2.0
+                        use-sync-external-store: 1.2.0_react@18.2.0
+                dev: false

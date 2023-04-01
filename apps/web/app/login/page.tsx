@@ -1,14 +1,20 @@
 'use client'
+import { Button } from '@mantine/core'
+import { setCookie } from 'cookies-next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { $Api } from '../../libs'
+import { useNotification } from '../../stores'
+import { notifyError } from '../../utils'
 import './login.scss'
 
 export default function LoginPage() {
 	const [email, setEmail] = useState('')
 	const [error, setError] = useState<string | null>(null)
+	const notify = useNotification((s) => s.notify)
+	const [loading, setLoading] = useState(false)
 
 	function ValidEmail(email: string) {
 		return /\S+@\S+\.\S+/.test(email)
@@ -40,17 +46,16 @@ export default function LoginPage() {
 
 	const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
 		e.preventDefault()
-		if (!isValidEmail) {
+		if (!isValidEmail || (email === '' && password === '')) {
 			return
 		}
 
+		setLoading(true)
 		try {
 			const { data } = await $Api.auth.authLoginPost({
 				email,
 				password
 			})
-
-			console.log({ data })
 
 			if (data.accessToken && data.refreshToken) {
 				localStorage.setItem(
@@ -61,11 +66,16 @@ export default function LoginPage() {
 					'refreshToken',
 					data.refreshToken
 				)
+				setCookie('refreshToken', data.refreshToken, {
+					maxAge: 30 * 60
+				})
 			}
 
 			router.push('/users')
 		} catch (e) {
-			console.error('Login error', e)
+			notifyError(e, notify)
+		} finally {
+			setLoading(false)
 		}
 	}
 
@@ -107,46 +117,97 @@ export default function LoginPage() {
 								handleChangePassword
 							}
 						/>
-						<button type='submit'>
-							Continue
-						</button>
+						<div>
+							<Button
+								className='bg-sky-500'
+								loaderPosition='center'
+								type='submit'
+								loading={
+									loading
+								}
+								size='xl'
+								fullWidth
+							>
+								Continue
+							</Button>
+						</div>
 						<span>Or contimue with:</span>
-						<button>
-							<Image
-								src='https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.429/static/media/google-logo.e086107b.svg'
-								alt=''
-								width={24}
-								height={24}
-							></Image>
+						<Button
+							className=' text-gray-500 shadow'
+							variant={'white'}
+							size='xl'
+							leftIcon={
+								<Image
+									src='https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.429/static/media/google-logo.e086107b.svg'
+									alt=''
+									width={
+										24
+									}
+									height={
+										24
+									}
+								/>
+							}
+						>
 							<span>Google</span>
-						</button>
-						<button>
-							<Image
-								src='https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.429/static/media/microsoft-logo.42b61fa1.svg'
-								alt=''
-								width={24}
-								height={24}
-							></Image>
+						</Button>
+						<Button
+							className=' text-gray-500 shadow'
+							variant={'white'}
+							size='xl'
+							leftIcon={
+								<Image
+									src='https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.429/static/media/microsoft-logo.42b61fa1.svg'
+									alt=''
+									width={
+										24
+									}
+									height={
+										24
+									}
+								/>
+							}
+						>
 							<span>Microsoft</span>
-						</button>
-						<button>
-							<Image
-								src='https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.429/static/media/apple-logo.4f2453fb.svg'
-								alt=''
-								width={24}
-								height={24}
-							></Image>
+						</Button>
+						<Button
+							className=' text-gray-500 shadow'
+							variant={'white'}
+							size='xl'
+							leftIcon={
+								<Image
+									src='https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.429/static/media/apple-logo.4f2453fb.svg'
+									alt=''
+									width={
+										24
+									}
+									height={
+										24
+									}
+								/>
+							}
+						>
 							<span>Apple</span>
-						</button>
-						<button>
-							<Image
-								src='https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.429/static/media/slack-logo.0390f069.svg'
-								alt=''
-								width={24}
-								height={24}
-							></Image>
+						</Button>
+						<Button
+							className=' text-gray-500 shadow'
+							variant={'white'}
+							size='xl'
+							leftIcon={
+								<Image
+									src='https://aid-frontend.prod.atl-paas.net/atlassian-id/front-end/5.0.429/static/media/slack-logo.0390f069.svg'
+									alt=''
+									width={
+										24
+									}
+									height={
+										24
+									}
+								/>
+							}
+						>
 							<span>Slack</span>
-						</button>
+						</Button>
 						<ul>
 							<li>
 								<Link href='/login'>
