@@ -44,7 +44,6 @@ const createAxiosResponseInterceptor = () => {
 				(error.response?.status !== 401 ||
 					!error.response.headers)
 			) {
-				// openNotification({ description, id, type })
 				return Promise.reject(error)
 			}
 

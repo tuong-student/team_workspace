@@ -1,5 +1,6 @@
 'use client'
 import './global.css'
+import NotificationList from './NotificationList'
 import Providers from './Providers'
 
 export default function RootLayout({
@@ -13,6 +14,7 @@ export default function RootLayout({
 				<title>Jira</title>
 			</head>
 			<body className='flex h-screen w-screen flex-col'>
+				<NotificationList />
 				<Providers>{children}</Providers>
 			</body>
 		</html>

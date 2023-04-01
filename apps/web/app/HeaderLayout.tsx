@@ -9,10 +9,13 @@ import {
 	TextInput
 } from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
+import { AxiosError } from 'axios'
 import NextLink from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ReactNode } from 'react'
 import { $Api } from '../libs'
+import { Notification, useNotification } from '../stores'
+import { uuid } from '../utils'
 import ArrowUpRightFromSquareIcon from './Icons/ArrowUpRightFromSquareIcon.svg'
 import BellIcon from './Icons/BellIcon.svg'
 import CaretDownIcon from './Icons/CaretDownIcon.svg'
@@ -36,15 +39,25 @@ const icons = [BellIcon, HelpIcon, SettingsIcon]
 
 export default function HeaderLayout({ children }: { children: ReactNode }) {
 	const router = useRouter()
-	const {
-		isLoading,
-		error,
-		data: profileData,
-		isFetching
-	} = useQuery({
+	const notify = useNotification((s) => s.notify)
+	const { error, data: profileData } = useQuery({
 		queryKey: ['repoData'],
 		queryFn: $Api.auth.authMeGet
 	})
+
+	if (error && error instanceof AxiosError) {
+		const notification: Notification = {
+			type: 'error',
+			k: uuid()
+		}
+		if (error.response) {
+			notification.title = error.response.data
+		} else if (error.message) {
+			notification.title = error.message
+		}
+
+		notify(notification)
+	}
 
 	const handleLogout = () => {
 		localStorage.removeItem('accessToken')
