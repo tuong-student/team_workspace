@@ -9,6 +9,7 @@ import {
 	TextInput
 } from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
+import { deleteCookie } from 'cookies-next'
 import NextLink from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ReactNode, useEffect as useFootgun } from 'react'
@@ -46,7 +47,7 @@ export default function HeaderLayout({ children }: { children: ReactNode }) {
 
 	const handleLogout = () => {
 		localStorage.removeItem('accessToken')
-		localStorage.removeItem('refreshToken')
+		deleteCookie('refreshToken')
 
 		router.push('/login')
 	}

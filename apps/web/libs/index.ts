@@ -1,4 +1,5 @@
 import axiosGlobal, { AxiosError, CreateAxiosDefaults } from 'axios'
+import { getCookie } from 'cookies-next'
 import {
 	AuthApiFactory,
 	ProjectApiFactory,
@@ -50,7 +51,7 @@ const createAxiosResponseInterceptor = () => {
 			axios.interceptors.response.eject(interceptor)
 
 			const refreshToken =
-				localStorage.getItem('refreshToken')
+				getCookie('refreshToken')?.toString()
 			if (!refreshToken) {
 				console.warn('DEBUG')
 
@@ -70,10 +71,6 @@ const createAxiosResponseInterceptor = () => {
 					localStorage.setItem(
 						'accessToken',
 						data.accessToken
-					)
-					localStorage.setItem(
-						'refreshToken',
-						data.refreshToken
 					)
 					error.response.config.headers[
 						'Authorization'
