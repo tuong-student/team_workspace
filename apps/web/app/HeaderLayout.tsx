@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation'
 import { ReactNode, useEffect as useFootgun } from 'react'
 import { $Api } from '../libs'
 import { useNotification } from '../stores'
-import { notifyError } from '../utils'
+import { notifyError, uuid } from '../utils'
 import ArrowUpRightFromSquareIcon from './Icons/ArrowUpRightFromSquareIcon.svg'
 import BellIcon from './Icons/BellIcon.svg'
 import CaretDownIcon from './Icons/CaretDownIcon.svg'
@@ -77,13 +77,10 @@ export default function HeaderLayout({ children }: { children: ReactNode }) {
 					</NextLink>
 					<div className='flex flex-row items-center'>
 						{ButtonTexts.map(
-							(
-								{
-									children,
-									props
-								},
-								i
-							) => (
+							({
+								children,
+								props
+							}) => (
 								<Button
 									className='group mx-[4px] h-[3.4rem] pl-[4px] pr-0'
 									color={
@@ -94,7 +91,7 @@ export default function HeaderLayout({ children }: { children: ReactNode }) {
 									}
 									size='xl'
 									{...props}
-									key={i}
+									key={uuid()}
 								>
 									<span className='text-slate-500 group-hover:text-blue-500'>
 										{
@@ -124,13 +121,13 @@ export default function HeaderLayout({ children }: { children: ReactNode }) {
 						size='lg'
 						radius={'md'}
 					/>
-					{icons.map((Icon, i) => (
+					{icons.map((Icon) => (
 						<ActionIcon
 							variant='subtle'
 							className='group rounded-full'
 							color={'indigo'}
 							size={54}
-							key={i}
+							key={uuid()}
 						>
 							<span className='text-zinc-500 group-hover:text-blue-500'>
 								{<Icon />}

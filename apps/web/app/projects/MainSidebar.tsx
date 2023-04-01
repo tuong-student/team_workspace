@@ -2,6 +2,7 @@ import { Divider } from '@mantine/core'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ReactNode } from 'react'
+import { uuid } from '../../utils'
 import AddshortcutIcon from '../Icons/AddshortcutIcon.svg'
 import BacklogIcon from '../Icons/BacklogIcon.svg'
 import BoardIcon from '../Icons/BoardIcon.svg'
@@ -77,13 +78,13 @@ export default function MainSidebar() {
 					description='Software project'
 				/>
 			</div>
-			{navLinkSections.map(({ label, children }, i) => (
-				<NavLinkSection label={label} key={i}>
+			{navLinkSections.map(({ label, children }) => (
+				<NavLinkSection label={label} key={uuid()}>
 					{children.map(
 						({ path, label, icon }, i) => (
 							<Link
 								href={`/projects/${path}`}
-								key={i}
+								key={uuid()}
 							>
 								<NavLink
 									className='text-[rgb(66,82,110)]'
@@ -108,11 +109,11 @@ export default function MainSidebar() {
 				</NavLinkSection>
 			))}
 			<Divider />
-			{otherLinks.map((el, i) => (
+			{otherLinks.map((el) => (
 				<NavLink
 					className='text-[rgb(66,82,110)]'
 					{...el}
-					key={i}
+					key={uuid()}
 				/>
 			))}
 		</>
