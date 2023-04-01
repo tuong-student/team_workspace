@@ -39,6 +39,7 @@ importers:
                         '@types/uuid': ^9.0.1
                         autoprefixer: ^10.4.14
                         axios: ^1.3.4
+                        cookies-next: ^2.1.1
                         eslint: 7.32.0
                         eslint-config-custom: workspace:*
                         next: ^13.1.1
@@ -57,6 +58,7 @@ importers:
                         '@tabler/icons-react': 2.13.0_react@18.2.0
                         '@tanstack/react-query': 4.28.0_biqbaboplfbrettd7655fr4n2y
                         axios: 1.3.4
+                        cookies-next: 2.1.1
                         next: 13.2.4_lpxbxhvdj65gzxdpbrqknapd3i
                         react: 18.2.0
                         react-dom: 18.2.0_react@18.2.0
@@ -3083,6 +3085,13 @@ packages:
                         }
                 dev: true
 
+        /@types/cookie/0.4.1:
+                resolution:
+                        {
+                                integrity: sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q==
+                        }
+                dev: false
+
         /@types/json5/0.0.29:
                 resolution:
                         {
@@ -3096,6 +3105,13 @@ packages:
                                 integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
                         }
                 dev: true
+
+        /@types/node/16.18.23:
+                resolution:
+                        {
+                                integrity: sha512-XAMpaw1s1+6zM+jn2tmw8MyaRDIJfXxqmIQIS0HfoGYPuf7dUWeiUKopwq13KFX9lEp1+THGtlaaYx39Nxr58g==
+                        }
+                dev: false
 
         /@types/node/17.0.45:
                 resolution:
@@ -4007,6 +4023,25 @@ packages:
                         {
                                 integrity: sha512-ASFBup0Mz1uyiIjANan1jzLQami9z1PoYSZCiiYW2FczPbenXc45FZdBZLzOT+r6+iciuEModtmCti+hjaAk0A==
                         }
+
+        /cookie/0.4.2:
+                resolution:
+                        {
+                                integrity: sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==
+                        }
+                engines: { node: '>= 0.6' }
+                dev: false
+
+        /cookies-next/2.1.1:
+                resolution:
+                        {
+                                integrity: sha512-AZGZPdL1hU3jCjN2UMJTGhLOYzNUN9Gm+v8BdptYIHUdwz397Et1p+sZRfvAl8pKnnmMdX2Pk9xDRKCGBum6GA==
+                        }
+                dependencies:
+                        '@types/cookie': 0.4.1
+                        '@types/node': 16.18.23
+                        cookie: 0.4.2
+                dev: false
 
         /core-js-compat/3.29.1:
                 resolution:
