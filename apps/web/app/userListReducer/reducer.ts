@@ -1,4 +1,3 @@
-import { $Api } from '../../libs'
 import { CreateUserFormInputType } from '../users/CreateUserModal'
 import { ActionType, AddUser, DeleteUser, UserListActions } from './actions'
 import { UserListState } from './state'
@@ -9,8 +8,6 @@ export function userReducer(
 ): UserListState {
 	switch (action.type) {
 		case ActionType.AddUser:
-			const users = $Api.user
-			users.userCreatePost(action.payload)
 			return {
 				...state,
 				users: [...state.users]

@@ -13,6 +13,7 @@ export const initialUserList: UserListState = {
 			createAt: 'Mar 25, 2023',
 			role: 'Developer'
 		},
+
 		{
 			id: 'duy',
 			fullName: 'Nguyen Khang Duy',
@@ -20,6 +21,7 @@ export const initialUserList: UserListState = {
 			createAt: 'Mar 25, 2023',
 			role: 'Developer'
 		},
+
 		{
 			id: 'duong',
 			fullName: 'Le Ho Hai Duong',

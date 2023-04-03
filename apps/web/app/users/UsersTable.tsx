@@ -50,9 +50,6 @@ export default function UsersTable({ data }: { data: UserDataType[] }) {
 						</TableLabel>
 					</th>
 					<th>
-						<TableLabel>Status</TableLabel>
-					</th>
-					<th>
 						<TableLabel>Actions</TableLabel>
 					</th>
 				</tr>

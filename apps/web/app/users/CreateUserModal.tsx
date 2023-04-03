@@ -1,4 +1,5 @@
-import { Button, Input, NativeSelect, Title } from '@mantine/core'
+import { Button, NativeSelect, TextInput, Title } from '@mantine/core'
+import { useForm } from '@mantine/form'
 import { useContext, useState } from 'react'
 import UserContext from '../userListReducer/context'
 import { addUser } from '../userListReducer/reducer'
@@ -22,6 +23,29 @@ export function CreateUserModal() {
 	const [userValue, setUserValue] =
 		useState<CreateUserFormInputType>(initialValue)
 
+	const form = useForm<CreateUserFormInputType>({
+		initialValues: {
+			...initialValue
+		},
+		validate: {
+			fullName: (value) =>
+				value.length < 2
+					? 'Name must have at least 2 letters'
+					: null,
+			email: (value) =>
+				/^\S+@\S+$/.test(value)
+					? null
+					: 'Invalid email',
+			password: (value) => {
+				if (value.length < 6)
+					return 'Password length must be longer than 5'
+				if (value.length >= 20)
+					return 'Password length must be lower thant 20'
+			}
+		},
+		validateInputOnBlur: true
+	})
+
 	const handleOnChange = (
 		event:
 			| React.ChangeEvent<HTMLInputElement>
@@ -42,54 +66,44 @@ export function CreateUserModal() {
 	return (
 		<div className='flex flex-col gap-[24px] bg-white px-[24px] pb-[32px] pt-[24px]'>
 			<Title size={'h1'}>Create new user</Title>
-			<form action='' className='flex flex-col gap-[16px]'>
-				<Input.Wrapper
+			<form
+				action=''
+				onSubmit={form.onSubmit(handleAddUser)}
+				className='flex flex-col gap-[16px]'
+			>
+				<TextInput
 					withAsterisk
-					label='Full Name'
+					label='Full name'
+					{...form.getInputProps('fullName')}
+					placeholder='Full Name'
+					id='name'
 					size={size}
-				>
-					<Input
-						value={userValue.fullName}
-						onChange={handleOnChange}
-						placeholder='Full Name'
-						id='name'
-						size={size}
-					/>
-				</Input.Wrapper>
-				<Input.Wrapper
+				/>
+				<TextInput
 					withAsterisk
 					label='Email'
+					{...form.getInputProps('email')}
+					placeholder='Email'
+					id='email'
 					size={size}
-				>
-					<Input
-						value={userValue.email}
-						onChange={handleOnChange}
-						placeholder='Email'
-						id='email'
-						size={size}
-					/>
-				</Input.Wrapper>
-				<Input.Wrapper
+				/>
+				<TextInput
+					{...form.getInputProps('password')}
 					withAsterisk
+					type='password'
 					label='Password'
+					placeholder='Password'
+					id='password'
 					size={size}
-				>
-					<Input
-						value={userValue.email}
-						onChange={handleOnChange}
-						placeholder='password'
-						id='password'
-						size={size}
-					/>
-				</Input.Wrapper>
+				/>
 				<NativeSelect
 					id='role'
-					value={userValue.role}
+					{...form.getInputProps('role')}
 					data={['Developer', 'Administrator']}
 					size={'xl'}
-					onChange={handleOnChange}
 				/>
 				<Button
+					type='submit'
 					onClick={() => handleAddUser(userValue)}
 					size={'xl'}
 					className={'bg-primary-b400'}
