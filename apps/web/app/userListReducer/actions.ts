@@ -1,3 +1,4 @@
+import { CreateUserFormInputType } from '../users/CreateUserModal'
 import { UserDataType } from '../users/UsersTable'
 export enum ActionType {
 	AddUser,
@@ -7,7 +8,7 @@ export enum ActionType {
 
 export interface AddUser {
 	type: ActionType.AddUser
-	payload: UserDataType
+	payload: CreateUserFormInputType
 }
 
 export interface DeleteUser {

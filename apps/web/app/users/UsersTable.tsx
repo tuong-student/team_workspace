@@ -2,13 +2,15 @@
 import { Table } from '@mantine/core'
 import { ReactNode } from 'react'
 import Actions from './ActionGroup'
-import User, { UserDetailProps } from './User'
+import User from './User'
 
 export type UserDataType = {
 	id: string
-	detail: UserDetailProps
-	activeDate?: string
-	status?: 'active' | 'offline'
+	avatarUrl?: string
+	fullName: string
+	email: string
+	role: string
+	createAt: string
 }
 
 const TableLabel = ({ children }: { children: ReactNode }) => {
@@ -23,16 +25,11 @@ export default function UsersTable({ data }: { data: UserDataType[] }) {
 	const userDataRows = data.map((user, i) => (
 		<tr key={i}>
 			<td>
-				<User user={user.detail} />
+				<User user={user} />
 			</td>
 			<td>
 				<span className='text-[1.3rem]'>
-					{user.activeDate}
-				</span>
-			</td>
-			<td>
-				<span className='capitalize text-[1.3rem]'>
-					{user.status}
+					{user.createAt}
 				</span>
 			</td>
 			<td>

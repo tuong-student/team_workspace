@@ -2,7 +2,7 @@
 import { Avatar, Title } from '@mantine/core'
 import { ReactNode, useContext } from 'react'
 import UserContext from '../../userListReducer/context'
-import { UserDetailProps } from '../User'
+import { UserDataType } from '../UsersTable'
 import { ProjectDetailProps } from './Project'
 import ProjectsTable from './ProjectsTable'
 
@@ -27,11 +27,11 @@ export function Label({ children }: { children: ReactNode }) {
 	)
 }
 
-export function Profile({ user }: { user: UserDetailProps }) {
+export function Profile({ user }: { user: UserDataType }) {
 	return (
 		<div className='flex flex-col gap-[1.6rem] py-[24px] pl-[24px] pr-[32px] border-[1px] border-neutral-mid-70'>
 			<Avatar
-				src={user.photo}
+				src={user.avatarUrl}
 				size={128}
 				color='blue'
 				radius='xl'
@@ -41,13 +41,13 @@ export function Profile({ user }: { user: UserDetailProps }) {
 			<div className='flex flex-col gap-[2px]'>
 				<Label>Full Name</Label>
 				<span className='text-[1.6rem] text-black'>
-					{user.name}
+					{user.fullName}
 				</span>
 			</div>
 			<div className='flex flex-col gap-[2px]'>
 				<Label>Email address</Label>
 				<span className='text-[1.6rem] text-black'>
-					{user.username}
+					{user.email}
 				</span>
 			</div>
 		</div>
@@ -68,14 +68,11 @@ export default function UserDetailPage({
 	return (
 		<div className='flex flex-col gap-[32px]'>
 			<Title size={'h1'} weight={600}>
-				{user?.detail.name}
+				{user?.fullName}
 			</Title>
 			<div className='flex flex-col gap-[24px]'>
-				<span className='text-[1.4rem] text-black'>
-					Last active on {user?.activeDate}
-				</span>
 				<div className='flex gap-[32px]'>
-					{user && <Profile user={user.detail} />}
+					{user && <Profile user={user} />}
 					<div className='flex-1'>
 						<ProjectsTable
 							data={userProject}

@@ -8,30 +8,24 @@ export const initialUserList: UserListState = {
 	users: [
 		{
 			id: 'dat',
-			detail: {
-				name: 'Huynh Cong Dat',
-				username: 'congdat@student.hcmute.edu.vn'
-			},
-			activeDate: 'Mar 25, 2023',
-			status: 'active'
+			fullName: 'Huynh Cong Dat',
+			email: 'congdat@student.hcmute.edu.vn',
+			createAt: 'Mar 25, 2023',
+			role: 'Developer'
 		},
 		{
 			id: 'duy',
-			detail: {
-				name: 'Nguyen Khang Duy',
-				username: 'khangduy@student.hcmute.edu.vn'
-			},
-			activeDate: 'Mar 25, 2023',
-			status: 'active'
+			fullName: 'Nguyen Khang Duy',
+			email: 'khangduy@student.hcmute.edu.vn',
+			createAt: 'Mar 25, 2023',
+			role: 'Developer'
 		},
 		{
 			id: 'duong',
-			detail: {
-				name: 'Le Ho Hai Duong',
-				username: 'haiduong@student.hcmute.edu.vn'
-			},
-			activeDate: 'Mar 25, 2023',
-			status: 'active'
+			fullName: 'Le Ho Hai Duong',
+			email: 'haiduong@student.hcmute.edu.vn',
+			createAt: 'Mar 25, 2023',
+			role: 'Developer'
 		}
 	]
 }

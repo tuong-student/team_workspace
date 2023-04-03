@@ -1,4 +1,5 @@
-import { UserDataType } from '../users/UsersTable'
+import { $Api } from '../../libs'
+import { CreateUserFormInputType } from '../users/CreateUserModal'
 import { ActionType, AddUser, DeleteUser, UserListActions } from './actions'
 import { UserListState } from './state'
 
@@ -8,9 +9,11 @@ export function userReducer(
 ): UserListState {
 	switch (action.type) {
 		case ActionType.AddUser:
+			const users = $Api.user
+			users.userCreatePost(action.payload)
 			return {
 				...state,
-				users: [...state.users, action.payload]
+				users: [...state.users]
 			}
 		case ActionType.DeleteUser:
 			const userList = [...state.users]
@@ -27,7 +30,7 @@ export function userReducer(
 	}
 }
 
-export const addUser = (user: UserDataType): AddUser => ({
+export const addUser = (user: CreateUserFormInputType): AddUser => ({
 	type: ActionType.AddUser,
 	payload: user
 })

@@ -1,33 +1,39 @@
-import { Button, Input, Title } from '@mantine/core'
+import { Button, Input, NativeSelect, Title } from '@mantine/core'
 import { useContext, useState } from 'react'
 import UserContext from '../userListReducer/context'
 import { addUser } from '../userListReducer/reducer'
-import { UserDetailProps } from './User'
-import { UserDataType } from './UsersTable'
+
+export type CreateUserFormInputType = {
+	email: string
+	fullName: string
+	password: string
+	role: 'Administrator' | 'Developer'
+}
 
 export function CreateUserModal() {
-	const initialValue: UserDetailProps = {
-		name: '',
-		username: ''
+	const initialValue: CreateUserFormInputType = {
+		fullName: '',
+		email: '',
+		password: '',
+		role: 'Developer'
 	}
 
 	const { dispatch } = useContext(UserContext)
 	const [userValue, setUserValue] =
-		useState<UserDetailProps>(initialValue)
+		useState<CreateUserFormInputType>(initialValue)
 
-	const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleOnChange = (
+		event:
+			| React.ChangeEvent<HTMLInputElement>
+			| React.ChangeEvent<HTMLSelectElement>
+	) => {
 		setUserValue((previous) => ({
 			...previous,
 			[event.target.id]: event.target.value
 		}))
 	}
 
-	const handleAddUser = (userDetail: UserDetailProps) => {
-		const user: UserDataType = {
-			id: new Date().toDateString(),
-			activeDate: new Date().toDateString(),
-			detail: { ...userDetail }
-		}
+	const handleAddUser = (user: CreateUserFormInputType) => {
 		dispatch(addUser(user))
 	}
 
@@ -43,7 +49,7 @@ export function CreateUserModal() {
 					size={size}
 				>
 					<Input
-						value={userValue.name}
+						value={userValue.fullName}
 						onChange={handleOnChange}
 						placeholder='Full Name'
 						id='name'
@@ -52,17 +58,37 @@ export function CreateUserModal() {
 				</Input.Wrapper>
 				<Input.Wrapper
 					withAsterisk
-					label='Username'
+					label='Email'
 					size={size}
 				>
 					<Input
-						value={userValue.username}
+						value={userValue.email}
 						onChange={handleOnChange}
-						placeholder='Username'
-						id='username'
+						placeholder='Email'
+						id='email'
 						size={size}
 					/>
 				</Input.Wrapper>
+				<Input.Wrapper
+					withAsterisk
+					label='Password'
+					size={size}
+				>
+					<Input
+						value={userValue.email}
+						onChange={handleOnChange}
+						placeholder='password'
+						id='password'
+						size={size}
+					/>
+				</Input.Wrapper>
+				<NativeSelect
+					id='role'
+					value={userValue.role}
+					data={['Developer', 'Administrator']}
+					size={'xl'}
+					onChange={handleOnChange}
+				/>
 				<Button
 					onClick={() => handleAddUser(userValue)}
 					size={'xl'}

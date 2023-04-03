@@ -1,11 +1,6 @@
 import { Avatar } from '@mantine/core'
 import { ReactNode } from 'react'
-
-export type UserDetailProps = {
-	photo?: string
-	name: string
-	username: string
-}
+import { UserDataType } from './UsersTable'
 
 export const Name = ({ children }: { children: ReactNode }) => {
 	return (
@@ -22,20 +17,20 @@ export const UserName = ({ children }: { children: ReactNode }) => {
 	)
 }
 
-export default function User({ user }: { user: UserDetailProps }) {
+export default function User({ user }: { user: UserDataType }) {
 	return (
 		<div className='flex items-center gap-[8px]'>
 			<Avatar
-				src={user.photo}
+				src={user.avatarUrl}
 				color={'blue'}
 				size={'lg'}
 				radius='xl'
 			>
-				{user.photo ? '' : 'US'}
+				{user.avatarUrl ? '' : 'US'}
 			</Avatar>
 			<div className='flex flex-col'>
-				<Name>{user.name}</Name>
-				<UserName>{user.username}</UserName>
+				<Name>{user.fullName}</Name>
+				<UserName>{user.email}</UserName>
 			</div>
 		</div>
 	)
