@@ -39,13 +39,12 @@ func Init(c *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Param admin body WriteAdminBody true "New admin information"
-// @Success 201 {object} user.UserResp
+// @Success 201 {object} user.User
 // @Failure 400 {string} common.BadRequestError
 // @Failure 409 {string} string
 // @Failure 422 {object} []common.ErrorResponse
 // @Failure 500 {string} string
 // @Router /admin/register [post]
-// @Security ApiKeyAuth
 // @tags Admin
 func RegisterAdmin(c *fiber.Ctx) error {
 	req := WriteAdminBody{}

@@ -16,7 +16,7 @@ type BaseQuery struct {
 }
 
 type BasePaginationResponse[T any] struct {
-	Items    []T  `json:"items"`
+	Items    []*T `json:"items"`
 	Page     uint `json:"page"`
 	PageSize uint `json:"pageSize"`
 	Total    uint `json:"total"`

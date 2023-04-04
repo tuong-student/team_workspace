@@ -16,6 +16,7 @@ type UserRepository interface {
 	Delete(id uint) (*User, error)
 	Find(queries UserQuery) (*common.BasePaginationResponse[User], error)
 	FindOne(id uint) (*User, error)
+	Count() (*uint, error)
 }
 
 type UserSqlxRepo struct {

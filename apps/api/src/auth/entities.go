@@ -1,8 +1,8 @@
 package auth
 
 type LoginBody struct {
-	Email    string `validate:"required,email,max=30" db:"email"`
-	Password string `validate:"min=8,max=32"`
+	Email    string `validate:"required,email,max=30" db:"email" json:"email"`
+	Password string `validate:"min=8,max=32" json:"password"`
 }
 
 type LoginResp struct {
