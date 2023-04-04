@@ -16,7 +16,7 @@ import { ReactNode } from 'react'
 import { getNestedProjectRoute } from '../../constants'
 import SearchIcon from '../Icons/SearchIcon.svg'
 import StarIcon from '../Icons/StarIcon.svg'
-import StarOutlineIcon from '../Icons/StarIconOutline.svg'
+import StarOutlineIcon from '../Icons/StarOutlineIcon.svg'
 import ActionContent from './ActionContent'
 
 type Project = {
