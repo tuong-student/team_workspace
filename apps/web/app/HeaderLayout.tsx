@@ -9,13 +9,13 @@ import {
 	TextInput
 } from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
-import { deleteCookie } from 'cookies-next'
 import NextLink from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ReactNode, useEffect as useFootgun } from 'react'
+import { AppRoute } from '../constants'
 import { $Api } from '../libs'
-import { useNotification } from '../stores'
-import { notifyError, uuid } from '../utils'
+import { useNotify } from '../stores'
+import { deleteTokens, notifyError, uuid } from '../utils'
 import ArrowUpRightFromSquareIcon from './Icons/ArrowUpRightFromSquareIcon.svg'
 import BellIcon from './Icons/BellIcon.svg'
 import CaretDownIcon from './Icons/CaretDownIcon.svg'
@@ -39,17 +39,15 @@ const icons = [BellIcon, HelpIcon, SettingsIcon]
 
 export default function HeaderLayout({ children }: { children: ReactNode }) {
 	const router = useRouter()
-	const notify = useNotification((s) => s.notify)
+	const notify = useNotify()
 	const { error, data: profileData } = useQuery({
 		queryKey: ['repoData'],
 		queryFn: $Api.auth.authMeGet
 	})
 
-	const handleLogout = () => {
-		localStorage.removeItem('accessToken')
-		deleteCookie('refreshToken')
-
-		router.push('/login')
+	function handleLogout() {
+		deleteTokens()
+		router.push(AppRoute.login)
 	}
 
 	useFootgun(() => {

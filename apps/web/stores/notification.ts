@@ -13,7 +13,7 @@ export type NotificationState = {
 	remove: (key: React.Key) => void
 }
 
-export const useNotification = create<NotificationState>((set) => ({
+export const useNotificationStore = create<NotificationState>((set) => ({
 	notification: [],
 	notify: (n) =>
 		set((state) => ({ notification: [...state.notification, n] })),
@@ -22,3 +22,15 @@ export const useNotification = create<NotificationState>((set) => ({
 			notification: s.notification.filter((n) => n.k !== key)
 		}))
 }))
+
+export function useNotification() {
+	return useNotificationStore((s) => s.notification)
+}
+
+export function useNotify() {
+	return useNotificationStore((s) => s.notify)
+}
+
+export function useRemoveNotification() {
+	return useNotificationStore((s) => s.remove)
+}

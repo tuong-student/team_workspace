@@ -4,14 +4,14 @@ import HeaderLayout from '../HeaderLayout'
 import SidebarLayout from '../SidebarLayout'
 import MainSidebar from './MainSidebar'
 
-export default function RootLayout({
+export default function ProjectManagementLayout({
 	children
 }: {
 	children: React.ReactNode
 }) {
 	const pathname = usePathname().split('/')
 	const Children =
-		pathname.length === 2 ? (
+		pathname.length === 2 || pathname.includes('settings') ? (
 			<>{children}</>
 		) : (
 			<SidebarLayout component={<MainSidebar />}>
