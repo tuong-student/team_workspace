@@ -50,7 +50,7 @@ export default function UsersManagementPage() {
 					Filters
 				</Button>
 			</div>
-			<UsersTable data={usersList} />
+			<UsersTable userList={usersList} />
 			<Modal
 				size={'xl'}
 				opened={opened}

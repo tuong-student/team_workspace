@@ -29,7 +29,11 @@ importers:
                         '@emotion/react': ^11.10.6
                         '@emotion/server': ^11.10.0
                         '@mantine/core': ^6.0.4
+<<<<<<< HEAD
                         '@mantine/form': ^6.0.6
+=======
+                        '@mantine/form': ^6.0.5
+>>>>>>> 08aff08 (feat(users): work with create user api)
                         '@mantine/hooks': ^6.0.4
                         '@mantine/next': ^6.0.4
                         '@svgr/webpack': ^7.0.0
@@ -57,9 +61,13 @@ importers:
                         uuid: ^9.0.0
                         zustand: ^4.3.7
                 dependencies:
+<<<<<<< HEAD
                         '@atlaskit/dynamic-table': 14.8.13_zula6vjvt3wdocc4mwcxqa6nzi
                         '@atlaskit/select': 16.1.7_zula6vjvt3wdocc4mwcxqa6nzi
                         '@mantine/form': 6.0.6_react@18.2.0
+=======
+                        '@mantine/form': 6.0.5_react@18.2.0
+>>>>>>> 08aff08 (feat(users): work with create user api)
                         '@tabler/icons-react': 2.13.0_react@18.2.0
                         '@tanstack/react-query': 4.28.0_biqbaboplfbrettd7655fr4n2y
                         axios: 1.3.4
@@ -88,7 +96,7 @@ importers:
                         eslint-config-custom: link:../../packages/eslint-config-custom
                         postcss: 8.4.21
                         sass: 1.60.0
-                        tailwindcss: 3.2.7
+                        tailwindcss: 3.2.7_postcss@8.4.21
                         tsconfig: link:../../packages/tsconfig
                         typescript: 4.9.5
 
@@ -2559,10 +2567,10 @@ packages:
                         - '@types/react'
                 dev: true
 
-        /@mantine/form/6.0.6_react@18.2.0:
+        /@mantine/form/6.0.5_react@18.2.0:
                 resolution:
                         {
-                                integrity: sha512-ZTudX5bW5i0dlNWqngd6B0HcV2hWNFf+IpRO4Pz+MYYUrp90lLftgIdr6cISEOsjM7v3tCKFNCjGhl7rck9p0w==
+                                integrity: sha512-7YclnSzYCCVZQKT4g9Hta6cvlVf20RUe5L6x1s570nfJFXk1j9wbrPIJ5pEUdXwTnMGfcZ+n0OmcCxUnf8lpPA==
                         }
                 peerDependencies:
                         react: '>=16.8.0'
@@ -4228,8 +4236,8 @@ packages:
                 engines: { node: '>=10' }
                 hasBin: true
                 dependencies:
-                        is-text-path: 1.0.1
                         JSONStream: 1.3.5
+                        is-text-path: 1.0.1
                         lodash: 4.17.21
                         meow: 8.1.2
                         split2: 3.2.2
@@ -8660,13 +8668,15 @@ packages:
                         string-width: 4.2.3
                         strip-ansi: 6.0.1
 
-        /tailwindcss/3.2.7:
+        /tailwindcss/3.2.7_postcss@8.4.21:
                 resolution:
                         {
                                 integrity: sha512-B6DLqJzc21x7wntlH/GsZwEXTBttVSl1FtCzC8WP4oBc/NKef7kaax5jeihkkCEWc831/5NDJ9gRNDK6NEioQQ==
                         }
                 engines: { node: '>=12.13.0' }
                 hasBin: true
+                peerDependencies:
+                        postcss: ^8.0.9
                 dependencies:
                         arg: 5.0.2
                         chokidar: 3.5.3

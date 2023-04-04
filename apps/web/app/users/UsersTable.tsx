@@ -21,8 +21,17 @@ const TableLabel = ({ children }: { children: ReactNode }) => {
 	)
 }
 
-export default function UsersTable({ data }: { data: UserDataType[] }) {
-	const userDataRows = data.map((user, i) => (
+export default function UsersTable({ userList }: { userList: UserDataType[] }) {
+	// const { data } = useQuery({
+	// 	queryKey: ['getusers'],
+	// 	queryFn: async () => {
+	// 		const { data } = await $Api.user.userFindGet()
+	// 		console.log(data)
+	// 		return data
+	// 	}
+	// })
+
+	const userDataRows = userList.map((user, i) => (
 		<tr key={i}>
 			<td>
 				<User user={user} />

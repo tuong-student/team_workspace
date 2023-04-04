@@ -1,14 +1,14 @@
 import { Button, NativeSelect, TextInput, Title } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useContext, useState } from 'react'
+import { $Api } from '../../libs'
 import UserContext from '../userListReducer/context'
-import { addUser } from '../userListReducer/reducer'
 
 export type CreateUserFormInputType = {
 	email: string
 	fullName: string
 	password: string
-	role: 'Administrator' | 'Developer'
+	role: string
 }
 
 export function CreateUserModal() {
@@ -16,12 +16,13 @@ export function CreateUserModal() {
 		fullName: '',
 		email: '',
 		password: '',
-		role: 'Developer'
+		role: 'user'
 	}
 
 	const { dispatch } = useContext(UserContext)
 	const [userValue, setUserValue] =
 		useState<CreateUserFormInputType>(initialValue)
+	const [isCreating, setIsCreating] = useState(false)
 
 	const form = useForm<CreateUserFormInputType>({
 		initialValues: {
@@ -37,10 +38,10 @@ export function CreateUserModal() {
 					? null
 					: 'Invalid email',
 			password: (value) => {
-				if (value.length < 6)
-					return 'Password length must be longer than 5'
+				if (value.length < 8)
+					return 'Password length must be longer than 7'
 				if (value.length >= 20)
-					return 'Password length must be lower thant 20'
+					return 'Password length must be lower than 20'
 			}
 		},
 		validateInputOnBlur: true
@@ -57,8 +58,10 @@ export function CreateUserModal() {
 		}))
 	}
 
-	const handleAddUser = (user: CreateUserFormInputType) => {
-		dispatch(addUser(user))
+	const handleAddUser = async (user: CreateUserFormInputType) => {
+		setIsCreating(!isCreating)
+		let newUser = await $Api.user.userCreatePost(user)
+		console.log(newUser.statusText)
 	}
 
 	const size = 'xl'
@@ -99,7 +102,7 @@ export function CreateUserModal() {
 				<NativeSelect
 					id='role'
 					{...form.getInputProps('role')}
-					data={['Developer', 'Administrator']}
+					data={['user']}
 					size={'xl'}
 				/>
 				<Button
