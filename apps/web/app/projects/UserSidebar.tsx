@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ReactNode } from 'react'
+import { AppRoute } from '../../constants'
 import { uuid } from '../../utils'
 import NavLink from './NavLink'
 import NavLinkLabel from './NavLinkLabel'
@@ -27,12 +28,15 @@ export default function UserSidebar() {
 	return (
 		<div className='pt-[16px]'>
 			{userSidebarLinks.map((el) => (
-				<Link href={`/users/${el.path}`} key={uuid()}>
+				<Link
+					href={`${AppRoute.users.root}/${el.path}`}
+					key={uuid()}
+				>
 					<NavLink
 						className='text-[rgb(66,82,110)]'
 						active={
 							el.path === active ||
-							`/users/${el.path}` ===
+							`${AppRoute.users.root}/${el.path}` ===
 								pathname + '/'
 						}
 						{...el}

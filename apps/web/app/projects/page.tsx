@@ -1,9 +1,19 @@
 'use client'
 import DynamicTable from '@atlaskit/dynamic-table'
 import Select from '@atlaskit/select'
-import { ActionIcon, Avatar, Button, TextInput } from '@mantine/core'
+import {
+	ActionIcon,
+	Avatar,
+	Button,
+	Divider,
+	Modal,
+	Select as MantineSelect,
+	TextInput
+} from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
 import Link from 'next/link'
 import { ReactNode } from 'react'
+import { getNestedProjectRoute } from '../../constants'
 import SearchIcon from '../Icons/SearchIcon.svg'
 import StarIcon from '../Icons/StarIcon.svg'
 import StarOutlineIcon from '../Icons/StarIconOutline.svg'
@@ -83,7 +93,9 @@ function RowContent() {
 						/>
 						<Link
 							className='text-blue-500 text-[14px] hover:underline'
-							href={`/projects/board/${item.id}`}
+							href={`${getNestedProjectRoute(
+								'board'
+							)}/${item.id}`}
 						>
 							{item.name}
 						</Link>
@@ -128,9 +140,99 @@ function RowContent() {
 }
 
 export default function ProjectsPage() {
+	const [opened, { open, close }] = useDisclosure(false)
+
 	return (
 		<main className='h-full w-full p-[40px] pt-0'>
 			<div className='h-full w-full'>
+				<Modal
+					opened={opened}
+					onClose={close}
+					title={
+						<span className='hidden'>
+							Lmao
+						</span>
+					}
+					size='xl'
+				>
+					<div className='flex flex-col gap-[8px] text-[rgb(23,43,77)] p-[16px] pt-0'>
+						<h1 className='text-[24px] font-bold'>
+							Add project details
+						</h1>
+						<p className='text-[14px]'>
+							You can change these
+							details anytime in your
+							project settings.
+						</p>
+						<TextInput
+							label={
+								<span className='text-[14px] font-bold '>
+									Name
+								</span>
+							}
+							size='lg'
+							required
+						/>
+						<div className='flex flex-row items-center gap-[12px]'>
+							<TextInput
+								className='flex-1'
+								label={
+									<span className='text-[14px] font-bold '>
+										Key
+									</span>
+								}
+								size='lg'
+								required
+							/>
+							<MantineSelect
+								className='flex-1'
+								label={
+									<span className='text-[14px] font-bold '>
+										Type
+									</span>
+								}
+								placeholder='Pick one'
+								data={[
+									{
+										value: 'react',
+										label: 'React'
+									},
+									{
+										value: 'ng',
+										label: 'Angular'
+									},
+									{
+										value: 'svelte',
+										label: 'Svelte'
+									},
+									{
+										value: 'vue',
+										label: 'Vue'
+									}
+								]}
+								size='lg'
+								required
+							/>
+						</div>
+						<Divider my={'xl'} />
+						<div className='flex items-center gap-[8px] justify-end'>
+							<Button
+								className='bg-gray-100 text-[rgb(23,43,77)] hover:text-white'
+								color='gray'
+								size={'lg'}
+								onClick={close}
+							>
+								Cancel
+							</Button>
+							<Button
+								className='bg-blue-500'
+								size={'lg'}
+							>
+								Next
+							</Button>
+						</div>
+					</div>
+				</Modal>
 				<DynamicTable
 					caption={
 						<div className='flex flex-col gap-[24px]'>
@@ -141,6 +243,9 @@ export default function ProjectsPage() {
 								<Button
 									className='bg-blue-500'
 									size='lg'
+									onClick={
+										open
+									}
 								>
 									Create
 									project

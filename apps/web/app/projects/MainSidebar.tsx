@@ -2,6 +2,7 @@ import { Divider } from '@mantine/core'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ReactNode } from 'react'
+import { AppRoute } from '../../constants'
 import { uuid } from '../../utils'
 import AddshortcutIcon from '../Icons/AddshortcutIcon.svg'
 import BacklogIcon from '../Icons/BacklogIcon.svg'
@@ -83,7 +84,7 @@ export default function MainSidebar() {
 					{children.map(
 						({ path, label, icon }, i) => (
 							<Link
-								href={`/projects/${path}`}
+								href={`${AppRoute.projects.root}/${path}`}
 								key={uuid()}
 							>
 								<NavLink
