@@ -111,7 +111,7 @@ func RefreshToken(ctx *fiber.Ctx) error {
 // @Description Ger current user profile api
 // @Accept json
 // @Produce json
-// @Success 200 {object} user.UserResp
+// @Success 200 {object} user.User
 // @Failure 401 {string} string
 // @Failure 404 {string} string
 // @Failure 500 {string} string

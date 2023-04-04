@@ -6,8 +6,14 @@ import (
 )
 
 type User struct {
-	UserResp
-	Password string
+	Id        uint
+	AvatarUrl string `db:"avatar_url" json:"avatarUrl"`
+	FullName  string `db:"full_name"`
+	Email     string
+	Role      string
+	CreateAt  time.Time `db:"created_at"`
+	UpdateAt  time.Time `db:"updated_at"`
+	Password  string    `json:"-"`
 }
 
 type WriteUserBody struct {
@@ -21,17 +27,8 @@ type UserQuery struct {
 	common.BaseQuery
 }
 
-type UserResp struct {
-	Id        uint
-	AvatarUrl string `db:"avatar_url" json:"avatarUrl"`
-	FullName  string `db:"full_name"`
-	Email     string
-	Role      string
-	CreateAt  time.Time `db:"created_at"`
-	UpdateAt  time.Time `db:"updated_at"`
-}
-
 type UpdateUserBody struct {
-	FullName  string `db:"full_name"`
-	AvatarUrl string `db:"avatar_url" json:"avatarUrl"`
+	FullName  string `db:"full_name" validate:"required,min=3,max=30"`
+	AvatarUrl string `db:"avatar_url" json:"avatarUrl" validate:"required,max=255"`
+	Role      string `db:"role" json:"role" validate:"required"`
 }

@@ -17,8 +17,8 @@ var insertQuery = `
 	) RETURNING id, avatar_url, full_name, email, role, created_at, updated_at
 `
 
-func (r *UserSqlxRepo) Insert(req WriteUserBody) (*UserResp, error) {
-	var createdUser UserResp
+func (r *UserSqlxRepo) Insert(req WriteUserBody) (*User, error) {
+	var createdUser User
 	if err := r.db.QueryRowx(
 		insertQuery,
 		req.FullName,
