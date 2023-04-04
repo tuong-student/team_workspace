@@ -35,3 +35,18 @@ export function getAccessToken() {
 export function getRefreshToken() {
 	return getCookie('refreshToken')
 }
+
+export function notifySuccess(
+	message: string,
+	notify: (n: Notification) => void
+) {
+	if (message) {
+		const notification: Notification = {
+			type: 'success',
+			k: uuid()
+		}
+		notification.title = message
+
+		notify(notification)
+	}
+}

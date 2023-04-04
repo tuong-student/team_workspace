@@ -46,7 +46,7 @@ export default function NotificationList() {
 	const notification = useNotification()
 
 	return (
-		<div className='fixed top-[80px] right-0 z-40'>
+		<div className='fixed top-[80px] right-0 z-50'>
 			{notification.map((n) => (
 				<NotificationItem {...n} key={n.k} />
 			))}

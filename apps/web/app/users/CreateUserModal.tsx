@@ -2,6 +2,8 @@ import { Button, NativeSelect, TextInput, Title } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useContext, useState } from 'react'
 import { $Api } from '../../libs'
+import { useNotification } from '../../stores'
+import { notifyError, notifySuccess } from '../../utils'
 import UserContext from '../userListReducer/context'
 
 export type CreateUserFormInputType = {
@@ -23,15 +25,15 @@ export function CreateUserModal() {
 	const [userValue, setUserValue] =
 		useState<CreateUserFormInputType>(initialValue)
 	const [isCreating, setIsCreating] = useState(false)
-
+	const notify = useNotification((s) => s.notify)
 	const form = useForm<CreateUserFormInputType>({
 		initialValues: {
 			...initialValue
 		},
 		validate: {
 			fullName: (value) =>
-				value.length < 2
-					? 'Name must have at least 2 letters'
+				value.length < 8
+					? 'Full name must have at least 8 letters'
 					: null,
 			email: (value) =>
 				/^\S+@\S+$/.test(value)
@@ -39,29 +41,30 @@ export function CreateUserModal() {
 					: 'Invalid email',
 			password: (value) => {
 				if (value.length < 8)
-					return 'Password length must be longer than 7'
-				if (value.length >= 20)
-					return 'Password length must be lower than 20'
+					return 'Password must have at least 8 letters'
 			}
 		},
 		validateInputOnBlur: true
 	})
 
-	const handleOnChange = (
-		event:
-			| React.ChangeEvent<HTMLInputElement>
-			| React.ChangeEvent<HTMLSelectElement>
-	) => {
-		setUserValue((previous) => ({
-			...previous,
-			[event.target.id]: event.target.value
-		}))
-	}
-
 	const handleAddUser = async (user: CreateUserFormInputType) => {
-		setIsCreating(!isCreating)
-		let newUser = await $Api.user.userCreatePost(user)
-		console.log(newUser.statusText)
+		setIsCreating(true)
+		if (form.errors && Object.keys(form.errors).length === 0) {
+			try {
+				await $Api.user
+					.userCreatePost(user)
+					.then((res) => {
+						if (res.status === 201)
+							notifySuccess(
+								'Create User Succesfully',
+								notify
+							)
+					})
+			} catch (e) {
+				notifyError(e, notify)
+			}
+		}
+		setIsCreating(false)
 	}
 
 	const size = 'xl'
@@ -75,6 +78,7 @@ export function CreateUserModal() {
 				className='flex flex-col gap-[16px]'
 			>
 				<TextInput
+					maxLength={30}
 					withAsterisk
 					label='Full name'
 					{...form.getInputProps('fullName')}
@@ -83,6 +87,7 @@ export function CreateUserModal() {
 					size={size}
 				/>
 				<TextInput
+					maxLength={30}
 					withAsterisk
 					label='Email'
 					{...form.getInputProps('email')}
@@ -91,6 +96,7 @@ export function CreateUserModal() {
 					size={size}
 				/>
 				<TextInput
+					maxLength={32}
 					{...form.getInputProps('password')}
 					withAsterisk
 					type='password'
@@ -106,8 +112,8 @@ export function CreateUserModal() {
 					size={'xl'}
 				/>
 				<Button
+					loading={isCreating}
 					type='submit'
-					onClick={() => handleAddUser(userValue)}
 					size={'xl'}
 					className={'bg-primary-b400'}
 				>

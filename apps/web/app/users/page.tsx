@@ -52,6 +52,7 @@ export default function UsersManagementPage() {
 			</div>
 			<UsersTable userList={usersList} />
 			<Modal
+				zIndex={2}
 				size={'xl'}
 				opened={opened}
 				onClose={close}
