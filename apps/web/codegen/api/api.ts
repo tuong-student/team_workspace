@@ -249,13 +249,19 @@ export interface UserUpdateUserBody {
 	 * @type {string}
 	 * @memberof UserUpdateUserBody
 	 */
-	avatarUrl?: string
+	avatarUrl: string
 	/**
 	 *
 	 * @type {string}
 	 * @memberof UserUpdateUserBody
 	 */
-	fullName?: string
+	fullName: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserUpdateUserBody
+	 */
+	role: string
 }
 /**
  *
@@ -298,66 +304,11 @@ export interface UserUser {
 	 * @type {string}
 	 * @memberof UserUser
 	 */
-	password?: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof UserUser
-	 */
 	role?: string
 	/**
 	 *
 	 * @type {string}
 	 * @memberof UserUser
-	 */
-	updateAt?: string
-}
-/**
- *
- * @export
- * @interface UserUserResp
- */
-export interface UserUserResp {
-	/**
-	 *
-	 * @type {string}
-	 * @memberof UserUserResp
-	 */
-	avatarUrl?: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof UserUserResp
-	 */
-	createAt?: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof UserUserResp
-	 */
-	email?: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof UserUserResp
-	 */
-	fullName?: string
-	/**
-	 *
-	 * @type {number}
-	 * @memberof UserUserResp
-	 */
-	id?: number
-	/**
-	 *
-	 * @type {string}
-	 * @memberof UserUserResp
-	 */
-	role?: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof UserUserResp
 	 */
 	updateAt?: string
 }
@@ -619,7 +570,7 @@ export const AuthApiFp = function (configuration?: Configuration) {
 			(
 				axios?: AxiosInstance,
 				basePath?: string
-			) => AxiosPromise<UserUserResp>
+			) => AxiosPromise<UserUser>
 		> {
 			const localVarAxiosArgs =
 				await localVarAxiosParamCreator.authMeGet(
@@ -695,7 +646,7 @@ export const AuthApiFactory = function (
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		authMeGet(options?: any): AxiosPromise<UserUserResp> {
+		authMeGet(options?: any): AxiosPromise<UserUser> {
 			return localVarFp
 				.authMeGet(options)
 				.then((request) => request(axios, basePath))
@@ -1861,7 +1812,7 @@ export const UserApiFp = function (configuration?: Configuration) {
 			(
 				axios?: AxiosInstance,
 				basePath?: string
-			) => AxiosPromise<UserUserResp>
+			) => AxiosPromise<UserUser>
 		> {
 			const localVarAxiosArgs =
 				await localVarAxiosParamCreator.userCreatePost(
@@ -2026,7 +1977,7 @@ export const UserApiFactory = function (
 		userCreatePost(
 			user: UserWriteUserBody,
 			options?: any
-		): AxiosPromise<UserUserResp> {
+		): AxiosPromise<UserUser> {
 			return localVarFp
 				.userCreatePost(user, options)
 				.then((request) => request(axios, basePath))
