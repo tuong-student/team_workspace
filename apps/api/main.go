@@ -16,6 +16,7 @@ import (
 	"api/src/admin"
 	"api/src/auth"
 	"api/src/config"
+	"api/src/media"
 	"api/src/project"
 	"api/src/user"
 	"api/src/utils"
@@ -57,7 +58,12 @@ func main() {
 	DB_DNS := utils.GetDbURI(config)
 	db, err := sqlx.Connect("postgres", DB_DNS)
 	if err != nil {
-		fmt.Println("Can't connect to database", err)
+		log.Panicf("Can't connect to database %s", err)
+	}
+
+	minioClient, err := utils.ConnectMinio(config.MinioSecret)
+	if err != nil {
+		log.Panicf("Can't connect to minio %s", err)
 	}
 
 	driver, err := postgres.WithInstance(db.DB, &postgres.Config{})
@@ -86,6 +92,8 @@ func main() {
 		project.RegisterProjectRepository(c, db)
 		user.RegisterUserRepo(c, db)
 		c.Locals("TokenSecret", config.TokenSecret)
+		c.Locals("minioBucket", config.MinioSecret.Bucket)
+		c.Locals("minioClient", minioClient)
 		return c.Next()
 	})
 	app.Use(recover.New())
@@ -99,6 +107,7 @@ func main() {
 	admin.New(v1)
 	user.New(v1)
 	project.New(v1)
+	media.New(v1)
 
 	app.Get("/healthz", HealthCheck)
 	app.Get("/docs/*", swagger.HandlerDefault)
