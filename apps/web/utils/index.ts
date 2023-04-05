@@ -1,4 +1,5 @@
 import { AxiosError } from 'axios'
+import { deleteCookie, getCookie } from 'cookies-next'
 import { v4 } from 'uuid'
 import { Notification } from '../stores'
 
@@ -20,4 +21,17 @@ export function notifyError(error: unknown, notify: (n: Notification) => void) {
 
 		notify(notification)
 	}
+}
+
+export function deleteTokens() {
+	localStorage.removeItem('accessToken')
+	deleteCookie('refreshToken')
+}
+
+export function getAccessToken() {
+	return localStorage.getItem('accessToken')
+}
+
+export function getRefreshToken() {
+	return getCookie('refreshToken')
 }

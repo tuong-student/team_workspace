@@ -1,12 +1,13 @@
 import axiosGlobal, { AxiosError, CreateAxiosDefaults } from 'axios'
-import { getCookie } from 'cookies-next'
+import { setCookie } from 'cookies-next'
 import {
+	AdminApiFactory,
 	AuthApiFactory,
 	ProjectApiFactory,
 	UserApiFactory
 } from '../codegen/api'
-
-const baseURL = 'https://api-fahasa-nomorechokedboy.cloud.okteto.net'
+import { baseURL } from '../constants'
+import { deleteTokens, getAccessToken, getRefreshToken } from '../utils'
 
 const configs: CreateAxiosDefaults = {
 	baseURL,
@@ -23,7 +24,7 @@ axios.interceptors.request.use((config: any) => {
 		Authorization: ''
 	}
 
-	const accessToken = localStorage.getItem('accessToken')
+	const accessToken = getAccessToken()
 
 	if (accessToken) customHeaders.Authorization = `Bearer ${accessToken}`
 
@@ -50,11 +51,9 @@ const createAxiosResponseInterceptor = () => {
 
 			axios.interceptors.response.eject(interceptor)
 
-			const refreshToken =
-				getCookie('refreshToken')?.toString()
-			if (!refreshToken) {
-				console.warn('DEBUG')
+			const refreshToken = getRefreshToken()?.toString()
 
+			if (!refreshToken) {
 				return Promise.reject(Error('No refresh token'))
 			}
 
@@ -72,6 +71,10 @@ const createAxiosResponseInterceptor = () => {
 						'accessToken',
 						data.accessToken
 					)
+					setCookie(
+						'refreshToken',
+						data.refreshToken
+					)
 					error.response.config.headers[
 						'Authorization'
 					] = `Bearer ${data.accessToken}`
@@ -79,8 +82,7 @@ const createAxiosResponseInterceptor = () => {
 					return axios(error.response.config)
 				})
 				.catch((e) => {
-					localStorage.removeItem('accessToken')
-					localStorage.removeItem('refreshToken')
+					deleteTokens()
 					return Promise.reject(e)
 				})
 				.finally(createAxiosResponseInterceptor)
@@ -91,10 +93,12 @@ const createAxiosResponseInterceptor = () => {
 createAxiosResponseInterceptor()
 
 const auth = AuthApiFactory(undefined, undefined, axios)
+const admin = AdminApiFactory(undefined, undefined, axios)
 const user = UserApiFactory(undefined, undefined, axios)
 const project = ProjectApiFactory(undefined, undefined, axios)
 
 export const $Api = {
+	admin,
 	auth,
 	user,
 	project

@@ -8,15 +8,14 @@ import (
 	"github.com/doug-martin/goqu/v9"
 )
 
-func (r *UserSqlxRepo) Find(query UserQuery) (*common.BasePaginationResponse[UserResp], error) {
-	users := []*UserResp{}
-	res := &common.BasePaginationResponse[UserResp]{}
+func (r *UserSqlxRepo) Find(query UserQuery) (*common.BasePaginationResponse[User], error) {
+	users := []*User{}
+	res := &common.BasePaginationResponse[User]{}
 	queryBuilder := common.
 		Pagination("users", &query.BaseQuery, res).
 		Select(
 			"id", "avatar_url", "full_name", "email", "role", "created_at", "updated_at",
-		).
-		Where(goqu.C("role").Eq("user"))
+		)
 
 	countQueryBuilder := goqu.From("users").
 		Select(goqu.COUNT("*")).

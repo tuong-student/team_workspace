@@ -35,6 +35,44 @@ import { BaseAPI, BASE_PATH, RequestArgs } from './base'
 /**
  *
  * @export
+ * @interface AdminInitResp
+ */
+export interface AdminInitResp {
+	/**
+	 *
+	 * @type {boolean}
+	 * @memberof AdminInitResp
+	 */
+	hasAdmin?: boolean
+}
+/**
+ *
+ * @export
+ * @interface AdminWriteAdminBody
+ */
+export interface AdminWriteAdminBody {
+	/**
+	 *
+	 * @type {string}
+	 * @memberof AdminWriteAdminBody
+	 */
+	email: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof AdminWriteAdminBody
+	 */
+	fullName: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof AdminWriteAdminBody
+	 */
+	password?: string
+}
+/**
+ *
+ * @export
  * @interface AuthLoginBody
  */
 export interface AuthLoginBody {
@@ -249,13 +287,19 @@ export interface UserUpdateUserBody {
 	 * @type {string}
 	 * @memberof UserUpdateUserBody
 	 */
-	avatarUrl?: string
+	avatarUrl: string
 	/**
 	 *
 	 * @type {string}
 	 * @memberof UserUpdateUserBody
 	 */
-	fullName?: string
+	fullName: string
+	/**
+	 *
+	 * @type {string}
+	 * @memberof UserUpdateUserBody
+	 */
+	role: string
 }
 /**
  *
@@ -274,7 +318,7 @@ export interface UserUser {
 	 * @type {string}
 	 * @memberof UserUser
 	 */
-	createAt?: string
+	createdAt?: string
 	/**
 	 *
 	 * @type {string}
@@ -298,68 +342,13 @@ export interface UserUser {
 	 * @type {string}
 	 * @memberof UserUser
 	 */
-	password?: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof UserUser
-	 */
 	role?: string
 	/**
 	 *
 	 * @type {string}
 	 * @memberof UserUser
 	 */
-	updateAt?: string
-}
-/**
- *
- * @export
- * @interface UserUserResp
- */
-export interface UserUserResp {
-	/**
-	 *
-	 * @type {string}
-	 * @memberof UserUserResp
-	 */
-	avatarUrl?: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof UserUserResp
-	 */
-	createAt?: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof UserUserResp
-	 */
-	email?: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof UserUserResp
-	 */
-	fullName?: string
-	/**
-	 *
-	 * @type {number}
-	 * @memberof UserUserResp
-	 */
-	id?: number
-	/**
-	 *
-	 * @type {string}
-	 * @memberof UserUserResp
-	 */
-	role?: string
-	/**
-	 *
-	 * @type {string}
-	 * @memberof UserUserResp
-	 */
-	updateAt?: string
+	updatedAt?: string
 }
 /**
  *
@@ -391,6 +380,259 @@ export interface UserWriteUserBody {
 	 * @memberof UserWriteUserBody
 	 */
 	role: string
+}
+
+/**
+ * AdminApi - axios parameter creator
+ * @export
+ */
+export const AdminApiAxiosParamCreator = function (
+	configuration?: Configuration
+) {
+	return {
+		/**
+		 * Get application initial state
+		 * @summary Init details api
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		adminInitGet: async (
+			options: AxiosRequestConfig = {}
+		): Promise<RequestArgs> => {
+			const localVarPath = `/admin/init`
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(
+				localVarPath,
+				DUMMY_BASE_URL
+			)
+			let baseOptions
+			if (configuration) {
+				baseOptions = configuration.baseOptions
+			}
+
+			const localVarRequestOptions = {
+				method: 'GET',
+				...baseOptions,
+				...options
+			}
+			const localVarHeaderParameter = {} as any
+			const localVarQueryParameter = {} as any
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter)
+			let headersFromBaseOptions =
+				baseOptions && baseOptions.headers
+					? baseOptions.headers
+					: {}
+			localVarRequestOptions.headers = {
+				...localVarHeaderParameter,
+				...headersFromBaseOptions,
+				...options.headers
+			}
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions
+			}
+		},
+		/**
+		 * Create a new admin for the whole system
+		 * @summary Register admin api
+		 * @param {AdminWriteAdminBody} admin New admin information
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		adminRegisterPost: async (
+			admin: AdminWriteAdminBody,
+			options: AxiosRequestConfig = {}
+		): Promise<RequestArgs> => {
+			// verify required parameter 'admin' is not null or undefined
+			assertParamExists('adminRegisterPost', 'admin', admin)
+			const localVarPath = `/admin/register`
+			// use dummy base URL string because the URL constructor only accepts absolute URLs.
+			const localVarUrlObj = new URL(
+				localVarPath,
+				DUMMY_BASE_URL
+			)
+			let baseOptions
+			if (configuration) {
+				baseOptions = configuration.baseOptions
+			}
+
+			const localVarRequestOptions = {
+				method: 'POST',
+				...baseOptions,
+				...options
+			}
+			const localVarHeaderParameter = {} as any
+			const localVarQueryParameter = {} as any
+
+			localVarHeaderParameter['Content-Type'] =
+				'application/json'
+
+			setSearchParams(localVarUrlObj, localVarQueryParameter)
+			let headersFromBaseOptions =
+				baseOptions && baseOptions.headers
+					? baseOptions.headers
+					: {}
+			localVarRequestOptions.headers = {
+				...localVarHeaderParameter,
+				...headersFromBaseOptions,
+				...options.headers
+			}
+			localVarRequestOptions.data = serializeDataIfNeeded(
+				admin,
+				localVarRequestOptions,
+				configuration
+			)
+
+			return {
+				url: toPathString(localVarUrlObj),
+				options: localVarRequestOptions
+			}
+		}
+	}
+}
+
+/**
+ * AdminApi - functional programming interface
+ * @export
+ */
+export const AdminApiFp = function (configuration?: Configuration) {
+	const localVarAxiosParamCreator =
+		AdminApiAxiosParamCreator(configuration)
+	return {
+		/**
+		 * Get application initial state
+		 * @summary Init details api
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async adminInitGet(
+			options?: AxiosRequestConfig
+		): Promise<
+			(
+				axios?: AxiosInstance,
+				basePath?: string
+			) => AxiosPromise<AdminInitResp>
+		> {
+			const localVarAxiosArgs =
+				await localVarAxiosParamCreator.adminInitGet(
+					options
+				)
+			return createRequestFunction(
+				localVarAxiosArgs,
+				globalAxios,
+				BASE_PATH,
+				configuration
+			)
+		},
+		/**
+		 * Create a new admin for the whole system
+		 * @summary Register admin api
+		 * @param {AdminWriteAdminBody} admin New admin information
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		async adminRegisterPost(
+			admin: AdminWriteAdminBody,
+			options?: AxiosRequestConfig
+		): Promise<
+			(
+				axios?: AxiosInstance,
+				basePath?: string
+			) => AxiosPromise<UserUser>
+		> {
+			const localVarAxiosArgs =
+				await localVarAxiosParamCreator.adminRegisterPost(
+					admin,
+					options
+				)
+			return createRequestFunction(
+				localVarAxiosArgs,
+				globalAxios,
+				BASE_PATH,
+				configuration
+			)
+		}
+	}
+}
+
+/**
+ * AdminApi - factory interface
+ * @export
+ */
+export const AdminApiFactory = function (
+	configuration?: Configuration,
+	basePath?: string,
+	axios?: AxiosInstance
+) {
+	const localVarFp = AdminApiFp(configuration)
+	return {
+		/**
+		 * Get application initial state
+		 * @summary Init details api
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		adminInitGet(options?: any): AxiosPromise<AdminInitResp> {
+			return localVarFp
+				.adminInitGet(options)
+				.then((request) => request(axios, basePath))
+		},
+		/**
+		 * Create a new admin for the whole system
+		 * @summary Register admin api
+		 * @param {AdminWriteAdminBody} admin New admin information
+		 * @param {*} [options] Override http request option.
+		 * @throws {RequiredError}
+		 */
+		adminRegisterPost(
+			admin: AdminWriteAdminBody,
+			options?: any
+		): AxiosPromise<UserUser> {
+			return localVarFp
+				.adminRegisterPost(admin, options)
+				.then((request) => request(axios, basePath))
+		}
+	}
+}
+
+/**
+ * AdminApi - object-oriented interface
+ * @export
+ * @class AdminApi
+ * @extends {BaseAPI}
+ */
+export class AdminApi extends BaseAPI {
+	/**
+	 * Get application initial state
+	 * @summary Init details api
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof AdminApi
+	 */
+	public adminInitGet(options?: AxiosRequestConfig) {
+		return AdminApiFp(this.configuration)
+			.adminInitGet(options)
+			.then((request) => request(this.axios, this.basePath))
+	}
+
+	/**
+	 * Create a new admin for the whole system
+	 * @summary Register admin api
+	 * @param {AdminWriteAdminBody} admin New admin information
+	 * @param {*} [options] Override http request option.
+	 * @throws {RequiredError}
+	 * @memberof AdminApi
+	 */
+	public adminRegisterPost(
+		admin: AdminWriteAdminBody,
+		options?: AxiosRequestConfig
+	) {
+		return AdminApiFp(this.configuration)
+			.adminRegisterPost(admin, options)
+			.then((request) => request(this.axios, this.basePath))
+	}
 }
 
 /**
@@ -619,7 +861,7 @@ export const AuthApiFp = function (configuration?: Configuration) {
 			(
 				axios?: AxiosInstance,
 				basePath?: string
-			) => AxiosPromise<UserUserResp>
+			) => AxiosPromise<UserUser>
 		> {
 			const localVarAxiosArgs =
 				await localVarAxiosParamCreator.authMeGet(
@@ -695,7 +937,7 @@ export const AuthApiFactory = function (
 		 * @param {*} [options] Override http request option.
 		 * @throws {RequiredError}
 		 */
-		authMeGet(options?: any): AxiosPromise<UserUserResp> {
+		authMeGet(options?: any): AxiosPromise<UserUser> {
 			return localVarFp
 				.authMeGet(options)
 				.then((request) => request(axios, basePath))
@@ -1861,7 +2103,7 @@ export const UserApiFp = function (configuration?: Configuration) {
 			(
 				axios?: AxiosInstance,
 				basePath?: string
-			) => AxiosPromise<UserUserResp>
+			) => AxiosPromise<UserUser>
 		> {
 			const localVarAxiosArgs =
 				await localVarAxiosParamCreator.userCreatePost(
@@ -2026,7 +2268,7 @@ export const UserApiFactory = function (
 		userCreatePost(
 			user: UserWriteUserBody,
 			options?: any
-		): AxiosPromise<UserUserResp> {
+		): AxiosPromise<UserUser> {
 			return localVarFp
 				.userCreatePost(user, options)
 				.then((request) => request(axios, basePath))

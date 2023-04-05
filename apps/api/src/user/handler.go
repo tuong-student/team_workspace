@@ -11,11 +11,12 @@ import (
 )
 
 type UserRepository interface {
-	Insert(req WriteUserBody) (*UserResp, error)
-	Update(id uint, req UpdateUserBody) (*UserResp, error)
-	Delete(id uint) (*UserResp, error)
-	Find(queries UserQuery) (*common.BasePaginationResponse[UserResp], error)
-	FindOne(id uint) (*UserResp, error)
+	Insert(req WriteUserBody) (*User, error)
+	Update(id uint, req UpdateUserBody) (*User, error)
+	Delete(id uint) (*User, error)
+	Find(queries UserQuery) (*common.BasePaginationResponse[User], error)
+	FindOne(id uint) (*User, error)
+	Count() (*uint, error)
 }
 
 type UserSqlxRepo struct {
@@ -28,7 +29,7 @@ type UserSqlxRepo struct {
 // @Accept json
 // @Produce json
 // @Param user body WriteUserBody true "New User body"
-// @Success 201 {object} UserResp
+// @Success 201 {object} User
 // @Failure 400 {string} common.BadRequestError
 // @Failure 409 {string} string
 // @Failure 422 {object} []common.ErrorResponse

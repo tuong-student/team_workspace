@@ -1,6 +1,7 @@
 package common
 
 import (
+	"api/src/config"
 	"api/src/utils"
 	"net/http"
 	"strings"
@@ -17,7 +18,8 @@ func AuthMiddleware(c *fiber.Ctx) error {
 		return c.Status(http.StatusUnauthorized).JSON("Unauthorized")
 	}
 
-	userId, err := utils.ParseToken(token, []byte("jwtsec"))
+	tokenSec := c.Locals("TokenSecret").(config.TokenSecret)
+	userId, err := utils.ParseToken(token, []byte(tokenSec.TokenSecret))
 	if err != nil {
 		return c.Status(http.StatusUnauthorized).JSON("Unauthorized")
 	}

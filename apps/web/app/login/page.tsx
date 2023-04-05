@@ -5,15 +5,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
+import { AppRoute } from '../../constants'
 import { $Api } from '../../libs'
-import { useNotification } from '../../stores'
+import { useNotify } from '../../stores'
 import { notifyError } from '../../utils'
 import './login.scss'
 
 export default function LoginPage() {
 	const [email, setEmail] = useState('')
 	const [error, setError] = useState<string | null>(null)
-	const notify = useNotification((s) => s.notify)
+	const notify = useNotify()
 	const [loading, setLoading] = useState(false)
 
 	function ValidEmail(email: string) {
@@ -72,16 +73,12 @@ export default function LoginPage() {
 					'accessToken',
 					data.accessToken
 				)
-				localStorage.setItem(
-					'refreshToken',
-					data.refreshToken
-				)
 				setCookie('refreshToken', data.refreshToken, {
 					maxAge: 30 * 60
 				})
 			}
 
-			router.push('/users')
+			router.push(AppRoute.projects.root)
 		} catch (e) {
 			notifyError(e, notify)
 		} finally {
@@ -221,13 +218,21 @@ export default function LoginPage() {
 						</Button>
 						<ul>
 							<li>
-								<Link href='/login'>
+								<Link
+									href={
+										AppRoute.login
+									}
+								>
 									{`Can't login?`}
 								</Link>
 							</li>
 							<p>•</p>
 							<li>
-								<Link href='/login'>
+								<Link
+									href={
+										AppRoute.login
+									}
+								>
 									Create
 									an
 									account
