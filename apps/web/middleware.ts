@@ -5,13 +5,17 @@ import { AppRoute } from './constants'
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
 	const refreshToken = request.cookies.get('refreshToken')
-	if (!refreshToken && request.nextUrl.pathname !== AppRoute.login) {
+	const isLoginRoute = request.nextUrl.pathname !== AppRoute.login
+	if (!refreshToken && isLoginRoute) {
 		return NextResponse.redirect(
 			new URL(AppRoute.login, request.url)
 		)
 	}
 
-	if (request.nextUrl.pathname === AppRoute.login && refreshToken) {
+	const isForbiddenRoute =
+		request.nextUrl.pathname === AppRoute.login ||
+		request.nextUrl.pathname === AppRoute.root
+	if (isForbiddenRoute && refreshToken) {
 		return NextResponse.redirect(
 			new URL(AppRoute.projects.root, request.url)
 		)
