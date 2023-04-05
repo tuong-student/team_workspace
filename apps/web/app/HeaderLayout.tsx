@@ -8,14 +8,12 @@ import {
 	Popover,
 	TextInput
 } from '@mantine/core'
-import { useQuery } from '@tanstack/react-query'
 import NextLink from 'next/link'
 import { useRouter } from 'next/navigation'
-import { ReactNode, useEffect as useFootgun } from 'react'
+import { ReactNode } from 'react'
 import { AppRoute } from '../constants'
-import { $Api } from '../libs'
-import { useNotify } from '../stores'
-import { deleteTokens, notifyError, uuid } from '../utils'
+import { useUserProfile } from '../hooks'
+import { deleteTokens, uuid } from '../utils'
 import ArrowUpRightFromSquareIcon from './Icons/ArrowUpRightFromSquareIcon.svg'
 import BellIcon from './Icons/BellIcon.svg'
 import CaretDownIcon from './Icons/CaretDownIcon.svg'
@@ -39,20 +37,12 @@ const icons = [BellIcon, HelpIcon, SettingsIcon]
 
 export default function HeaderLayout({ children }: { children: ReactNode }) {
 	const router = useRouter()
-	const notify = useNotify()
-	const { error, data: profileData } = useQuery({
-		queryKey: ['repoData'],
-		queryFn: $Api.auth.authMeGet
-	})
+	const { data: profileData } = useUserProfile()
 
 	function handleLogout() {
 		deleteTokens()
 		router.push(AppRoute.login)
 	}
-
-	useFootgun(() => {
-		notifyError(error, notify)
-	}, [error])
 
 	return (
 		<>
@@ -157,9 +147,7 @@ export default function HeaderLayout({ children }: { children: ReactNode }) {
 									className='flex items-center'
 									radius='xl'
 									src={
-										profileData
-											?.data
-											.avatarUrl
+										profileData?.avatarUrl
 									}
 								/>
 							</ActionIcon>
@@ -177,21 +165,15 @@ export default function HeaderLayout({ children }: { children: ReactNode }) {
 								<div className='py-[8px]'>
 									<SidebarHeader
 										src={
-											profileData
-												?.data
-												.avatarUrl ||
+											profileData?.avatarUrl ||
 											''
 										}
 										title={
-											profileData
-												?.data
-												.fullName ||
+											profileData?.fullName ||
 											'User Name'
 										}
 										description={
-											profileData
-												?.data
-												.email ||
+											profileData?.email ||
 											'User email'
 										}
 										circle

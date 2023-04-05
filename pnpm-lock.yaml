@@ -29,6 +29,7 @@ importers:
                         '@emotion/react': ^11.10.6
                         '@emotion/server': ^11.10.0
                         '@mantine/core': ^6.0.4
+                        '@mantine/form': ^6.0.6
                         '@mantine/hooks': ^6.0.4
                         '@mantine/next': ^6.0.4
                         '@svgr/webpack': ^7.0.0
@@ -58,6 +59,7 @@ importers:
                 dependencies:
                         '@atlaskit/dynamic-table': 14.8.13_zula6vjvt3wdocc4mwcxqa6nzi
                         '@atlaskit/select': 16.1.7_zula6vjvt3wdocc4mwcxqa6nzi
+                        '@mantine/form': 6.0.6_react@18.2.0
                         '@tabler/icons-react': 2.13.0_react@18.2.0
                         '@tanstack/react-query': 4.28.0_biqbaboplfbrettd7655fr4n2y
                         axios: 1.3.4
@@ -2556,6 +2558,19 @@ packages:
                         - '@emotion/react'
                         - '@types/react'
                 dev: true
+
+        /@mantine/form/6.0.6_react@18.2.0:
+                resolution:
+                        {
+                                integrity: sha512-ZTudX5bW5i0dlNWqngd6B0HcV2hWNFf+IpRO4Pz+MYYUrp90lLftgIdr6cISEOsjM7v3tCKFNCjGhl7rck9p0w==
+                        }
+                peerDependencies:
+                        react: '>=16.8.0'
+                dependencies:
+                        fast-deep-equal: 3.1.3
+                        klona: 2.0.6
+                        react: 18.2.0
+                dev: false
 
         /@mantine/hooks/6.0.4_react@18.2.0:
                 resolution:
@@ -6405,6 +6420,14 @@ packages:
                         }
                 engines: { node: '>=0.10.0' }
                 dev: true
+
+        /klona/2.0.6:
+                resolution:
+                        {
+                                integrity: sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==
+                        }
+                engines: { node: '>= 8' }
+                dev: false
 
         /language-subtag-registry/0.3.22:
                 resolution:

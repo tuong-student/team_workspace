@@ -70,7 +70,7 @@ func RegisterAdmin(c *fiber.Ctx) error {
 		return c.Status(http.StatusConflict).JSON("Admin already exist")
 	}
 
-	hashPassword, err := utils.GenerateFromPassword("admin123")
+	hashPassword, err := utils.GenerateFromPassword(req.Password)
 	if err != nil {
 		return c.Status(http.StatusInternalServerError).JSON("Internal error")
 	}

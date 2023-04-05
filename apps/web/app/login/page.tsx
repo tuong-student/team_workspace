@@ -68,7 +68,7 @@ export default function LoginPage() {
 				})
 			}
 
-			router.push(AppRoute.users.root)
+			router.push(AppRoute.projects.root)
 		} catch (e) {
 			notifyError(e, notify)
 		} finally {

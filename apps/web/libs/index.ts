@@ -1,5 +1,7 @@
 import axiosGlobal, { AxiosError, CreateAxiosDefaults } from 'axios'
+import { setCookie } from 'cookies-next'
 import {
+	AdminApiFactory,
 	AuthApiFactory,
 	ProjectApiFactory,
 	UserApiFactory
@@ -50,6 +52,7 @@ const createAxiosResponseInterceptor = () => {
 			axios.interceptors.response.eject(interceptor)
 
 			const refreshToken = getRefreshToken()?.toString()
+
 			if (!refreshToken) {
 				return Promise.reject(Error('No refresh token'))
 			}
@@ -67,6 +70,10 @@ const createAxiosResponseInterceptor = () => {
 					localStorage.setItem(
 						'accessToken',
 						data.accessToken
+					)
+					setCookie(
+						'refreshToken',
+						data.refreshToken
 					)
 					error.response.config.headers[
 						'Authorization'
@@ -86,10 +93,12 @@ const createAxiosResponseInterceptor = () => {
 createAxiosResponseInterceptor()
 
 const auth = AuthApiFactory(undefined, undefined, axios)
+const admin = AdminApiFactory(undefined, undefined, axios)
 const user = UserApiFactory(undefined, undefined, axios)
 const project = ProjectApiFactory(undefined, undefined, axios)
 
 export const $Api = {
+	admin,
 	auth,
 	user,
 	project
