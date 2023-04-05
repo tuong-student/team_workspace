@@ -10,11 +10,10 @@ import {
 } from '@mantine/core'
 import NextLink from 'next/link'
 import { useRouter } from 'next/navigation'
-import { ReactNode, useEffect as useFootgun } from 'react'
+import { ReactNode } from 'react'
 import { AppRoute } from '../constants'
 import { useUserProfile } from '../hooks/useUserProfile'
-import { useNotify } from '../stores'
-import { deleteTokens, notifyError, uuid } from '../utils'
+import { deleteTokens, uuid } from '../utils'
 import ArrowUpRightFromSquareIcon from './Icons/ArrowUpRightFromSquareIcon.svg'
 import BellIcon from './Icons/BellIcon.svg'
 import CaretDownIcon from './Icons/CaretDownIcon.svg'
@@ -38,17 +37,12 @@ const icons = [BellIcon, HelpIcon, SettingsIcon]
 
 export default function HeaderLayout({ children }: { children: ReactNode }) {
 	const router = useRouter()
-	const notify = useNotify()
-	const { error, data: profileData } = useUserProfile()
+	const { data: profileData } = useUserProfile()
 
 	function handleLogout() {
 		deleteTokens()
 		router.push(AppRoute.login)
 	}
-
-	useFootgun(() => {
-		notifyError(error, notify)
-	}, [error])
 
 	return (
 		<>
