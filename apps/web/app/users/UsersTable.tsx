@@ -1,6 +1,7 @@
 'use client'
 import { Table } from '@mantine/core'
 import { ReactNode } from 'react'
+import { useUserList } from '../../stores/users'
 import Actions from './ActionGroup'
 import User from './User'
 
@@ -11,6 +12,7 @@ export type UserDataType = {
 	email: string
 	role: string
 	createAt: string
+	updateAt: string
 }
 
 const TableLabel = ({ children }: { children: ReactNode }) => {
@@ -21,15 +23,8 @@ const TableLabel = ({ children }: { children: ReactNode }) => {
 	)
 }
 
-export default function UsersTable({ userList }: { userList: UserDataType[] }) {
-	// const { data } = useQuery({
-	// 	queryKey: ['getusers'],
-	// 	queryFn: async () => {
-	// 		const { data } = await $Api.user.userFindGet()
-	// 		console.log(data)
-	// 		return data
-	// 	}
-	// })
+export default function UsersTable() {
+	const userList = useUserList((state) => state.users)
 
 	const userDataRows = userList.map((user, i) => (
 		<tr key={i}>
@@ -55,7 +50,7 @@ export default function UsersTable({ userList }: { userList: UserDataType[] }) {
 					</th>
 					<th>
 						<TableLabel>
-							Last Active
+							Create At
 						</TableLabel>
 					</th>
 					<th>

@@ -1,10 +1,9 @@
 'use client'
 import { Avatar, Title } from '@mantine/core'
-import { ReactNode, useContext } from 'react'
-import UserContext from '../../userListReducer/context'
-import { UserDataType } from '../UsersTable'
+import { ReactNode, useState } from 'react'
+import { UserUser } from '../../../codegen/api'
+import { $Api } from '../../../libs'
 import { ProjectDetailProps } from './Project'
-import ProjectsTable from './ProjectsTable'
 
 export const projectList: ProjectDetailProps[] = [
 	{
@@ -27,7 +26,7 @@ export function Label({ children }: { children: ReactNode }) {
 	)
 }
 
-export function Profile({ user }: { user: UserDataType }) {
+export function Profile({ user }: { user: UserUser }) {
 	return (
 		<div className='flex flex-col gap-[1.6rem] py-[24px] pl-[24px] pr-[32px] border-[1px] border-neutral-mid-70'>
 			<Avatar
@@ -35,9 +34,7 @@ export function Profile({ user }: { user: UserDataType }) {
 				size={128}
 				color='blue'
 				radius='xl'
-			>
-				US
-			</Avatar>
+			></Avatar>
 			<div className='flex flex-col gap-[2px]'>
 				<Label>Full Name</Label>
 				<span className='text-[1.6rem] text-black'>
@@ -59,26 +56,21 @@ export default function UserDetailPage({
 }: {
 	params: { userId: string }
 }) {
-	const { state } = useContext(UserContext)
+	const [userDetail, setUserDetail] = useState<UserUser>({})
+	$Api.user.userDetailsIdGet(params.userId).then((res) => {
+		if (res.status === 200) {
+			setUserDetail(res.data)
+		}
+	})
 
-	const user = state.users.find((user) => user.id === params.userId)
-	const userProject = projectList.filter((project) =>
-		project.users.includes(params.userId)
-	)
 	return (
 		<div className='flex flex-col gap-[32px]'>
 			<Title size={'h1'} weight={600}>
-				{user?.fullName}
+				{userDetail.fullName}
 			</Title>
 			<div className='flex flex-col gap-[24px]'>
 				<div className='flex gap-[32px]'>
-					{user && <Profile user={user} />}
-					<div className='flex-1'>
-						<ProjectsTable
-							data={userProject}
-							userRole={'Developer'}
-						/>
-					</div>
+					<Profile user={userDetail} />
 				</div>
 			</div>
 		</div>

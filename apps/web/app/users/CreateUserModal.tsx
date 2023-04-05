@@ -1,10 +1,10 @@
 import { Button, NativeSelect, TextInput, Title } from '@mantine/core'
 import { useForm } from '@mantine/form'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { $Api } from '../../libs'
 import { useNotification } from '../../stores'
+import { useUserList } from '../../stores/users'
 import { notifyError, notifySuccess } from '../../utils'
-import UserContext from '../userListReducer/context'
 
 export type CreateUserFormInputType = {
 	email: string
@@ -20,10 +20,6 @@ export function CreateUserModal() {
 		password: '',
 		role: 'user'
 	}
-
-	const { dispatch } = useContext(UserContext)
-	const [userValue, setUserValue] =
-		useState<CreateUserFormInputType>(initialValue)
 	const [isCreating, setIsCreating] = useState(false)
 	const notify = useNotification((s) => s.notify)
 	const form = useForm<CreateUserFormInputType>({
@@ -47,6 +43,7 @@ export function CreateUserModal() {
 		validateInputOnBlur: true
 	})
 
+	const addUser = useUserList((state) => state.create)
 	const handleAddUser = async (user: CreateUserFormInputType) => {
 		setIsCreating(true)
 		if (form.errors && Object.keys(form.errors).length === 0) {
@@ -59,6 +56,7 @@ export function CreateUserModal() {
 								'Create User Succesfully',
 								notify
 							)
+						addUser(res.data)
 					})
 			} catch (e) {
 				notifyError(e, notify)
@@ -108,7 +106,7 @@ export function CreateUserModal() {
 				<NativeSelect
 					id='role'
 					{...form.getInputProps('role')}
-					data={['user']}
+					data={['Developer', 'Administrator']}
 					size={'xl'}
 				/>
 				<Button

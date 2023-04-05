@@ -19,21 +19,25 @@ export default function RootLayout({
 			<head>
 				<title>Administrator</title>
 			</head>
-			<body className='flex h-screen w-screen flex-col'>
+			<body className='flex overflow-hidden h-screen w-screen flex-col'>
 				<HeaderLayout>
 					<SidebarLayout
 						component={<UserSidebar />}
 					>
-						<PageLayout>
-							<UserContext.Provider
-								value={{
-									state,
-									dispatch
-								}}
-							>
-								{children}
-							</UserContext.Provider>
-						</PageLayout>
+						<div className='w-full h-full overflow-scroll'>
+							<PageLayout>
+								<UserContext.Provider
+									value={{
+										state,
+										dispatch
+									}}
+								>
+									{
+										children
+									}
+								</UserContext.Provider>
+							</PageLayout>
+						</div>
 					</SidebarLayout>
 				</HeaderLayout>
 			</body>
