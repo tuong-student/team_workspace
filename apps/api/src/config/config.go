@@ -9,6 +9,13 @@ type TokenSecret struct {
 	RefreshTokenSecret string `env:"REFRESH_TOKEN_SECRET" env-default:"This is a super secret string for refresh token"`
 }
 
+type MinioSecret struct {
+	Endpoint string `env:"MINIO_HOST" env-default:"localhost:9000"`
+	User     string `env:"MINIO_USER" env-default:"admin"`
+	Password string `env:"MINIO_PASSWORD" env-default:"admin123"`
+	Bucket   string `env:"MINIO_BUCKET" env-default:"general"`
+}
+
 type Config struct {
 	Database struct {
 		Port     string `env:"DB_PORT" env-default:"5432"`
@@ -22,6 +29,7 @@ type Config struct {
 		Port string `env:"PORT" env-default:"3001"`
 	}
 	TokenSecret TokenSecret
+	MinioSecret MinioSecret
 }
 
 func LoadEnv() (*Config, error) {
