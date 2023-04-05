@@ -2,11 +2,12 @@ import { Notification } from '@mantine/core'
 import { useEffect as useFootgun, useRef } from 'react'
 import {
 	Notification as NotificationItemProps,
-	useNotification
+	useNotification,
+	useRemoveNotification
 } from '../stores'
 
 function NotificationItem({ type, k, ...props }: NotificationItemProps) {
-	const removeNotification = useNotification((s) => s.remove)
+	const removeNotification = useRemoveNotification()
 	const timeout = useRef<NodeJS.Timeout>()
 	const color =
 		type === 'error'
@@ -14,13 +15,13 @@ function NotificationItem({ type, k, ...props }: NotificationItemProps) {
 			: type === 'warning'
 			? 'yellow'
 			: 'green'
-	const handleClose = () => {
+	function handleClose() {
 		removeNotification(k)
 	}
-	const handleAutoClose = () => {
+	function handleAutoClose() {
 		timeout.current = setTimeout(handleClose, 5000)
 	}
-	const cancelDelay = () => {
+	function cancelDelay() {
 		clearTimeout(timeout.current)
 	}
 
@@ -42,7 +43,7 @@ function NotificationItem({ type, k, ...props }: NotificationItemProps) {
 }
 
 export default function NotificationList() {
-	const notification = useNotification((s) => s.notification)
+	const notification = useNotification()
 
 	return (
 		<div className='fixed top-[80px] right-0'>

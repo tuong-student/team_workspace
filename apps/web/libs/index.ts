@@ -1,12 +1,11 @@
 import axiosGlobal, { AxiosError, CreateAxiosDefaults } from 'axios'
-import { getCookie } from 'cookies-next'
 import {
 	AuthApiFactory,
 	ProjectApiFactory,
 	UserApiFactory
 } from '../codegen/api'
-
-const baseURL = 'https://api-fahasa-nomorechokedboy.cloud.okteto.net'
+import { baseURL } from '../constants'
+import { deleteTokens, getAccessToken, getRefreshToken } from '../utils'
 
 const configs: CreateAxiosDefaults = {
 	baseURL,
@@ -23,7 +22,7 @@ axios.interceptors.request.use((config: any) => {
 		Authorization: ''
 	}
 
-	const accessToken = localStorage.getItem('accessToken')
+	const accessToken = getAccessToken()
 
 	if (accessToken) customHeaders.Authorization = `Bearer ${accessToken}`
 
@@ -50,11 +49,8 @@ const createAxiosResponseInterceptor = () => {
 
 			axios.interceptors.response.eject(interceptor)
 
-			const refreshToken =
-				getCookie('refreshToken')?.toString()
+			const refreshToken = getRefreshToken()?.toString()
 			if (!refreshToken) {
-				console.warn('DEBUG')
-
 				return Promise.reject(Error('No refresh token'))
 			}
 
@@ -79,8 +75,7 @@ const createAxiosResponseInterceptor = () => {
 					return axios(error.response.config)
 				})
 				.catch((e) => {
-					localStorage.removeItem('accessToken')
-					localStorage.removeItem('refreshToken')
+					deleteTokens()
 					return Promise.reject(e)
 				})
 				.finally(createAxiosResponseInterceptor)

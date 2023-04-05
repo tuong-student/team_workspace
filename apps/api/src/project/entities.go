@@ -6,12 +6,12 @@ import (
 )
 
 type Project struct {
-	Id          uint
-	Name        string
-	Description *string
-	Category    string
-	CreatedAt   time.Time `db:"created_at"`
-	UpdatedAt   time.Time `db:"updated_at"`
+	Id          uint      `json:"id"`
+	Name        string    `json:"name"`
+	Description *string   `json:"description"`
+	Category    string    `json:"category"`
+	CreatedAt   time.Time `json:"createdAt" db:"created_at"`
+	UpdatedAt   time.Time `json:"updatedAt" db:"updated_at"`
 }
 
 type WriteProjectBody struct {
