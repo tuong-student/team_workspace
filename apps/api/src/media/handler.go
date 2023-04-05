@@ -18,7 +18,7 @@ type UploadMediaResp struct {
 // @Produce json
 // @Accept multipart/form-data
 // @Param fileUpload formData file true "Upload file"
-// @Success 200 {string} string
+// @Success 200 {object} UploadMediaResp
 // @Router /media/upload [post]
 // @Security ApiKeyAuth
 // @Tags Media
