@@ -1,8 +1,13 @@
-import { CreateUserFormInputType } from '../app/users/CreateUserModal'
-import { UserDataType } from '../app/users/UsersTable'
+import { create } from 'zustand'
+import { UserUser } from '../codegen/api'
 
 export type UserListState = {
-	users: UserDataType[]
-	create: (user: CreateUserFormInputType) => void
-	remove: (userId: string) => void
+	users: UserUser[]
+	create: (user: UserUser) => void
+	getList: (users: UserUser[]) => void
 }
+export const useUserList = create<UserListState>((set) => ({
+	users: [],
+	create: (user) => set((state) => ({ users: [...state.users, user] })),
+	getList: (userList) => set((state) => ({ users: [...userList] }))
+}))
