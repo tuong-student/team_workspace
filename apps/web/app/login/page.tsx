@@ -22,6 +22,16 @@ export default function LoginPage() {
 	const handleEmailChange: ChangeEventHandler<HTMLInputElement> = (
 		event
 	) => {
+		if (ValidEmail(event.target.value)) {
+			if (error && Object.keys(error).length > 0) {
+				setError(null)
+			}
+		}
+		setEmail(event.target.value)
+	}
+	const handleEmailBlur: ChangeEventHandler<HTMLInputElement> = (
+		event
+	) => {
 		if (!ValidEmail(event.target.value)) {
 			setError('Email is invalid')
 		} else {
@@ -86,27 +96,26 @@ export default function LoginPage() {
 					<h1>CHEESERA</h1>
 					<p>Login to continue</p>
 					<form onSubmit={handleSubmit}>
-						{error && (
-							<span
-								style={{
-									color: 'red',
-									fontSize: '10px'
-								}}
-							>
-								{error}
-							</span>
-						)}
-						<input
-							type='email'
-							placeholder='Email'
-							id='email'
-							name='email'
-							value={email}
-							onChange={
-								handleEmailChange
-							}
-						/>
-
+						<div className='parent-email'>
+							<input
+								type='email'
+								placeholder='Email'
+								id='email'
+								name='email'
+								value={email}
+								onChange={
+									handleEmailChange
+								}
+								onBlur={
+									handleEmailBlur
+								}
+							/>
+							{error && (
+								<span className='errorEmail'>
+									{error}
+								</span>
+							)}
+						</div>
 						<input
 							type='password'
 							placeholder='Password'
@@ -131,7 +140,9 @@ export default function LoginPage() {
 								Continue
 							</Button>
 						</div>
-						<span>Or contimue with:</span>
+						<span className='continuewith'>
+							Or continue with:
+						</span>
 						<Button
 							className=' text-gray-500 shadow'
 							variant={'white'}
@@ -214,6 +225,7 @@ export default function LoginPage() {
 									{`Can't login?`}
 								</Link>
 							</li>
+							<p>•</p>
 							<li>
 								<Link href='/login'>
 									Create
