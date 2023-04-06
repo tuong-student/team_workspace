@@ -24,12 +24,18 @@ import SearchIcon from './Icons/SearchIcon.svg'
 import SettingsIcon from './Icons/SettingsIcon.svg'
 import SidebarHeader from './projects/SidebarHeader'
 
-const ButtonTexts: { children: ReactNode; props?: ButtonProps }[] = [
+const ButtonTexts: {
+	children: ReactNode
+	props?: ButtonProps
+	handleClick?: () => void
+}[] = [
 	{ children: 'Your work', props: {} },
-	{ children: 'Projects', props: {} },
 	{ children: 'Filters', props: {} },
 	{ children: 'Dashboard', props: {} },
-	{ children: 'Teams', props: {} },
+	{
+		children: 'Account Management',
+		props: {}
+	},
 	{ children: 'Apps', props: {} }
 ]
 
@@ -65,6 +71,49 @@ export default function HeaderLayout({ children }: { children: ReactNode }) {
 						</Button>
 					</NextLink>
 					<div className='flex flex-row items-center'>
+						<Button
+							className='group mx-[4px] h-[3.4rem] pl-[4px] pr-0'
+							color={'indigo'}
+							variant={'subtle'}
+							size='xl'
+							onClick={() =>
+								router.push(
+									'/users'
+								)
+							}
+						>
+							<span
+								className='text-slate-500 group-hover:text-blue-500'
+								key={uuid()}
+							>
+								Account
+								Management
+							</span>
+							<span className='text-slate-500/60 group-hover:text-blue-500/60'>
+								<CaretDownIcon />
+							</span>
+						</Button>
+						<Button
+							className='group mx-[4px] h-[3.4rem] pl-[4px] pr-0'
+							color={'indigo'}
+							variant={'subtle'}
+							size='xl'
+							onClick={() =>
+								router.push(
+									'/projects'
+								)
+							}
+						>
+							<span
+								className='text-slate-500 group-hover:text-blue-500'
+								key={uuid()}
+							>
+								Projects
+							</span>
+							<span className='text-slate-500/60 group-hover:text-blue-500/60'>
+								<CaretDownIcon />
+							</span>
+						</Button>
 						{ButtonTexts.map(
 							({
 								children,
