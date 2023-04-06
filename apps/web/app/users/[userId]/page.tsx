@@ -4,7 +4,7 @@ import { ReactNode, useState } from 'react'
 import { UserUser } from '../../../codegen/api'
 import { $Api } from '../../../libs'
 
-export function Label({ children }: { children: ReactNode }) {
+function Label({ children }: { children: ReactNode }) {
 	return (
 		<span className='font-bold text-[1.2rem] text-neutral-mid-90'>
 			{children}
@@ -12,7 +12,7 @@ export function Label({ children }: { children: ReactNode }) {
 	)
 }
 
-export function Profile({ user }: { user: UserUser }) {
+function Profile({ user }: { user: UserUser }) {
 	return (
 		<div className='flex flex-col gap-[1.6rem] py-[24px] pl-[24px] pr-[32px] border-[1px] border-neutral-mid-70'>
 			<Avatar
@@ -71,7 +71,9 @@ export default function UserDetailPage({
 			</div>
 			<div className='flex flex-col gap-[24px]'>
 				<div className='flex gap-[32px]'>
-					<Profile user={userDetail} />
+					{userDetail && (
+						<Profile user={userDetail} />
+					)}
 				</div>
 			</div>
 		</div>

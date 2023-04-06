@@ -7,7 +7,7 @@ import { useNotify } from '../../stores'
 import { useUserList } from '../../stores/users'
 import { notifyError } from '../../utils'
 
-export default function Actions({ userId }: { userId: number }) {
+export default function Actions({ userId }: { userId: number | any }) {
 	const deleteUser = useUserList((state) => state.delete)
 	const [isDeleting, setIsDeleting] = useState(false)
 	const notify = useNotify()
