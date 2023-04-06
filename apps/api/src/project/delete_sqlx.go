@@ -6,7 +6,21 @@ import (
 )
 
 var deleteQuery = `
-	DELETE FROM projects WHERE id = $1 RETURNING *
+    WITH deleted AS
+    (
+        DELETE FROM projects
+        WHERE id = $1 
+        RETURNING id, name, key, category, 
+        icon_url, owner_id, created_at, updated_at
+    )
+    SELECT
+    deleted.id, deleted.name, deleted.key, deleted.category,
+    deleted.icon_url, deleted.owner_id, deleted.created_at, deleted.updated_at,
+    users.id, users.avatar_url, users.full_name, users.email, users.role,
+    users.created_at, users.updated_at
+    FROM deleted
+    INNER JOIN users
+    ON deleted.owner_id = users.id
 `
 
 func (r *ProjectSqlxRepo) Delete(id uint) (*Project, error) {

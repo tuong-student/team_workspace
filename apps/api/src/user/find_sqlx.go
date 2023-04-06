@@ -18,8 +18,7 @@ func (r *UserSqlxRepo) Find(query UserQuery) (*common.BasePaginationResponse[Use
 		)
 
 	countQueryBuilder := goqu.From("users").
-		Select(goqu.COUNT("*")).
-		Where(goqu.C("role").Eq("user"))
+		Select(goqu.COUNT("*"))
 
 	if query.Q != nil {
 		search := utils.EscapeLike("%", "%", strings.ToLower(*query.Q))

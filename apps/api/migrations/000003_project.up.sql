@@ -1,7 +1,9 @@
 CREATE TABLE IF NOT EXISTS projects (
         id SERIAL PRIMARY KEY,
-        name VARCHAR(50) NOT NULL UNIQUE,
-        description VARCHAR(500) DEFAULT NULL,
+        name VARCHAR(255) NOT NULL,
+        key VARCHAR(50) NOT NULL UNIQUE,
+        icon_url VARCHAR(255) NOT NULL,
+        owner_id INTEGER REFERENCES users (id),
         category VARCHAR(20) NOT NULL,
         created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP

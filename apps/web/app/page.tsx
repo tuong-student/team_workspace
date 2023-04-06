@@ -10,7 +10,7 @@ import {
 import { useQuery } from '@tanstack/react-query'
 import Image from 'next/image'
 import { redirect, useRouter } from 'next/navigation'
-import { useEffect as useFootgun } from 'react'
+import { useEffect as useFootgun, useState } from 'react'
 import { AppRoute } from '../constants'
 import { $Api } from '../libs'
 import { useNotify } from '../stores'
@@ -32,6 +32,7 @@ export default function Home() {
 	const router = useRouter()
 	const notify = useNotify()
 	const { data } = useQuery({ queryKey: ['init'], queryFn: getAppInit })
+	const [loading, setLoading] = useState(false)
 	const form = useForm<FormData>({
 		initialValues: {
 			email: '',
@@ -58,6 +59,7 @@ export default function Home() {
 		validateInputOnBlur: true
 	})
 	async function handleSubmit({ email, fullName, password }: FormData) {
+		setLoading(true)
 		try {
 			await $Api.admin.adminRegisterPost({
 				email,
@@ -72,6 +74,8 @@ export default function Home() {
 			router.push(AppRoute.login)
 		} catch (e) {
 			notifyError(e, notify)
+		} finally {
+			setLoading(false)
 		}
 	}
 	function checkForFirstAdmin() {
@@ -172,6 +176,7 @@ export default function Home() {
 							className='bg-indigo-700'
 							type='submit'
 							size={'xl'}
+							loading={loading}
 						>
 							<span className='text-white font-bold text-[16px]'>
 								{"Let's start"}
