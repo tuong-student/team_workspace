@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { useUserList } from '../../stores/users'
 import Ammount from './Amount'
 import Label from './Label'
 
@@ -18,17 +19,13 @@ const accountSummarizerList: { label: ReactNode; ammount: ReactNode }[] = [
 ]
 
 export default function AccountSummarizer() {
+	const userList = useUserList((state) => state.users)
 	return (
 		<div className='flex gap-[24px]'>
-			{accountSummarizerList.map((item, i) => (
-				<div
-					key={i}
-					className='flex flex-col gap-[8px]'
-				>
-					{item.label}
-					{item.ammount}
-				</div>
-			))}
+			<div className='flex flex-col gap-[8px]'>
+				<Label>Total users:</Label>
+				<Ammount>{userList.length}</Ammount>
+			</div>
 		</div>
 	)
 }

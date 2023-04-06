@@ -1,7 +1,7 @@
 'use client'
 import { Button, TextInput } from '@mantine/core'
 import { $Api } from '../../libs'
-import { useNotification } from '../../stores'
+import { useNotify } from '../../stores'
 import { useUserList } from '../../stores/users'
 import { notifyError } from '../../utils'
 import SearchIcon from '../Icons/SearchIcon.svg'
@@ -29,7 +29,7 @@ export function SearchBar() {
 	)
 }
 export default function AccountManager() {
-	const notify = useNotification((s) => s.notify)
+	const notify = useNotify()
 
 	const getUserList = useUserList((state) => state.getList)
 	try {

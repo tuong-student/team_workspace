@@ -2,7 +2,7 @@ import { Button, NativeSelect, TextInput, Title } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useState } from 'react'
 import { $Api } from '../../libs'
-import { useNotification } from '../../stores'
+import { useNotify } from '../../stores'
 import { useUserList } from '../../stores/users'
 import { notifyError, notifySuccess } from '../../utils'
 
@@ -21,7 +21,7 @@ export function CreateUserModal() {
 		role: 'user'
 	}
 	const [isCreating, setIsCreating] = useState(false)
-	const notify = useNotification((s) => s.notify)
+	const notify = useNotify()
 	const form = useForm<CreateUserFormInputType>({
 		initialValues: {
 			...initialValue

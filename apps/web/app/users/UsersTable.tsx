@@ -33,7 +33,12 @@ export default function UsersTable() {
 			</td>
 			<td>
 				<span className='text-[1.3rem]'>
-					{user.createAt}
+					{user.createdAt}
+				</span>
+			</td>
+			<td>
+				<span className='text-[1.3rem] capitalize'>
+					{user.role}
 				</span>
 			</td>
 			<td>
@@ -52,6 +57,9 @@ export default function UsersTable() {
 						<TableLabel>
 							Create At
 						</TableLabel>
+					</th>
+					<th>
+						<TableLabel>Role</TableLabel>
 					</th>
 					<th>
 						<TableLabel>Actions</TableLabel>
