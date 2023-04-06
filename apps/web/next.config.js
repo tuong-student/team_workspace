@@ -1,5 +1,5 @@
 module.exports = {
-	reactStrictMode: true,
+	reactStrictMode: false,
 	transpilePackages: ['ui'],
 	experimental: {
 		appDir: true
@@ -41,6 +41,10 @@ module.exports = {
 			{
 				protocol: 'https',
 				hostname: 'api.dicebear.com'
+			},
+			{
+				protocol: 'https',
+				hostname: 'randomuser.me'
 			}
 		]
 	}
