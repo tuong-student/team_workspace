@@ -88,7 +88,7 @@ importers:
                         eslint-config-custom: link:../../packages/eslint-config-custom
                         postcss: 8.4.21
                         sass: 1.60.0
-                        tailwindcss: 3.2.7
+                        tailwindcss: 3.2.7_postcss@8.4.21
                         tsconfig: link:../../packages/tsconfig
                         typescript: 4.9.5
 
@@ -4228,8 +4228,8 @@ packages:
                 engines: { node: '>=10' }
                 hasBin: true
                 dependencies:
-                        is-text-path: 1.0.1
                         JSONStream: 1.3.5
+                        is-text-path: 1.0.1
                         lodash: 4.17.21
                         meow: 8.1.2
                         split2: 3.2.2
@@ -4934,7 +4934,7 @@ packages:
                         eslint: 7.32.0
                         eslint-import-resolver-node: 0.3.7
                         eslint-import-resolver-typescript: 2.7.1_4heylg5ce4zxl5r7mnxe6vqlki
-                        eslint-plugin-import: 2.27.5_io37mvi6ovpcj4jotyhdarbj2u
+                        eslint-plugin-import: 2.27.5_eslint@7.32.0
                         eslint-plugin-jsx-a11y: 6.7.1_eslint@7.32.0
                         eslint-plugin-react: 7.31.8_eslint@7.32.0
                         eslint-plugin-react-hooks: 4.6.0_eslint@7.32.0
@@ -4993,7 +4993,7 @@ packages:
                 dependencies:
                         debug: 4.3.4
                         eslint: 7.32.0
-                        eslint-plugin-import: 2.27.5_io37mvi6ovpcj4jotyhdarbj2u
+                        eslint-plugin-import: 2.27.5_eslint@7.32.0
                         glob: 7.2.3
                         is-glob: 4.0.3
                         resolve: 1.22.1
@@ -5002,7 +5002,7 @@ packages:
                         - supports-color
                 dev: false
 
-        /eslint-module-utils/2.7.4_sj6a3iydwxvwqj3csyeupfemim:
+        /eslint-module-utils/2.7.4_rwiw7b2uo76lkopjtpefklygj4:
                 resolution:
                         {
                                 integrity: sha512-j4GT+rqzCoRKHwURX7pddtIPGySnX9Si/cgMI5ztrcqOPtk5dDEeZ34CQVPphnqkJytlc97Vuk05Um2mJ3gEQA==
@@ -5026,16 +5026,14 @@ packages:
                         eslint-import-resolver-webpack:
                                 optional: true
                 dependencies:
-                        '@typescript-eslint/parser': 5.56.0_jofidmxrjzhj7l6vknpw5ecvfe
                         debug: 3.2.7
                         eslint: 7.32.0
                         eslint-import-resolver-node: 0.3.7
-                        eslint-import-resolver-typescript: 2.7.1_4heylg5ce4zxl5r7mnxe6vqlki
                 transitivePeerDependencies:
                         - supports-color
                 dev: false
 
-        /eslint-plugin-import/2.27.5_io37mvi6ovpcj4jotyhdarbj2u:
+        /eslint-plugin-import/2.27.5_eslint@7.32.0:
                 resolution:
                         {
                                 integrity: sha512-LmEt3GVofgiGuiE+ORpnvP+kAm3h6MLZJ4Q5HCyHADofsb4VzXFsRiWj3c0OFiV+3DWFh0qg3v9gcPlfc3zRow==
@@ -5048,7 +5046,6 @@ packages:
                         '@typescript-eslint/parser':
                                 optional: true
                 dependencies:
-                        '@typescript-eslint/parser': 5.56.0_jofidmxrjzhj7l6vknpw5ecvfe
                         array-includes: 3.1.6
                         array.prototype.flat: 1.3.1
                         array.prototype.flatmap: 1.3.1
@@ -5056,7 +5053,7 @@ packages:
                         doctrine: 2.1.0
                         eslint: 7.32.0
                         eslint-import-resolver-node: 0.3.7
-                        eslint-module-utils: 2.7.4_sj6a3iydwxvwqj3csyeupfemim
+                        eslint-module-utils: 2.7.4_rwiw7b2uo76lkopjtpefklygj4
                         has: 1.0.3
                         is-core-module: 2.11.0
                         is-glob: 4.0.3
@@ -8660,13 +8657,15 @@ packages:
                         string-width: 4.2.3
                         strip-ansi: 6.0.1
 
-        /tailwindcss/3.2.7:
+        /tailwindcss/3.2.7_postcss@8.4.21:
                 resolution:
                         {
                                 integrity: sha512-B6DLqJzc21x7wntlH/GsZwEXTBttVSl1FtCzC8WP4oBc/NKef7kaax5jeihkkCEWc831/5NDJ9gRNDK6NEioQQ==
                         }
                 engines: { node: '>=12.13.0' }
                 hasBin: true
+                peerDependencies:
+                        postcss: ^8.0.9
                 dependencies:
                         arg: 5.0.2
                         chokidar: 3.5.3

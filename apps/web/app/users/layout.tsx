@@ -1,5 +1,6 @@
 'use client'
 import HeaderLayout from '../HeaderLayout'
+import PageLayout from '../PageLayout'
 import UserSidebar from '../projects/UserSidebar'
 import SidebarLayout from '../SidebarLayout'
 
@@ -13,12 +14,16 @@ export default function RootLayout({
 			<head>
 				<title>Administrator</title>
 			</head>
-			<body className='flex h-screen w-screen flex-col'>
+			<body className='flex overflow-hidden h-screen w-screen flex-col'>
 				<HeaderLayout>
 					<SidebarLayout
 						component={<UserSidebar />}
 					>
-						{children}
+						<div className='w-full h-full overflow-scroll'>
+							<PageLayout>
+								{children}
+							</PageLayout>
+						</div>
 					</SidebarLayout>
 				</HeaderLayout>
 			</body>
