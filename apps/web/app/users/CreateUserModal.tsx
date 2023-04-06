@@ -10,7 +10,7 @@ export type CreateUserFormInputType = {
 	email: string
 	fullName: string
 	password: string
-	role: string
+	role: 'Developer' | 'Administrator'
 }
 
 export function CreateUserModal() {
@@ -18,7 +18,7 @@ export function CreateUserModal() {
 		fullName: '',
 		email: '',
 		password: '',
-		role: 'user'
+		role: 'Developer'
 	}
 	const [isCreating, setIsCreating] = useState(false)
 	const notify = useNotify()

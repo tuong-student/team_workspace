@@ -1,5 +1,5 @@
 'use client'
-import { Avatar, Button, Title } from '@mantine/core'
+import { Avatar, Title } from '@mantine/core'
 import { ReactNode, useState } from 'react'
 import { UserUser } from '../../../codegen/api'
 import { $Api } from '../../../libs'
@@ -68,9 +68,6 @@ export default function UserDetailPage({
 				<Title size={'h1'} weight={600}>
 					{userDetail.fullName}
 				</Title>
-				<Button className='text-primary-b400 text-[1.6rem]'>
-					Back
-				</Button>
 			</div>
 			<div className='flex flex-col gap-[24px]'>
 				<div className='flex gap-[32px]'>
