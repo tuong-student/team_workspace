@@ -8,11 +8,12 @@ import (
 )
 
 type BaseQuery struct {
-	Page     *uint   `query:"page"`
-	PageSize *uint   `query:"pageSize"`
-	Q        *string `query:"q"`
-	Sort     *string `query:"sort" validate:"oneof=asc ASC desc DESC"`
-	SortBy   *string `query:"sortBy"`
+	Page          *uint   `query:"page"`
+	PageSize      *uint   `query:"pageSize"`
+	Q             *string `query:"q"`
+	Sort          *string `query:"sort" validate:"oneof=asc ASC desc DESC"`
+	SortBy        *string `query:"sortBy"`
+	DefaultSortBy *string `query:"-"`
 }
 
 type BasePaginationResponse[T any] struct {
@@ -55,7 +56,11 @@ func (q *BaseQuery) GetSort() *string {
 }
 
 func (q *BaseQuery) GetSortBy() *string {
-	if q.SortBy == nil {
+	if q.SortBy == nil && q.DefaultSortBy != nil {
+		q.SortBy = q.DefaultSortBy
+	}
+
+	if q.SortBy == nil && q.DefaultSortBy == nil {
 		q.SortBy = utils.GetDataTypeAddress("id")
 	}
 

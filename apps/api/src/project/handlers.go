@@ -2,7 +2,9 @@ package project
 
 import (
 	"api/src/common"
+	"api/src/utils"
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
@@ -11,7 +13,7 @@ import (
 
 type ProjectRepository interface {
 	Insert(req WriteProjectBody) (*Project, error)
-	Update(id uint, req WriteProjectBody) (*Project, error)
+	Update(id uint, req UpdateProjectBody) (*Project, error)
 	Delete(id uint) (*Project, error)
 	Find(queries ProjectQuery) (*common.BasePaginationResponse[Project], error)
 	FindOne(id uint) (*Project, error)
@@ -36,7 +38,8 @@ type ProjectSqlxRepo struct {
 // @Security ApiKeyAuth
 // @tags Project
 func CreateProject(ctx *fiber.Ctx) error {
-	req := WriteProjectBody{}
+	userId := ctx.Locals("userId").(uint)
+	req := WriteProjectBody{OwnerId: userId}
 	if err := ctx.BodyParser(&req); err != nil {
 		return ctx.Status(http.StatusBadRequest).JSON(err)
 	}
@@ -98,7 +101,7 @@ func DeleteProject(ctx *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Param id path string true "Project Id"
-// @Param project body WriteProjectBody true "Update project"
+// @Param project body UpdateProjectBody true "Update project"
 // @Success 200 {object} Project
 // @Failure 400 {string} string
 // @Failure 404 {string} string
@@ -114,7 +117,7 @@ func UpdateProject(ctx *fiber.Ctx) error {
 		return ctx.Status(http.StatusBadRequest).JSON(err)
 	}
 
-	req := WriteProjectBody{}
+	req := UpdateProjectBody{}
 	if err := ctx.BodyParser(&req); err != nil {
 		return ctx.Status(http.StatusBadRequest).JSON(err)
 	}
@@ -145,20 +148,25 @@ func UpdateProject(ctx *fiber.Ctx) error {
 // @Param pageSize query int false "Project page size return"
 // @Param q query string false "Project query"
 // @Param sort query string false "Sort direction" Enums(asc, desc) default(desc)
-// @Param sortBy query string false "Sort by" Enums(id, name, description) default(id)
+// @Param sortBy query string false "Sort by" Enums(projects.id, projects.name, projects.key) default(id)
 // @Success 200 {object} common.BasePaginationResponse[Project]
 // @Failure 500 {string} string
 // @Router /project/find [get]
 // @Security ApiKeyAuth
 // @tags Project
 func FindProject(ctx *fiber.Ctx) error {
-	queries := new(ProjectQuery)
-	if err := ctx.QueryParser(queries); err != nil {
+	queries := ProjectQuery{
+		BaseQuery: common.BaseQuery{
+			DefaultSortBy: utils.GetDataTypeAddress("projects.id"),
+		},
+	}
+	if err := ctx.QueryParser(&queries); err != nil {
+		fmt.Println("DEBUG: ", err)
 		return ctx.Status(http.StatusBadRequest).JSON(err)
 	}
 
 	repo := ctx.Locals("ProjectRepo").(ProjectRepository)
-	projects, err := repo.Find(*queries)
+	projects, err := repo.Find(queries)
 
 	if err != nil {
 		if httpErr := common.IsHttpError(err); httpErr != nil {

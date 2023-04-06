@@ -1,4 +1,5 @@
-import { Avatar, Group, Text, UnstyledButton } from '@mantine/core'
+import { Group, Text, UnstyledButton } from '@mantine/core'
+import Image from 'next/image'
 
 type SidebarHeaderProps = {
 	src: string
@@ -16,12 +17,17 @@ export default function SidebarHeader({
 	return (
 		<UnstyledButton className='w-full px-4 cursor-default'>
 			<Group>
-				<Avatar
+				<Image
+					alt='Project icon'
+					className={`${
+						circle
+							? 'rounded-full'
+							: 'rounded'
+					}`}
 					src={src}
-					size={40}
+					width={40}
+					height={40}
 					color='blue'
-					placeholder='Avatar'
-					radius={circle ? 'xl' : undefined}
 				/>
 				<div className='flex-1'>
 					<Text

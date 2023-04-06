@@ -1,5 +1,5 @@
 module.exports = {
-	reactStrictMode: true,
+	reactStrictMode: false,
 	transpilePackages: ['ui'],
 	experimental: {
 		appDir: true
@@ -32,19 +32,19 @@ module.exports = {
 		return config
 	},
 	images: {
+		dangerouslyAllowSVG: true,
 		remotePatterns: [
 			{
 				protocol: 'https',
 				hostname: 'aid-frontend.prod.atl-paas.net'
-			}
-		]
-	},
-	async rewrites() {
-		return [
+			},
 			{
-				source: '/api/:path',
-				destination:
-					'https://api-fahasa-nomorechokedboy.cloud.okteto.net/api/v1'
+				protocol: 'https',
+				hostname: 'api.dicebear.com'
+			},
+			{
+				protocol: 'https',
+				hostname: 'randomuser.me'
 			}
 		]
 	}
