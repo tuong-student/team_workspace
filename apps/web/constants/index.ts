@@ -1,5 +1,4 @@
-// export const baseURL = 'https://api-fahasa-nomorechokedboy.cloud.okteto.net'
-export const baseURL = 'http://localhost:3001'
+export const baseURL = 'https://api-fahasa-nomorechokedboy.cloud.okteto.net'
 
 export const mediaURL = `${baseURL}/api/v1/media`
 
